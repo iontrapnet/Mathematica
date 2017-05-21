@@ -1,0 +1,2700 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     94876,       2692]
+NotebookOptionsPosition[     92626,       2613]
+NotebookOutlinePosition[     93031,       2630]
+CellTagsIndexPosition[     92988,       2627]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SetOptions", "[", 
+   RowBox[{
+    RowBox[{"SelectedNotebook", "[", "]"}], ",", 
+    RowBox[{"FontProperties", "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{"\"\<ScreenResolution\>\"", "\[Rule]", "Automatic"}], "}"}]}]}],
+    "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.6880211146554074`*^9, 3.688021166465846*^9}, 
+   3.688253285003331*^9}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Include", "/@", 
+   RowBox[{"{", "\"\<$.m\>\"", "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Remove", "[", "FFI", "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"FFI", "=", 
+   RowBox[{"$", "[", "FFI", "]"}]}], ";"}]}], "Code",
+ InitializationCell->True,
+ CellChangeTimes->{{3.657114895353719*^9, 3.6571148995699606`*^9}, {
+   3.657115240913484*^9, 3.65711525098506*^9}, 3.657115378318343*^9, {
+   3.6571155908755007`*^9, 3.6571156054573345`*^9}, {3.65711571517061*^9, 
+   3.65711571586665*^9}, {3.657161756647505*^9, 3.6571617739120483`*^9}, 
+   3.6846495504369707`*^9, {3.68465022377708*^9, 3.684650243988187*^9}, 
+   3.6846503766943417`*^9, {3.684650492671748*^9, 3.6846504931745253`*^9}, {
+   3.68465054083294*^9, 3.68465056818841*^9}, {3.690758221967551*^9, 
+   3.6907582299291773`*^9}, {3.690760987656265*^9, 3.690760991865405*^9}, {
+   3.690765595149089*^9, 3.690765599453974*^9}, {3.690786309720157*^9, 
+   3.690786310172073*^9}, {3.690805305602326*^9, 3.6908053126798573`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["System", "Subsection",
+ CellChangeTimes->{{3.6907656825075183`*^9, 3.69076569065819*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Begin", "[", "\"\<System`\>\"", "]"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "\n", 
+   RowBox[{
+   "Each", ",", "\n", "ReturnType", ",", "\n", "ArgTypes", ",", "\n", 
+    "Convention", ",", "\n", "Data", ",", "\n", "$0", ",", "$1", ",", "$2", 
+    ",", "$3", ",", "$4", ",", "$5", ",", "$6", ",", "$7", ",", "$8", ",", 
+    "$9"}], "\n", "]"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"Each", "[", 
+     RowBox[{"lst_", ",", "expr_"}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"expr", "@@", "#"}], ")"}], "&"}], "/@", "lst"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"Unprotect", "[", "Total", "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Total", "[", 
+    RowBox[{
+     RowBox[{"atom_", "?", "AtomQ"}], ",", "args___"}], "]"}], ":=", "atom"}],
+   ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Protect", "[", "Total", "]"}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"End", "[", "]"}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"BeginPackage", "[", "\"\<SymbolicC`\>\"", "]"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "\n", 
+   RowBox[{"FromCDeclareString", ",", "\n", "ToProto"}], "\n", "]"}], 
+  "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}], 
+  "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FromCDeclareString", "[", "str_String", "]"}], ":=", 
+    RowBox[{"CDeclare", "@@", 
+     RowBox[{"StringSplit", "[", 
+      RowBox[{"str", ",", 
+       RowBox[{"{", 
+        RowBox[{"\"\< \>\"", ",", "\"\<;\>\""}], "}"}]}], "]"}]}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FromCFunctionString", "[", "str_String", "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"type", ",", "name", ",", "sigstr"}], "}"}], ",", "\n", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"type", ",", "sigstr"}], "}"}], "=", 
+        RowBox[{"StringSplit", "[", 
+         RowBox[{"str", ",", "\"\<(\>\""}], "]"}]}], ";", "\n", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"type", ",", "name"}], "}"}], "=", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Most", "[", "#", "]"}], ",", 
+            RowBox[{"Last", "[", "#", "]"}]}], "}"}], "&"}], "@", 
+         RowBox[{"StringSplit", "[", "type", "]"}]}]}], ";", "\n", 
+       RowBox[{"sigstr", "=", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"StringSplit", "[", "#", "]"}], "&"}], "/@", 
+         RowBox[{"StringSplit", "[", 
+          RowBox[{"sigstr", ",", 
+           RowBox[{"{", 
+            RowBox[{"\"\<,\>\"", ",", "\"\<)\>\"", ",", "\"\<;\>\""}], 
+            "}"}]}], "]"}]}]}], ";", "\n", 
+       RowBox[{"CFunction", "[", 
+        RowBox[{"type", ",", "name", ",", "sigstr"}], "]"}]}]}], "\n", 
+     "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ToProto", "[", "cfunc_CFunction", "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"type", ",", "name", ",", "sigstr"}], "}"}], ",", "\n", 
+      RowBox[{
+       RowBox[{"type", "=", 
+        RowBox[{"cfunc", "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}], ";", "\n", 
+       RowBox[{"type", "=", 
+        RowBox[{"ToCCodeString", "[", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Head", "[", "type", "]"}], "===", "List"}], ",", 
+           RowBox[{"type", "[", 
+            RowBox[{"[", 
+             RowBox[{"-", "1"}], "]"}], "]"}], ",", "type"}], "]"}], "]"}]}], 
+       ";", "\n", 
+       RowBox[{"name", "=", 
+        RowBox[{"ToCCodeString", "[", 
+         RowBox[{"cfunc", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], "]"}]}], ";", "\n", 
+       RowBox[{"sigstr", "=", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"ToCCodeString", "[", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Head", "[", "#", "]"}], "===", "List"}], ",", 
+             RowBox[{"#", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], ",", "#"}], "]"}], "]"}], "&"}],
+          "/@", 
+         RowBox[{"cfunc", "[", 
+          RowBox[{"[", "3", "]"}], "]"}]}]}], ";", "\n", 
+       RowBox[{"{", 
+        RowBox[{"type", ",", "name", ",", "sigstr"}], "}"}]}]}], "\n", 
+     "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ToProto", "[", "code_String", "]"}], ":=", 
+    RowBox[{"ToProto", "/@", 
+     RowBox[{"FromCFunctionString", "/@", 
+      RowBox[{"StringSplit", "[", 
+       RowBox[{"code", ",", "\"\<\\n\>\""}], "]"}]}]}]}], ";"}], 
+  "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{"EndPackage", "[", "]"}], ";"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.6907655431564093`*^9, {3.6907656799631567`*^9, 3.6907656811431704`*^9}, 
+   3.6907662545850983`*^9, 3.6907765910354104`*^9, {3.690776631311197*^9, 
+   3.690776640747656*^9}, {3.690776682793845*^9, 3.6907767036221294`*^9}}],
+
+Cell[BoxData["\<\"System`\"\>"], "Output",
+ CellChangeTimes->{3.6907767145827446`*^9}],
+
+Cell[BoxData["\<\"SymbolicC`\"\>"], "Output",
+ CellChangeTimes->{3.690776714583748*^9}],
+
+Cell[BoxData["\<\"SymbolicC`Private`\"\>"], "Output",
+ CellChangeTimes->{3.6907767145887604`*^9}]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Encode/Decode", "Subsection",
+ CellChangeTimes->{{3.69076569711506*^9, 3.6907657031859818`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", "[", 
+     RowBox[{"ptrSize_Integer:", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"$ProcessorType", " ", "==", " ", "\"\<x86-64\>\""}], ",", 
+        "64", ",", "32"}], "]"}]}], "]"}], ":=", 
+    RowBox[{"(", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"$", ".", "PtrSize"}], "=", "ptrSize"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"$", ".", "PtrType"}], "=", 
+       RowBox[{"\"\<Integer\>\"", "<>", 
+        RowBox[{"ToString", "[", "ptrSize", "]"}]}]}], ";"}], "\n", ")"}]}], 
+   ";"}], "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", "Types"}], " ", "=", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"__", " ", "~~", " ", "\"\<*\>\""}], "\[Rule]", 
+       RowBox[{"$", ".", "PtrType"}]}], ",", " ", 
+      RowBox[{"\"\<int\>\"", "\[Rule]", "\"\<Integer32\>\""}], ",", " ", "\n",
+       "   ", 
+      RowBox[{"\"\<long\>\"", "\[Rule]", "\"\<Integer64\>\""}], ",", " ", 
+      RowBox[{"\"\<float\>\"", "\[Rule]", "\"\<Real32\>\""}], ",", " ", 
+      RowBox[{"\"\<double\>\"", "\[Rule]", "\"\<Real64\>\""}], ",", " ", "\n",
+       "   ", 
+      RowBox[{"\"\<void\>\"", "\[Rule]", "\"\<Void\>\""}], ",", " ", 
+      RowBox[{"\"\<char\>\"", "\[Rule]", "\"\<Integer8\>\""}], ",", " ", 
+      RowBox[{"\"\<short\>\"", "\[Rule]", "\"\<Integer16\>\""}]}], "}"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", "Aligns"}], " ", "=", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\"\<Integer8\>\"", "\[Rule]", " ", 
+       RowBox[{"$", ".", "PtrType"}]}], ",", " ", 
+      RowBox[{"\"\<Integer16\>\"", "\[Rule]", 
+       RowBox[{"$", ".", "PtrType"}]}]}], "}"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", "Type"}], "=", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"StringReplace", "[", 
+       RowBox[{"#", ",", 
+        RowBox[{"$", ".", "Types"}]}], "]"}], ")"}], "&"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", "Align"}], " ", "=", " ", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"#", " ", "/.", " ", 
+       RowBox[{"$", ".", "Aligns"}]}], ")"}], " ", "&"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", "TypeAlign"}], " ", "=", " ", 
+    RowBox[{
+     RowBox[{"$", ".", 
+      RowBox[{"Align", "[", 
+       RowBox[{"$", ".", 
+        RowBox[{"Type", "[", "#", "]"}]}], "]"}]}], " ", "&"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", "TypeSize"}], " ", "=", " ", 
+    RowBox[{
+     RowBox[{"Total", "[", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"$", ".", 
+          RowBox[{"Type", "[", "#", "]"}]}], " ", "/.", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\"\<Integer8\>\"", " ", "->", " ", "1"}], ",", " ", 
+           RowBox[{"\"\<Integer16\>\"", " ", "->", " ", "2"}], ",", " ", 
+           RowBox[{"\"\<Integer32\>\"", " ", "->", " ", "4"}], ",", " ", 
+           RowBox[{"\"\<Integer64\>\"", " ", "->", " ", "8"}], ",", " ", "\n",
+            "      ", 
+           RowBox[{"\"\<Real32\>\"", " ", "->", " ", "4"}], ",", " ", 
+           RowBox[{"\"\<Real64\>\"", " ", "->", " ", "8"}]}], "}"}]}], ")"}], 
+       ",", " ", "Infinity"}], "]"}], " ", "&"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", "TypeInfer"}], " ", "=", " ", 
+    RowBox[{
+     RowBox[{"Switch", "[", 
+      RowBox[{
+       RowBox[{"Head", "[", "#", "]"}], ",", " ", "\n", "\t", "Integer", ",", 
+       " ", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"IntegerLength", "[", 
+           RowBox[{"#", ",", " ", "256"}], "]"}], " ", ">", " ", "4"}], ",", 
+         " ", "\"\<Integer64\>\"", ",", " ", "\"\<Integer32\>\""}], "]"}], 
+       ",", " ", "\n", "\t", "Real", ",", "\"\<Real64\>\"", ",", "\n", "\t", 
+       "String", ",", 
+       RowBox[{"$", ".", "PtrType"}]}], "\n", "\t", "]"}], " ", "&"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", "TypeEncode"}], " ", "=", " ", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"$", ".", 
+        RowBox[{"TypeAlign", "[", "#", "]"}]}], " ", "/.", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"\"\<Integer32\>\"", " ", "->", " ", "0"}], ",", " ", 
+         RowBox[{"\"\<Integer64\>\"", " ", "->", " ", "1"}], ",", " ", "\n", 
+         "      ", 
+         RowBox[{"\"\<Real32\>\"", " ", "->", " ", "2"}], ",", " ", 
+         RowBox[{"\"\<Real64\>\"", " ", "->", " ", "3"}], ",", " ", 
+         RowBox[{"\"\<Void\>\"", " ", "->", " ", "0"}]}], 
+        RowBox[{"(*", " ", "\n", "      ", 
+         RowBox[{
+          RowBox[{
+          "only", " ", "used", " ", "as", " ", "return", " ", "type"}], ",", 
+          " ", 
+          RowBox[{"encode", " ", "same", " ", "as", " ", "PtrType"}], ",", 
+          " ", "\n", "      ", 
+          RowBox[{"just", " ", "ignore", " ", "returned", " ", "value"}]}], 
+         " ", "*)"}], "}"}]}], ")"}], " ", "&"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"SizeEncode", "[", "0", "]"}]}], ":=", 
+    RowBox[{"ExportString", "[", 
+     RowBox[{"0", ",", " ", "\"\<Byte\>\""}], "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"SizeEncode", "[", "size_Integer", "]"}]}], " ", ":=", " ", "\n",
+     "  ", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"bytesize", " ", "=", " ", 
+         RowBox[{"IntegerLength", "[", 
+          RowBox[{
+           RowBox[{"size", "*", "4"}], ",", " ", "256"}], "]"}]}], ",", " ", 
+        "bytes"}], "}"}], ",", "\n", "   ", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"bytesize", " ", ">", " ", "4"}], ",", " ", 
+        RowBox[{"Message", "[", 
+         RowBox[{"General", "::", "args"}], "]"}], ",", "\n", "    ", 
+        RowBox[{
+         RowBox[{"bytes", " ", "=", " ", 
+          RowBox[{"IntegerDigits", "[", 
+           RowBox[{"size", ",", " ", "256", ",", " ", "bytesize"}], "]"}]}], 
+         ";", "\n", "    ", 
+         RowBox[{
+          RowBox[{"bytes", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], " ", "=", " ", 
+          RowBox[{"BitOr", "[", 
+           RowBox[{
+            RowBox[{"bytes", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+            RowBox[{"64", "*", 
+             RowBox[{"(", 
+              RowBox[{"bytesize", " ", "-", " ", "1"}], ")"}]}]}], "]"}]}], 
+         ";", " ", "\n", "    ", 
+         RowBox[{"StringJoin", " ", "@@", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"ExportString", "[", 
+              RowBox[{"#", ",", " ", "\"\<Byte\>\""}], "]"}], " ", "&"}], " ",
+             "/@", " ", "bytes"}], ")"}]}]}]}], "]"}]}], "\n", "   ", "]"}]}],
+    ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"SigEncode", "[", 
+      RowBox[{"{", "}"}], "]"}]}], " ", ":=", " ", 
+    RowBox[{"FFI", ".", 
+     RowBox[{"SizeEncode", "[", "0", "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"SigEncode", "[", 
+      RowBox[{"sigstr", " ", ":", " ", 
+       RowBox[{"{", "__String", "}"}]}], "]"}]}], " ", ":=", " ", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"sigs", " ", "=", " ", 
+        RowBox[{"$", ".", 
+         RowBox[{"TypeEncode", "[", "sigstr", "]"}]}]}], "}"}], ",", "\n", 
+      "   ", 
+      RowBox[{
+       RowBox[{"sigs", " ", "=", " ", 
+        RowBox[{"Partition", "[", 
+         RowBox[{"sigs", ",", " ", "4", ",", " ", "4", ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"1", ",", " ", "1"}], "}"}], ",", " ", "0"}], "]"}]}], ";",
+        "\n", "   ", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"$", ".", 
+          RowBox[{"SizeEncode", "[", 
+           RowBox[{"Length", "[", "sigstr", "]"}], "]"}]}], ")"}], " ", "<>", 
+        " ", "\n", "    ", 
+        RowBox[{"StringJoin", " ", "@@", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"ExportString", "[", 
+             RowBox[{
+              RowBox[{"FromDigits", "[", 
+               RowBox[{"#", ",", " ", "4"}], "]"}], ",", " ", 
+              "\"\<Byte\>\""}], "]"}], " ", "&"}], " ", "/@", " ", "sigs"}], 
+          ")"}]}]}]}]}], "\n", "   ", "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", "TypeDecode"}], " ", "=", " ", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"#", " ", "/.", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"0", " ", "->", " ", "\"\<Integer32\>\""}], ",", " ", 
+         RowBox[{"1", " ", "->", " ", "\"\<Integer64\>\""}], ",", " ", "\n", 
+         "      ", 
+         RowBox[{"2", " ", "->", " ", "\"\<Real32\>\""}], ",", " ", 
+         RowBox[{"3", " ", "->", " ", "\"\<Real64\>\""}]}], 
+        RowBox[{"(*", 
+         RowBox[{",", 
+          RowBox[{"4", "\[Rule]", "\"\<Void\>\""}]}], "*)"}], "}"}]}], ")"}], 
+     " ", "&"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"SigDecode", "[", "str_String", "]"}]}], " ", ":=", " ", "\n", 
+    "  ", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"bytes", " ", "=", " ", 
+         RowBox[{"ImportString", "[", 
+          RowBox[{"str", ",", " ", "\"\<Byte\>\""}], "]"}]}], ",", " ", 
+        RowBox[{"ptr", " ", "=", " ", "0"}], ",", " ", "bytesize", ",", " ", 
+        "size"}], "}"}], ",", "\n", "   ", 
+      RowBox[{
+       RowBox[{"bytesize", " ", "=", " ", 
+        RowBox[{
+         RowBox[{"BitShiftRight", "[", 
+          RowBox[{
+           RowBox[{"bytes", "[", 
+            RowBox[{"[", 
+             RowBox[{"ptr", " ", "+", " ", "1"}], "]"}], "]"}], ",", " ", 
+           "6"}], "]"}], " ", "+", " ", "1"}]}], ";", "\n", "   ", 
+       RowBox[{
+        RowBox[{"bytes", "[", 
+         RowBox[{"[", 
+          RowBox[{"ptr", " ", "+", " ", "1"}], "]"}], "]"}], " ", "=", " ", 
+        RowBox[{"BitAnd", "[", 
+         RowBox[{
+          RowBox[{"bytes", "[", 
+           RowBox[{"[", 
+            RowBox[{"ptr", " ", "+", " ", "1"}], "]"}], "]"}], ",", " ", 
+          "63"}], "]"}]}], ";", "\n", "   ", 
+       RowBox[{"size", " ", "=", " ", 
+        RowBox[{"FromDigits", "[", 
+         RowBox[{
+          RowBox[{"bytes", "[", 
+           RowBox[{"[", 
+            RowBox[{
+             RowBox[{"ptr", " ", "+", " ", "1"}], " ", ";;", " ", 
+             RowBox[{"ptr", " ", "+", " ", "bytesize"}]}], "]"}], "]"}], ",", 
+          " ", "256"}], "]"}]}], ";", "\n", "   ", 
+       RowBox[{"ptr", " ", "+=", " ", "bytesize"}], ";", "\n", "   ", 
+       RowBox[{"bytesize", " ", "=", " ", 
+        RowBox[{"Ceiling", "[", 
+         RowBox[{"size", "/", "4"}], "]"}]}], ";", "\n", "   ", 
+       RowBox[{"$", ".", 
+        RowBox[{"TypeDecode", "[", "\n", "    ", 
+         RowBox[{
+          RowBox[{"Flatten", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"IntegerDigits", "[", 
+               RowBox[{"#", ",", " ", "4", ",", " ", "4"}], "]"}], " ", "&"}],
+              " ", "/@", " ", "\n", "       ", 
+             RowBox[{"bytes", "[", 
+              RowBox[{"[", 
+               RowBox[{
+                RowBox[{"ptr", " ", "+", " ", "1"}], " ", ";;", " ", 
+                RowBox[{"ptr", " ", "+", " ", "bytesize"}]}], "]"}], "]"}]}], 
+            ",", " ", "1"}], "]"}], "[", 
+          RowBox[{"[", 
+           RowBox[{"1", " ", ";;", " ", "size"}], "]"}], "]"}], "]"}]}]}]}], 
+     "\n", "   ", "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"ProtoEncode", "[", 
+      RowBox[{"type_String", ",", " ", 
+       RowBox[{"sigstr", " ", ":", " ", 
+        RowBox[{"{", "___String", "}"}]}]}], "]"}]}], " ", ":=", " ", 
+    RowBox[{"$", ".", 
+     RowBox[{"SigEncode", "[", "\n", "   ", 
+      RowBox[{"Append", "[", 
+       RowBox[{"sigstr", ",", " ", "type"}], "]"}], "]"}]}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"ArgEncode", "[", 
+      RowBox[{
+       RowBox[{"data", " ", ":", " ", 
+        RowBox[{"{", 
+         RowBox[{"___", "?", "NumericQ"}], "}"}]}], ",", " ", 
+       RowBox[{"sigstr", " ", ":", " ", 
+        RowBox[{"{", "___String", "}"}]}]}], "]"}]}], " ", ":=", " ", "\n", 
+    "  ", 
+    RowBox[{"ExportString", "[", 
+     RowBox[{"data", ",", " ", "\"\<Binary\>\"", ",", " ", 
+      RowBox[{"\"\<DataFormat\>\"", " ", "\[Rule]", " ", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"$", ".", "Type"}], ")"}], " ", "/@", " ", "sigstr"}]}]}], 
+     "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"ArgDecode", "[", 
+      RowBox[{"str_String", ",", " ", 
+       RowBox[{"sigstr", " ", ":", " ", 
+        RowBox[{"{", "___String", "}"}]}]}], "]"}]}], " ", ":=", " ", "\n", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Length", "[", "#", "]"}], "===", "1"}], ",", 
+        RowBox[{"#", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], ",", "#"}], "]"}], "&"}], "@", 
+     RowBox[{"ImportString", "[", 
+      RowBox[{"str", ",", " ", "\"\<Binary\>\"", ",", " ", 
+       RowBox[{"\"\<DataFormat\>\"", " ", "\[Rule]", " ", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"$", ".", "Type"}], ")"}], " ", "/@", " ", "sigstr"}]}]}], 
+      "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"ArgDecode", "[", 
+      RowBox[{"str_String", ",", " ", "sigstr_String"}], "]"}]}], " ", ":=", 
+    " ", "\n", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"ListQ", "[", "#", "]"}], ",", 
+        RowBox[{"Flatten", "[", 
+         RowBox[{"#", ",", "1"}], "]"}], ",", "#"}], "]"}], "&"}], "[", 
+     RowBox[{"$", ".", 
+      RowBox[{"ArgDecode", "[", 
+       RowBox[{"str", ",", 
+        RowBox[{"{", "sigstr", "}"}]}], "]"}]}], "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"ArgEncode", "[", "]"}]}], " ", ":=", " ", "\"\<\>\""}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"ArgEncode", "[", 
+      RowBox[{"data", " ", ":", " ", 
+       RowBox[{
+        RowBox[{"PatternSequence", "[", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"_", "?", "NumericQ"}], " ", "->", " ", "_String"}], ")"}],
+          "]"}], " ", ".."}]}], "]"}]}], " ", ":=", " ", "\n", "  ", 
+    RowBox[{"StringJoin", " ", "@@", " ", 
+     RowBox[{"(", 
+      RowBox[{"Table", "[", "\n", "     ", 
+       RowBox[{
+        RowBox[{"ExportString", "[", 
+         RowBox[{
+          RowBox[{"item", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], ",", 
+          RowBox[{"$", ".", 
+           RowBox[{"Type", "[", 
+            RowBox[{
+            "item", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+            "]"}]}]}], "]"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"item", ",", " ", 
+          RowBox[{"{", "data", "}"}]}], "}"}]}], "]"}], ")"}]}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"ArgEncode", "[", 
+      RowBox[{"data", " ", ":", " ", 
+       RowBox[{
+        RowBox[{"PatternSequence", "[", 
+         RowBox[{"(", 
+          RowBox[{"_", "?", "NumericQ"}], ")"}], "]"}], " ", ".."}]}], 
+      "]"}]}], " ", ":=", " ", 
+    RowBox[{"$", ".", 
+     RowBox[{"ArgEncode", "[", "\n", "   ", 
+      RowBox[{"Sequence", " ", "@@", " ", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"item", " ", "\[Rule]", " ", 
+          RowBox[{"$", ".", 
+           RowBox[{"TypeInfer", "[", "item", "]"}]}]}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"item", ",", " ", 
+           RowBox[{"{", "data", "}"}]}], "}"}]}], "]"}]}], "]"}]}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"StructEncode", "[", 
+      RowBox[{"data_List", ",", " ", "sigstr_List"}], "]"}]}], " ", ":=", " ", 
+    RowBox[{"$", ".", 
+     RowBox[{"ArgEncode", "[", 
+      RowBox[{
+       RowBox[{"Flatten", "[", "data", "]"}], ",", " ", "\n", "   ", 
+       RowBox[{"Flatten", "[", "sigstr", "]"}]}], "]"}]}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"StructEncode", "[", "data__Rule", "]"}]}], " ", ":=", " ", 
+    RowBox[{"$", ".", 
+     RowBox[{"ArgEncode", "[", 
+      RowBox[{"Flatten", "[", 
+       RowBox[{"Thread", " ", "/@", " ", 
+        RowBox[{"{", "data", "}"}]}], "]"}], "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", "StructDecode"}], " ", "=", " ", 
+    RowBox[{
+     RowBox[{"$", ".", 
+      RowBox[{"ArgDecode", "[", 
+       RowBox[{"#1", ",", " ", 
+        RowBox[{"Flatten", "[", "#2", "]"}]}], "]"}]}], " ", "&"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"InvokeEncode", "[", 
+      RowBox[{"addr_Integer", ",", " ", 
+       RowBox[{"data", " ", ":", " ", 
+        RowBox[{"{", 
+         RowBox[{"___", "?", "NumericQ"}], "}"}]}], ",", " ", "\n", "   ", 
+       RowBox[{"sigstr", " ", ":", " ", 
+        RowBox[{"{", "___String", "}"}]}]}], "]"}]}], " ", ":=", " ", 
+    RowBox[{"$", ".", 
+     RowBox[{"ArgEncode", "[", 
+      RowBox[{
+       RowBox[{"Append", "[", 
+        RowBox[{"data", ",", " ", "addr"}], "]"}], ",", " ", "\n", 
+       RowBox[{"Append", "[", 
+        RowBox[{"sigstr", ",", " ", 
+         RowBox[{"$", ".", "PtrType"}]}], "]"}]}], "]"}]}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"InvokeEncode", "[", 
+      RowBox[{"addr_Integer", ",", " ", "\n", "   ", 
+       RowBox[{"data", " ", ":", " ", 
+        RowBox[{
+         RowBox[{"PatternSequence", "[", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"_", "?", "NumericQ"}], " ", "->", " ", "_String"}], 
+           ")"}], "]"}], " ", "..."}]}]}], "]"}]}], " ", ":=", " ", 
+    RowBox[{"$", ".", 
+     RowBox[{"ArgEncode", "[", "\n", "   ", 
+      RowBox[{"data", ",", " ", 
+       RowBox[{"addr", " ", "\[Rule]", 
+        RowBox[{"$", ".", "PtrType"}]}]}], "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"FFI", ".", 
+    RowBox[{"CallEncode", "[", 
+     RowBox[{"type_String", ",", " ", "addr_Integer", ",", " ", 
+      RowBox[{"sigstr", " ", ":", " ", 
+       RowBox[{"{", "___String", "}"}]}]}], "]"}]}], " ", ":=", " ", "\n", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"$", ".", 
+      RowBox[{"InvokeEncode", "[", "addr", "]"}]}], ")"}], "<>", 
+    RowBox[{"(", 
+     RowBox[{"$", ".", 
+      RowBox[{"ProtoEncode", "[", 
+       RowBox[{"type", ",", " ", "sigstr"}], "]"}]}], ")"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Seems", " ", "sometimes", " ", "funptr", " ", 
+     RowBox[{"isn", "'"}], "t", " ", "aligned", " ", "to", " ", "4", " ", 
+     "bytes"}], ",", " ", 
+    RowBox[{"like", " ", "tcc_relocate", "\n", "so", " ", 
+     RowBox[{"ExportString", "[", 
+      RowBox[{
+       RowBox[{"BitOr", "[", 
+        RowBox[{"addr", ",", 
+         RowBox[{"TypeEncode", "[", "type", "]"}]}], "]"}], ",", "PtrType"}], 
+      "]"}], " ", 
+     RowBox[{"doesn", "'"}], 
+     RowBox[{"t", " ", "\\\n", "work"}]}]}], " ", "*)"}]}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.690765668798669*^9, {3.6907657062506876`*^9, 3.690765707224516*^9}, {
+   3.690765987678091*^9, 3.6907662336181307`*^9}, {3.690766286494687*^9, 
+   3.6907663632764826`*^9}, {3.690766438249877*^9, 3.6907664397467136`*^9}, {
+   3.6907665431712227`*^9, 3.6907665658235044`*^9}, {3.6907666078900347`*^9, 
+   3.690766644163557*^9}, {3.690766687428623*^9, 3.6907666997202716`*^9}, {
+   3.690766846394229*^9, 3.6907668729552345`*^9}, {3.6907669081558886`*^9, 
+   3.6907670581036797`*^9}, {3.690767100350072*^9, 3.690767114688114*^9}, {
+   3.690767227532683*^9, 3.6907673048750906`*^9}, {3.6907673899031286`*^9, 
+   3.690767398758286*^9}, {3.6907674911442738`*^9, 3.690767648222147*^9}, {
+   3.6907677663138857`*^9, 3.6907677898379564`*^9}, {3.690768174822771*^9, 
+   3.6907681778926687`*^9}, {3.6907695167780514`*^9, 3.690769633384209*^9}, {
+   3.690769727811429*^9, 3.690769730053858*^9}, {3.6907697855270243`*^9, 
+   3.6907698630798597`*^9}, {3.6907724850103655`*^9, 
+   3.6907724943489265`*^9}, {3.6907739600524626`*^9, 
+   3.6907739656998963`*^9}, {3.690774020748215*^9, 3.690774032819433*^9}, {
+   3.690786302105138*^9, 3.690786303627378*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{3.690769624246906*^9}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Invoke/Callback ", "Subsection",
+ CellChangeTimes->{3.690765725143009*^9}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"install", "[", "]"}]}], ":=", 
+    RowBox[{"(", "\n", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"$", ".", "StdLink"}], "=", 
+       RowBox[{"Install", "@", 
+        RowBox[{"FileNameJoin", "[", 
+         RowBox[{"{", 
+          RowBox[{"$Directory", ",", "\"\<FFI\>\"", ",", 
+           RowBox[{"ToString", "[", 
+            RowBox[{"$", ".", "PtrSize"}], "]"}], ",", "\"\<ffi.exe\>\""}], 
+          "}"}], "]"}]}]}], ";", "\n", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"$", ".", "AuxLink"}], "=", 
+         RowBox[{"LinkCreate", "[", "\"\<FFI_aux\>\"", "]"}]}], ";", "\n", 
+        RowBox[{"JLink`ShareKernel", "[", 
+         RowBox[{"$", ".", "AuxLink"}], "]"}], ";"}], " ", "*)"}], "\n", 
+      RowBox[{
+       RowBox[{"$", ".", "VM"}], "=", 
+       RowBox[{
+        RowBox[{"FFI`Init", "[", 
+         RowBox[{"$", ".", "PtrSize"}], "]"}], "[", 
+        RowBox[{"4096", ",", "0"}], "]"}]}], ";", "\n", 
+      RowBox[{"$", ".", 
+       RowBox[{"CreateLibs", "[", "]"}]}], ";", "\n", 
+      RowBox[{"$", ".", 
+       RowBox[{"CreateVars", "[", "]"}]}], ";"}], "\n", ")"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"uninstall", "[", "]"}]}], ":=", 
+    RowBox[{"(", "\n", 
+     RowBox[{
+      RowBox[{"$", ".", 
+       RowBox[{"ClearVars", "[", "]"}]}], ";", "\n", 
+      RowBox[{"$", ".", 
+       RowBox[{"ClearLibs", "[", "]"}]}], ";", "\n", 
+      RowBox[{
+       RowBox[{"FFI`Exit", "[", 
+        RowBox[{"$", ".", "PtrSize"}], "]"}], "[", 
+       RowBox[{"$", ".", "VM"}], "]"}], ";", "\n", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+        RowBox[{"$", ".", 
+         RowBox[{"ReleaseClosure", "[", "0", "]"}]}], ";", "\n", 
+        RowBox[{"JLink`UnshareKernel", "[", 
+         RowBox[{"$", ".", "AuxLink"}], "]"}], ";", "\n", 
+        RowBox[{"LinkClose", "[", 
+         RowBox[{"$", ".", "AuxLink"}], "]"}], ";"}], " ", "*)"}], "\n", 
+      RowBox[{"Uninstall", "[", 
+       RowBox[{"$", ".", "StdLink"}], "]"}], ";"}], "\n", ")"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"Lib", "[", "path_String", "]"}]}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"handle", "=", 
+        RowBox[{
+         RowBox[{"FFI`Load", "[", 
+          RowBox[{"$", ".", "PtrSize"}], "]"}], "[", "path", "]"}]}], "}"}], 
+      ",", "\n", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"handle", ">", "0"}], ",", "\n", 
+        RowBox[{
+         RowBox[{"PrependTo", "[", 
+          RowBox[{
+           RowBox[{"$", ".", "Libs"}], ",", 
+           RowBox[{"path", "->", 
+            RowBox[{"{", 
+             RowBox[{"handle", ",", 
+              RowBox[{"{", "}"}]}], "}"}]}]}], "]"}], ";", "\n", 
+         RowBox[{
+          RowBox[{"$", ".", 
+           RowBox[{"Lib", "[", "path", "]"}]}], "=", 
+          RowBox[{"$", ".", 
+           RowBox[{"LibObject", "[", "path", "]"}]}]}]}], ",", "\n", 
+        RowBox[{
+         RowBox[{"Message", "[", 
+          RowBox[{
+           RowBox[{"General", "::", "args"}], ",", "path"}], "]"}], ";", 
+         "$Failed"}]}], "]"}]}], "\n", "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"FFI", ".", 
+    RowBox[{"Func", "[", 
+     RowBox[{"path_String", ",", "name_String"}], "]"}]}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"index", "=", 
+        RowBox[{"Position", "[", 
+         RowBox[{
+          RowBox[{"$", ".", "Libs"}], ",", "path", ",", "2"}], "]"}]}], ",", 
+       "handle"}], "}"}], ",", "\n", 
+     RowBox[{
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"index", "===", 
+         RowBox[{"{", "}"}]}], ",", "\n", 
+        RowBox[{
+         RowBox[{"$", ".", 
+          RowBox[{"Lib", "[", "path", "]"}]}], ";", 
+         RowBox[{"index", "=", "1"}]}], ",", "\n", 
+        RowBox[{"index", "=", 
+         RowBox[{"index", "[", 
+          RowBox[{"[", 
+           RowBox[{"1", ",", "1"}], "]"}], "]"}]}]}], "]"}], ";", "\n", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"handle", "=", 
+           RowBox[{
+            RowBox[{"FFI`Find", "[", 
+             RowBox[{"$", ".", "PtrSize"}], "]"}], "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"$", ".", "Libs"}], ")"}], "[", 
+              RowBox[{"[", 
+               RowBox[{"index", ",", "2", ",", "1"}], "]"}], "]"}], ",", 
+             "name"}], "]"}]}], ")"}], ">", "0"}], ",", 
+        RowBox[{
+         RowBox[{"AppendTo", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"$", ".", "Libs"}], ")"}], "[", 
+            RowBox[{"[", 
+             RowBox[{"index", ",", "2", ",", "2"}], "]"}], "]"}], ",", 
+           RowBox[{"name", "->", "handle"}]}], "]"}], ";", "\n", 
+         RowBox[{
+          RowBox[{"$", ".", 
+           RowBox[{"Func", "[", "handle", "]"}]}], "=", 
+          RowBox[{
+           RowBox[{"$", ".", 
+            RowBox[{"Func", "[", "name", "]"}]}], "=", 
+           RowBox[{
+            RowBox[{"$", ".", 
+             RowBox[{"Func", "[", 
+              RowBox[{"path", ",", "name"}], "]"}]}], "=", 
+            RowBox[{"$", ".", 
+             RowBox[{"FuncObject", "[", 
+              RowBox[{"path", ",", "name"}], "]"}]}]}]}]}]}], ",", "\n", 
+        RowBox[{
+         RowBox[{"Message", "[", 
+          RowBox[{
+           RowBox[{"General", "::", "args"}], ",", "name"}], "]"}], ";", 
+         "$Failed"}]}], "]"}]}]}], "\n", "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"FFI", ".", 
+    RowBox[{"Func", "[", 
+     RowBox[{"path_String", ",", "name_Symbol"}], "]"}]}], ":=", 
+   RowBox[{"$", ".", 
+    RowBox[{"Func", "[", 
+     RowBox[{"path", ",", 
+      RowBox[{"ToString", "[", "name", "]"}]}], "]"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"FFI", ".", 
+    RowBox[{"Func", "[", "name_String", "]"}]}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "r", "}"}], ",", "\n", 
+     RowBox[{
+      RowBox[{"Off", "[", 
+       RowBox[{"General", "::", "args"}], "]"}], ";", 
+      RowBox[{"Do", "[", 
+       RowBox[{
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"r", "=", 
+             RowBox[{"$", ".", 
+              RowBox[{"Func", "[", 
+               RowBox[{
+                RowBox[{"lib", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], ",", "name"}], "]"}]}]}], 
+            ")"}], "=!=", "$Failed"}], ",", 
+          RowBox[{"Break", "[", "]"}]}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"lib", ",", 
+          RowBox[{"$", ".", "Libs"}]}], "}"}]}], "]"}], ";", "\n", 
+      RowBox[{"On", "[", 
+       RowBox[{"General", "::", "args"}], "]"}], ";", "r"}]}], "\n", "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"Func", "[", "name_Symbol", "]"}]}], ":=", 
+    RowBox[{"$", ".", 
+     RowBox[{"Func", "[", 
+      RowBox[{"ToString", "[", "name", "]"}], "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"CreateLibs", "[", "]"}]}], ":=", 
+    RowBox[{"(", "\n", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"$", ".", "Libs"}], "=", 
+       RowBox[{"{", 
+        RowBox[{"\"\<FFI\>\"", "->", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"{", "}"}]}], "}"}]}], "}"}]}], ";", "\n", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"$OperatingSystem", " ", "==", " ", "\"\<Windows\>\""}], ",", 
+        "\n", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"$", ".", "LibC"}], "=", 
+          RowBox[{"$", ".", 
+           RowBox[{"Lib", "[", "\"\<msvcrt.dll\>\"", "]"}]}]}], ";", "\n", 
+         RowBox[{
+          RowBox[{"$", ".", "LibML"}], "=", 
+          RowBox[{"$", ".", 
+           RowBox[{"Lib", "[", 
+            RowBox[{"\"\<ml\>\"", "<>", 
+             RowBox[{"ToString", "[", 
+              RowBox[{"$", ".", "PtrSize"}], "]"}], "<>", "\"\<i4.dll\>\""}], 
+            "]"}]}]}], ";"}]}], "\n", "]"}], ";"}], "\n", ")"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"ClearLibs", "[", "]"}]}], ":=", 
+    RowBox[{"(", "\n", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"FFI`Unload", "[", 
+        RowBox[{"$", ".", "PtrSize"}], "]"}], "/@", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"$", ".", "Libs"}], ")"}], "[", 
+        RowBox[{"[", 
+         RowBox[{"All", ",", "2", ",", "1"}], "]"}], "]"}]}], ";", "\n", 
+      RowBox[{"ClearAll", "[", 
+       RowBox[{
+        RowBox[{"$", ".", "Libs"}], ",", 
+        RowBox[{"$", ".", "Lib"}], ",", 
+        RowBox[{"$", ".", "Func"}]}], "]"}], ";"}], "\n", ")"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"CreateVars", "[", "]"}]}], ":=", 
+    RowBox[{"(", "\n", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"$", ".", "Vars"}], "=", 
+       RowBox[{"{", "}"}]}], ";", "\n", 
+      RowBox[{
+       RowBox[{"$", ".", "Scope"}], "=", 
+       RowBox[{"{", "}"}]}], ";", "\n", 
+      RowBox[{
+       RowBox[{"$", ".", "Str"}], "=", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"#", "<>", 
+          RowBox[{"FromCharacterCode", "[", "0", "]"}]}], ")"}], "&"}]}], ";",
+       "\n", 
+      RowBox[{
+       RowBox[{"$", ".", "Var"}], "=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"AppendTo", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"$", ".", "Vars"}], ")"}], "[", 
+            RowBox[{"[", 
+             RowBox[{"Sequence", "@@", 
+              RowBox[{"(", 
+               RowBox[{"$", ".", "Scope"}], ")"}]}], "]"}], "]"}], ",", 
+           RowBox[{"New", "[", "##", "]"}]}], "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"-", "1"}], "]"}], "]"}], "&"}]}], ";"}], "\n", ")"}]}], 
+   ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"ClearVars", "[", "]"}]}], ":=", 
+    RowBox[{"(", "\n", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"FFI`ReleaseData", "[", 
+        RowBox[{"$", ".", "PtrSize"}], "]"}], "/@", 
+       RowBox[{"Flatten", "[", 
+        RowBox[{"$", ".", "Vars"}], "]"}]}], ";", "\n", 
+      RowBox[{"ClearAll", "[", 
+       RowBox[{
+        RowBox[{"$", ".", "Vars"}], ",", 
+        RowBox[{"$", ".", "Scope"}], ",", 
+        RowBox[{"$", ".", "Var"}]}], "]"}], ";"}], "\n", ")"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"Unlib", "[", "path_String", "]"}]}], ":=", 
+    RowBox[{"Block", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"index", "=", 
+        RowBox[{"Position", "[", 
+         RowBox[{
+          RowBox[{"$", ".", "Libs"}], ",", "path", ",", "2"}], "]"}]}], "}"}],
+       ",", "\n", 
+      RowBox[{
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"index", "===", 
+          RowBox[{"{", "}"}]}], ",", 
+         RowBox[{"Return", "[", "]"}], ",", 
+         RowBox[{"index", "=", 
+          RowBox[{"index", "[", 
+           RowBox[{"[", 
+            RowBox[{"1", ",", "1"}], "]"}], "]"}]}]}], "]"}], ";", "\n", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"$", ".", 
+             RowBox[{"Func", "[", 
+              RowBox[{"#", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "]"}]}], "=."}], ";", 
+           RowBox[{
+            RowBox[{"$", ".", 
+             RowBox[{"Func", "[", 
+              RowBox[{"path", ",", 
+               RowBox[{"#", "[", 
+                RowBox[{"[", "1", "]"}], "]"}]}], "]"}]}], "=."}]}], ")"}], 
+         "&"}], "/@", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"$", ".", "Libs"}], ")"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"index", ",", "2", ",", "2"}], "]"}], "]"}]}], ";", "\n", 
+       RowBox[{
+        RowBox[{"FFI`Unload", "[", 
+         RowBox[{"$", ".", "PtrSize"}], "]"}], "[", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"$", ".", "Libs"}], ")"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"index", ",", "2", ",", "1"}], "]"}], "]"}], "]"}], ";", 
+       "\n", 
+       RowBox[{
+        RowBox[{"$", ".", 
+         RowBox[{"Lib", "[", "path", "]"}]}], "=."}], ";", "\n", 
+       RowBox[{
+        RowBox[{"$", ".", "Libs"}], "=", 
+        RowBox[{"Delete", "[", 
+         RowBox[{
+          RowBox[{"$", ".", "Libs"}], ",", "index"}], "]"}]}], ";"}]}], "\n", 
+     "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"Unlib", "[", "obj_LibObject", "]"}]}], ":=", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"$", ".", "Unlib"}], ")"}], "@@", "obj"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"run", "[", 
+      RowBox[{"type_String", ",", "addr_Integer", ",", 
+       RowBox[{"sigstr", ":", 
+        RowBox[{"{", "___String", "}"}]}], ",", 
+       RowBox[{"args", ":", 
+        RowBox[{"{", 
+         RowBox[{"___", "?", "NumberQ"}], "}"}]}]}], "]"}]}], ":=", 
+    RowBox[{"Module", "[", "\n", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"result", "=", 
+        RowBox[{
+         RowBox[{"FFI`Call", "[", 
+          RowBox[{"$", ".", "PtrSize"}], "]"}], "[", 
+         RowBox[{
+          RowBox[{"$", ".", "VM"}], ",", 
+          RowBox[{"$", ".", 
+           RowBox[{"CallEncode", "[", 
+            RowBox[{"type", ",", "addr", ",", "sigstr"}], "]"}]}], ",", 
+          "args"}], "]"}]}], "}"}], ",", "\n", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"MemberQ", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"\"\<void\>\"", ",", "\"\<Void\>\""}], "}"}], ",", 
+          "type"}], "]"}], ",", "Null", ",", "result"}], "]"}]}], "\n", 
+     "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"run", "[", 
+      RowBox[{"type_String", ",", "obj_FuncObject", ",", 
+       RowBox[{"sigstr", ":", 
+        RowBox[{"{", "___String", "}"}]}], ",", 
+       RowBox[{"data", ":", 
+        RowBox[{"{", 
+         RowBox[{"___", "?", "NumberQ"}], "}"}]}]}], "]"}]}], ":=", 
+    RowBox[{"$", ".", 
+     RowBox[{"Run", "[", 
+      RowBox[{"type", ",", 
+       RowBox[{"$", ".", 
+        RowBox[{"FuncHandle", "[", "obj", "]"}]}], ",", "sigstr", ",", 
+       "data"}], "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"run", "[", 
+      RowBox[{"type_String", ",", "name__String", ",", 
+       RowBox[{"sigstr", ":", 
+        RowBox[{"{", "___String", "}"}]}], ",", 
+       RowBox[{"data", ":", 
+        RowBox[{"{", 
+         RowBox[{"___", "?", "NumberQ"}], "}"}]}]}], "]"}]}], ":=", 
+    RowBox[{"$", ".", 
+     RowBox[{"Run", "[", 
+      RowBox[{"type", ",", 
+       RowBox[{"$", ".", 
+        RowBox[{"Func", "[", "name", "]"}]}], ",", "sigstr", ",", "data"}], 
+      "]"}]}]}], ";"}], "\n", "\n", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Options", "[", 
+      RowBox[{"FFI", ".", "apply"}], "]"}], "=", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"ReturnType", "\[Rule]", "Automatic"}], ",", 
+       RowBox[{"ArgTypes", "\[Rule]", "Automatic"}], ",", 
+       RowBox[{"Convention", "\[Rule]", "Automatic"}]}], "}"}]}], ";"}], 
+   "*)"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"apply", "[", 
+      RowBox[{"addr_Integer", ",", 
+       RowBox[{"args", ":", 
+        RowBox[{"{", 
+         RowBox[{"___", "?", "NumberQ"}], "}"}]}], ",", 
+       RowBox[{"(*", "\n", 
+        RowBox[{"OptionsPattern", "[", "]"}], "*)"}], 
+       RowBox[{"ReturnType_:", "Automatic"}], ",", 
+       RowBox[{"ArgTypes_:", "Automatic"}]}], "]"}]}], ":=", 
+    RowBox[{"Module", "[", "\n", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"type", "=", "ReturnType"}], ",", 
+        RowBox[{"sigstr", "=", "ArgTypes"}]}], "}"}], ",", "\n", 
+      RowBox[{
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"type", "===", "Automatic"}], ",", 
+         RowBox[{"type", "=", 
+          RowBox[{"$", ".", "PtrType"}]}]}], "]"}], ";", "\n", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"sigstr", "===", "Automatic"}], ",", 
+         RowBox[{"sigstr", "=", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"$", ".", "TypeInfer"}], ")"}], "/@", "args"}]}]}], "]"}],
+        ";", "\n", 
+       RowBox[{"$", ".", 
+        RowBox[{"run", "[", 
+         RowBox[{"type", ",", "addr", ",", "sigstr", ",", "args"}], 
+         "]"}]}]}]}], "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"Def", "[", 
+      RowBox[{"type_String", ",", "addr_Integer", ",", 
+       RowBox[{"sigstr", ":", 
+        RowBox[{"{", "___String", "}"}]}]}], "]"}]}], ":=", 
+    RowBox[{"(", "\n", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"$", ".", 
+        RowBox[{"FuncType", "[", "addr", "]"}]}], "=", 
+       RowBox[{"{", 
+        RowBox[{"(*", 
+         RowBox[{"ReturnType", "\[Rule]"}], "*)"}], 
+        RowBox[{"type", ",", 
+         RowBox[{"(*", 
+          RowBox[{"ArgTypes", "\[Rule]"}], "*)"}], "sigstr"}], "}"}]}], ";", 
+      "\n", 
+      RowBox[{
+       RowBox[{"ToExpression", "[", 
+        RowBox[{"\"\<$1[\>\"", "<>", 
+         RowBox[{"ToString", "[", 
+          RowBox[{"$", ".", "VM"}], "]"}], "<>", "\"\<,$2,{##}]&\>\""}], 
+        "]"}], "/.", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"$1", "\[Rule]", 
+          RowBox[{"FFI`Call", "[", 
+           RowBox[{"$", ".", "PtrSize"}], "]"}]}], ",", 
+         RowBox[{"$2", "\[Rule]", 
+          RowBox[{"$", ".", 
+           RowBox[{"CallEncode", "[", 
+            RowBox[{"type", ",", "addr", ",", "sigstr"}], "]"}]}]}]}], 
+        "}"}]}]}], ")"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"Def", "[", 
+      RowBox[{"type_String", ",", "name__String", ",", "addr_Integer", ",", 
+       RowBox[{"sigstr", ":", 
+        RowBox[{"{", "___String", "}"}]}]}], "]"}]}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"argc", "=", 
+         RowBox[{"Length", "[", "sigstr", "]"}]}], ",", 
+        RowBox[{"flag", "=", 
+         RowBox[{"And", "@@", 
+          RowBox[{"StringFreeQ", "[", 
+           RowBox[{"sigstr", ",", 
+            RowBox[{"__", " ", "~~", " ", "\"\<*\>\""}]}], "]"}]}]}]}], "}"}],
+       ",", "\n", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"$", ".", 
+         RowBox[{"FuncType", "[", "addr", "]"}]}], "=", 
+        RowBox[{"{", 
+         RowBox[{"(*", 
+          RowBox[{"ReturnType", "\[Rule]"}], "*)"}], 
+         RowBox[{"type", ",", 
+          RowBox[{"(*", 
+           RowBox[{"ArgTypes", "\[Rule]"}], "*)"}], "sigstr"}], "}"}]}], ";", 
+       "\n", 
+       RowBox[{
+        RowBox[{"ToExpression", "[", 
+         RowBox[{"\"\<Function[Null,If[Length[{##}]===$1,\>\"", "<>", "\n", 
+          RowBox[{"If", "[", 
+           RowBox[{"flag", ",", "\"\<\>\"", ",", "\"\<$2[$,\>\""}], "]"}], 
+          "<>", "\"\<$3[$4,$5,\>\"", "<>", 
+          RowBox[{"If", "[", 
+           RowBox[{
+           "flag", ",", "\"\<\>\"", ",", 
+            "\"\<If[NumberQ[#],#,$6[#]]&/@\>\""}], "]"}], "\n", "<>", 
+          "\"\<{##}]\>\"", "<>", 
+          RowBox[{"If", "[", 
+           RowBox[{"flag", ",", "\"\<\>\"", ",", "\"\<]\>\""}], "]"}], "<>", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"MemberQ", "[", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"\"\<void\>\"", ",", "\"\<Void\>\""}], "}"}], ",", 
+              "type"}], "]"}], ",", "\"\<;\>\"", ",", "\"\<\>\""}], "]"}], "<>",
+           "\n", "\"\<,Message[General::argrx,$7,Length[{##}],$8];$Failed],{\
+HoldAll}]\>\""}], "]"}], "\n", "/.", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"$1", "->", "argc"}], ",", 
+          RowBox[{"$2", "\[Rule]", "FFI`Block"}], ",", 
+          RowBox[{"$3", "\[Rule]", 
+           RowBox[{"FFI`Call", "[", 
+            RowBox[{"$", ".", "PtrSize"}], "]"}]}], ",", 
+          RowBox[{"$4", "\[Rule]", 
+           RowBox[{"$", ".", "VM"}]}], ",", 
+          RowBox[{"$5", "\[Rule]", 
+           RowBox[{"$", ".", 
+            RowBox[{"CallEncode", "[", 
+             RowBox[{"type", ",", "addr", ",", "sigstr"}], "]"}]}]}], ",", 
+          "\n", 
+          RowBox[{"$6", "\[Rule]", 
+           RowBox[{"$", ".", "Var"}]}], ",", 
+          RowBox[{"$7", "->", 
+           RowBox[{"FileNameJoin", "[", 
+            RowBox[{"{", "name", "}"}], "]"}]}], ",", 
+          RowBox[{"$8", "->", "argc"}]}], "}"}]}]}]}], "\n", "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"Def", "[", 
+      RowBox[{"type_String", ",", "obj_FuncObject", ",", 
+       RowBox[{"sigstr", ":", 
+        RowBox[{"{", "___String", "}"}]}]}], "]"}]}], ":=", 
+    RowBox[{"$", ".", 
+     RowBox[{"Def", "[", 
+      RowBox[{"type", ",", 
+       RowBox[{"obj", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], ",", 
+       RowBox[{"obj", "[", 
+        RowBox[{"[", "2", "]"}], "]"}], ",", 
+       RowBox[{"$", ".", 
+        RowBox[{"FuncHandle", "[", "obj", "]"}]}], ",", "sigstr"}], "]"}]}]}],
+    ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"Def", "[", 
+      RowBox[{"type_String", ",", "name__String", ",", 
+       RowBox[{"sigstr", ":", 
+        RowBox[{"{", "___String", "}"}]}]}], "]"}]}], ":=", 
+    RowBox[{"$", ".", 
+     RowBox[{"Def", "[", 
+      RowBox[{"type", ",", 
+       RowBox[{"$", ".", 
+        RowBox[{"Func", "[", "name", "]"}]}], ",", "sigstr"}], "]"}]}]}], 
+   ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"Def", "[", "code_String", "]"}]}], ":=", "\n", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"$", ".", 
+       RowBox[{"Def", "[", 
+        RowBox[{"Sequence", "@@", "#"}], "]"}]}], "&"}], "/@", 
+     RowBox[{"SymbolicC`ToProto", "[", "code", "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"Def", "[", 
+      RowBox[{"path_String", ",", "code_String"}], "]"}]}], ":=", "\n", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"$", ".", 
+       RowBox[{"Def", "[", 
+        RowBox[{"Sequence", "@@", 
+         RowBox[{"Insert", "[", 
+          RowBox[{"#", ",", "path", ",", "2"}], "]"}]}], "]"}]}], "&"}], "/@", 
+     RowBox[{"SymbolicC`ToProto", "[", "code", "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"Def", "[", 
+      RowBox[{"obj_LibObject", ",", "code_String"}], "]"}]}], ":=", 
+    RowBox[{"$", ".", 
+     RowBox[{"Def", "[", 
+      RowBox[{
+       RowBox[{"obj", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], ",", "code"}], "]"}]}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{
+      RowBox[{"LibObject", "[", "path_String", "]"}], "[", 
+      RowBox[{"name", ":", 
+       RowBox[{"(", 
+        RowBox[{"_String", "|", "_Symbol"}], ")"}]}], "]"}]}], ":=", 
+    RowBox[{"$", ".", 
+     RowBox[{"Func", "[", 
+      RowBox[{"path", ",", "name"}], "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{
+      RowBox[{"LibObject", "[", "path_String", "]"}], "[", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"name", ":", 
+         RowBox[{"(", 
+          RowBox[{"_String", "|", "_Symbol"}], ")"}]}], ")"}], "[", "args___",
+        "]"}], "]"}]}], ":=", 
+    RowBox[{"$", ".", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"LibObject", "[", "path", "]"}], "[", "name", "]"}], "[", 
+      "args", "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"LibHandle", "[", "path_String", "]"}]}], ":=", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"path", "/.", 
+       RowBox[{"$", ".", "Libs"}]}], ")"}], "[", 
+     RowBox[{"[", "1", "]"}], "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"LibHandle", "[", "obj_LibObject", "]"}]}], ":=", 
+    RowBox[{"$", ".", 
+     RowBox[{"LibHandle", "@@", "obj"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{
+      RowBox[{"FuncObject", "[", 
+       RowBox[{"path_String", ",", "name_String"}], "]"}], "[", 
+      RowBox[{"args___", ",", "\n", 
+       RowBox[{"opts", ":", 
+        RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}]}], ":=", "\n", 
+    RowBox[{"(*", 
+     RowBox[{"FFI`Block", "["}], "*)"}], 
+    RowBox[{"$", ".", 
+     RowBox[{"apply", "[", 
+      RowBox[{
+       RowBox[{"$", ".", 
+        RowBox[{"FuncHandle", "[", 
+         RowBox[{"path", ",", "name"}], "]"}]}], ",", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"NumberQ", "[", "#", "]"}], ",", "#", ",", 
+           RowBox[{"$", ".", 
+            RowBox[{"Var", "[", "#", "]"}]}]}], "]"}], "&"}], "/@", 
+        RowBox[{"{", "args", "}"}]}], ",", "\n", 
+       RowBox[{"Sequence", "@@", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"{", "opts", "}"}], "\[LeftDoubleBracket]", 
+          RowBox[{"All", ",", "2"}], "\[RightDoubleBracket]"}], ")"}]}], ",", 
+       RowBox[{"Sequence", "@@", 
+        RowBox[{"(", 
+         RowBox[{"$", ".", 
+          RowBox[{"FuncType", "[", 
+           RowBox[{"path", ",", "name"}], "]"}]}], ")"}]}]}], "]"}]}]}], 
+   RowBox[{"(*", "]", "*)"}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"FuncHandle", "[", 
+      RowBox[{"path_String", ",", "name_String"}], "]"}]}], ":=", 
+    RowBox[{"name", "/.", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"path", "/.", 
+        RowBox[{"$", ".", "Libs"}]}], ")"}], "[", 
+      RowBox[{"[", "2", "]"}], "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"FuncHandle", "[", "obj_FuncObject", "]"}]}], ":=", 
+    RowBox[{"$", ".", 
+     RowBox[{"FuncHandle", "@@", "obj"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"FuncHandle", "[", "name_String", "]"}]}], ":=", 
+    RowBox[{"$", ".", 
+     RowBox[{"FuncHandle", "[", 
+      RowBox[{"$", ".", 
+       RowBox[{"Func", "[", "name", "]"}]}], "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"FuncType", "[", "addr_Integer", "]"}]}], ":=", 
+    RowBox[{"{", "}"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"FuncType", "[", 
+      RowBox[{"path_String", ",", "name_String"}], "]"}]}], ":=", 
+    RowBox[{"$", ".", 
+     RowBox[{"FuncType", "[", 
+      RowBox[{"$", ".", 
+       RowBox[{"FuncHandle", "[", 
+        RowBox[{"path", ",", "name"}], "]"}]}], "]"}]}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"FuncType", "[", "obj_FuncObject", "]"}]}], ":=", 
+    RowBox[{"$", ".", 
+     RowBox[{"FuncType", "@@", "obj"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"FuncType", "[", "name_String", "]"}]}], ":=", 
+    RowBox[{"$", ".", 
+     RowBox[{"FuncType", "[", 
+      RowBox[{"$", ".", 
+       RowBox[{"FuncHandle", "[", "name", "]"}]}], "]"}]}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"FuncType", "[", 
+      RowBox[{"addr_Integer", ",", 
+       RowBox[{"opts", ":", 
+        RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}]}], ":=", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"$", ".", 
+       RowBox[{"FuncType", "[", "addr", "]"}]}], "=", 
+      RowBox[{"{", "opts", "}"}]}], ")"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"FuncType", "[", 
+      RowBox[{"path_String", ",", "name_String", ",", 
+       RowBox[{"opts", ":", 
+        RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}]}], ":=", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"$", ".", 
+       RowBox[{"FuncType", "[", 
+        RowBox[{"path", ",", "name"}], "]"}]}], "=", 
+      RowBox[{"{", "opts", "}"}]}], ")"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"FuncType", "[", 
+      RowBox[{"obj_FuncObject", ",", 
+       RowBox[{"opts", ":", 
+        RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}]}], ":=", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"$", ".", 
+       RowBox[{"FuncType", "[", "obj", "]"}]}], "=", 
+      RowBox[{"{", "opts", "}"}]}], ")"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"FuncType", "[", 
+      RowBox[{"name_String", ",", 
+       RowBox[{"opts", ":", 
+        RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}]}], ":=", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"$", ".", 
+       RowBox[{"FuncType", "[", "name", "]"}]}], "=", 
+      RowBox[{"{", "opts", "}"}]}], ")"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"FuncProto", "[", "addr_Integer", "]"}]}], ":=", "\n", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"ReturnType", "/.", 
+       RowBox[{"$", ".", 
+        RowBox[{"FuncType", "[", "addr", "]"}]}]}], ",", 
+      RowBox[{"$", ".", 
+       RowBox[{
+        RowBox[{"Func", "[", "addr", "]"}], "[", 
+        RowBox[{"[", "2", "]"}], "]"}]}], ",", 
+      RowBox[{"ArgTypes", "/.", 
+       RowBox[{"$", ".", 
+        RowBox[{"FuncType", "[", "addr", "]"}]}]}]}], "}"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"FuncProto", "[", 
+      RowBox[{"path_String", ",", "name_String"}], "]"}]}], ":=", 
+    RowBox[{"$", ".", 
+     RowBox[{"FuncProto", "[", 
+      RowBox[{"$", ".", 
+       RowBox[{"FuncHandle", "[", 
+        RowBox[{"path", ",", "name"}], "]"}]}], "]"}]}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"FuncProto", "[", "obj_FuncObject", "]"}]}], ":=", 
+    RowBox[{"$", ".", 
+     RowBox[{"FuncProto", "@@", "obj"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"FuncProto", "[", "name_String", "]"}]}], ":=", 
+    RowBox[{"$", ".", 
+     RowBox[{"FuncProto", "[", 
+      RowBox[{"$", ".", 
+       RowBox[{"FuncHandle", "[", "name", "]"}]}], "]"}]}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"NewFunc", "[", 
+      RowBox[{"type_String", ",", 
+       RowBox[{"sigstr", ":", 
+        RowBox[{"{", "___String", "}"}]}], ",", "expr_"}], "]"}]}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"userdata", ",", "name", ",", "handle"}], "}"}], ",", "\n", 
+      RowBox[{
+       RowBox[{"userdata", "=", 
+        RowBox[{
+         RowBox[{"FFI`NewData", "[", 
+          RowBox[{"$", ".", "PtrSize"}], "]"}], "[", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"$", ".", 
+            RowBox[{"ArgEncode", "[", 
+             RowBox[{"0", "\[Rule]", 
+              RowBox[{"$", ".", "PtrType"}]}], "]"}]}], ")"}], "<>", 
+          RowBox[{"(", 
+           RowBox[{"$", ".", 
+            RowBox[{"ProtoEncode", "[", 
+             RowBox[{"type", ",", "sigstr"}], "]"}]}], ")"}]}], "]"}]}], ";", 
+       "\n", 
+       RowBox[{"name", "=", 
+        RowBox[{"IntegerString", "[", 
+         RowBox[{"userdata", ",", "16", ",", 
+          RowBox[{
+           RowBox[{"$", ".", "PtrSize"}], "/", "4"}]}], "]"}]}], ";", "\n", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+         RowBox[{"JLink`ShareKernel", "[", 
+          RowBox[{"LinkCreate", "[", 
+           RowBox[{"\"\<FFI_\>\"", "<>", "name"}], "]"}], "]"}], ";"}], " ", 
+        "*)"}], "\n", 
+       RowBox[{"handle", "=", 
+        RowBox[{
+         RowBox[{"FFI`NewClosure", "[", 
+          RowBox[{"$", ".", "PtrSize"}], "]"}], "[", 
+         RowBox[{"userdata", ",", "0"}], "]"}]}], ";", "\n", 
+       RowBox[{"AppendTo", "[", 
+        RowBox[{
+         RowBox[{"$", ".", 
+          RowBox[{"Libs", "[", 
+           RowBox[{"[", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", "2", ",", "2"}], "]"}], "]"}]}], ",", 
+         RowBox[{"name", "->", "handle"}]}], "]"}], ";", "\n", 
+       RowBox[{
+        RowBox[{"$", ".", 
+         RowBox[{"DefaultClosureHandler", "[", 
+          RowBox[{"handle", ",", "args_List"}], "]"}]}], ":=", 
+        RowBox[{"expr", "@@", "args"}]}], ";", "\n", 
+       RowBox[{
+        RowBox[{"$", ".", 
+         RowBox[{"Func", "[", "handle", "]"}]}], "=", 
+        RowBox[{
+         RowBox[{"$", ".", 
+          RowBox[{"Func", "[", "name", "]"}]}], "=", 
+         RowBox[{
+          RowBox[{"$", ".", 
+           RowBox[{"Func", "[", 
+            RowBox[{"\"\<FFI\>\"", ",", "name"}], "]"}]}], "=", 
+          RowBox[{"$", ".", 
+           RowBox[{"FuncObject", "[", 
+            RowBox[{"\"\<FFI\>\"", ",", "name"}], "]"}]}]}]}]}]}]}], "\n", 
+     "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"ReleaseFunc", "[", "obj_FuncObject", "]"}]}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"name", "=", 
+         RowBox[{"obj", "[", 
+          RowBox[{"[", "2", "]"}], "]"}]}], ",", 
+        RowBox[{"handle", "=", 
+         RowBox[{"$", ".", 
+          RowBox[{"FuncHandle", "[", "obj", "]"}]}]}], ",", "kernel"}], "}"}],
+       ",", "\n", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"$", ".", 
+         RowBox[{"Func", "[", "handle", "]"}]}], "=."}], ";", "\n", 
+       RowBox[{
+        RowBox[{"$", ".", 
+         RowBox[{"Func", "[", "name", "]"}]}], "=."}], ";", "\n", 
+       RowBox[{
+        RowBox[{"$", ".", 
+         RowBox[{"Func", "[", 
+          RowBox[{"\"\<FFI\>\"", ",", "name"}], "]"}]}], "=."}], ";", "\n", 
+       RowBox[{
+        RowBox[{"$", ".", 
+         RowBox[{"DefaultClosureHandler", "[", 
+          RowBox[{"handle", ",", "args_List"}], "]"}]}], "=."}], ";", "\n", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"$", ".", "Libs"}], ")"}], "[", 
+         RowBox[{"[", 
+          RowBox[{
+           RowBox[{"-", "1"}], ",", "2", ",", "2"}], "]"}], "]"}], "=", 
+        RowBox[{"DeleteCases", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"$", ".", "Libs"}], ")"}], "[", 
+           RowBox[{"[", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", "2", ",", "2"}], "]"}], "]"}], ",", 
+          RowBox[{"name", "->", "handle"}]}], "]"}]}], ";", "\n", 
+       RowBox[{
+        RowBox[{"FFI`ReleaseClosure", "[", 
+         RowBox[{"$", ".", "PtrSize"}], "]"}], "[", "handle", "]"}], ";", 
+       "\n", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+         RowBox[{"kernel", "=", 
+          RowBox[{
+           RowBox[{"Cases", "[", 
+            RowBox[{
+             RowBox[{"Links", "[", "]"}], ",", 
+             RowBox[{"LinkObject", "[", 
+              RowBox[{
+               RowBox[{"\"\<FFI_\>\"", "<>", "name"}], ",", "_", ",", "_"}], 
+              "]"}]}], "]"}], "[", 
+           RowBox[{"[", "1", "]"}], "]"}]}], ";", "\n", 
+         RowBox[{"JLink`UnshareKernel", "[", "kernel", "]"}], ";", "\n", 
+         RowBox[{"LinkClose", "[", "kernel", "]"}], ";"}], " ", "*)"}], "\n", 
+       RowBox[{
+        RowBox[{"FFI`ReleaseData", "[", 
+         RowBox[{"$", ".", "PtrSize"}], "]"}], "[", 
+        RowBox[{"FromDigits", "[", 
+         RowBox[{"name", ",", "16"}], "]"}], "]"}]}]}], "\n", "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"Buf", "[", 
+      RowBox[{"size_Integer", ",", 
+       RowBox[{"init_Integer:", "0"}]}], "]"}]}], ":=", "\n", 
+    RowBox[{"StringJoin", "@@", 
+     RowBox[{"ConstantArray", "[", 
+      RowBox[{
+       RowBox[{"FromCharacterCode", "[", "init", "]"}], ",", "size"}], 
+      "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"new", "[", 
+      RowBox[{"Data", "[", "str_String", "]"}], "]"}]}], ":=", 
+    RowBox[{
+     RowBox[{"FFI`NewData", "[", 
+      RowBox[{"$", ".", "PtrSize"}], "]"}], "[", "str", "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"new", "[", 
+      RowBox[{"size_Integer", ",", 
+       RowBox[{"init_Integer:", "0"}]}], "]"}]}], ":=", 
+    RowBox[{
+     RowBox[{"FFI`NewData", "[", 
+      RowBox[{"$", ".", "PtrSize"}], "]"}], "[", 
+     RowBox[{"$", ".", 
+      RowBox[{"Buf", "[", 
+       RowBox[{"size", ",", "init"}], "]"}]}], "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"new", "[", "str_String", "]"}]}], ":=", 
+    RowBox[{
+     RowBox[{"FFI`NewData", "[", 
+      RowBox[{"$", ".", "PtrSize"}], "]"}], "[", 
+     RowBox[{"$", ".", 
+      RowBox[{"Str", "[", "str", "]"}]}], "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"new", "[", 
+      RowBox[{"{", "data___", "}"}], "]"}]}], ":=", 
+    RowBox[{
+     RowBox[{"FFI`NewData", "[", 
+      RowBox[{"$", ".", "PtrSize"}], "]"}], "[", 
+     RowBox[{"$", ".", 
+      RowBox[{"ArgEncode", "[", "data", "]"}]}], "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"begin", "[", "]"}]}], ":=", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"AppendTo", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"$", ".", "Vars"}], ")"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"Sequence", "@@", 
+           RowBox[{"(", 
+            RowBox[{"$", ".", "Scope"}], ")"}]}], "]"}], "]"}], ",", 
+        RowBox[{"{", "}"}]}], "]"}], ";", 
+      RowBox[{"AppendTo", "[", 
+       RowBox[{
+        RowBox[{"$", ".", "Scope"}], ",", 
+        RowBox[{"-", "1"}]}], "]"}]}], ")"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"end", "[", "]"}]}], ":=", 
+    RowBox[{"(", "\n", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"FFI`ReleaseData", "[", 
+        RowBox[{"$", ".", "PtrSize"}], "]"}], "/@", 
+       RowBox[{"Flatten", "[", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"$", ".", "Vars"}], ")"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"Sequence", "@@", 
+           RowBox[{"(", 
+            RowBox[{"$", ".", "Scope"}], ")"}]}], "]"}], "]"}], "]"}]}], ";", 
+      RowBox[{
+       RowBox[{"$", ".", "Vars"}], "=", 
+       RowBox[{"Delete", "[", 
+        RowBox[{
+         RowBox[{"$", ".", "Vars"}], ",", 
+         RowBox[{"$", ".", "Scope"}]}], "]"}]}], ";", "\n", 
+      RowBox[{
+       RowBox[{"$", ".", "Scope"}], "=", 
+       RowBox[{"Drop", "[", 
+        RowBox[{
+         RowBox[{"$", ".", "Scope"}], ",", 
+         RowBox[{"-", "1"}]}], "]"}]}]}], "\n", ")"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SetAttributes", "[", 
+    RowBox[{"FFI`Block", ",", "HoldAll"}], "]"}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI`Block", "[", 
+     RowBox[{"obj_", ",", "expr_"}], "]"}], ":=", 
+    RowBox[{"Block", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"$", "=", "obj"}], ",", "r"}], "}"}], ",", "\n", 
+      RowBox[{
+       RowBox[{"$", ".", 
+        RowBox[{"Begin", "[", "]"}]}], ";", "\n", 
+       RowBox[{"r", "=", "expr"}], ";", "\n", 
+       RowBox[{"$", ".", 
+        RowBox[{"End", "[", "]"}]}], ";", "\n", "r"}]}], "\n", "]"}]}], ";"}],
+   "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"read", "[", "addr_Integer", "]"}]}], ":=", 
+    RowBox[{
+     RowBox[{"FFI`ReadData", "[", 
+      RowBox[{"$", ".", "PtrSize"}], "]"}], "[", 
+     RowBox[{"addr", ",", 
+      RowBox[{"$", ".", 
+       RowBox[{"LibC", "@", 
+        RowBox[{"\"\<strlen\>\"", "[", "addr", "]"}]}]}]}], "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"read", "[", 
+      RowBox[{"addr_Integer", ",", "size_Integer"}], "]"}]}], ":=", 
+    RowBox[{"ImportString", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"FFI`ReadData", "[", 
+        RowBox[{"$", ".", "PtrSize"}], "]"}], "[", 
+       RowBox[{"addr", ",", "size"}], "]"}], ",", "\"\<Byte\>\""}], "]"}]}], 
+   ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"read", "[", 
+      RowBox[{"addr_Integer", ",", 
+       RowBox[{"sigstr", ":", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"{", "___String", "}"}], "|", "_String"}], ")"}]}], ",", 
+       RowBox[{"size_Integer:", "1"}]}], "]"}]}], ":=", "\n", 
+    RowBox[{"$", ".", 
+     RowBox[{"ArgDecode", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"FFI`ReadData", "[", 
+         RowBox[{"$", ".", "PtrSize"}], "]"}], "[", 
+        RowBox[{"addr", ",", 
+         RowBox[{"size", "*", 
+          RowBox[{"$", ".", 
+           RowBox[{"TypeSize", "[", "sigstr", "]"}]}]}]}], "]"}], ",", 
+       "sigstr"}], "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"write", "[", 
+      RowBox[{"addr_Integer", ",", 
+       RowBox[{"Data", "[", "str_String", "]"}]}], "]"}]}], ":=", 
+    RowBox[{
+     RowBox[{"FFI`WriteData", "[", 
+      RowBox[{"$", ".", "PtrSize"}], "]"}], "[", 
+     RowBox[{"addr", ",", "str"}], "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"write", "[", 
+      RowBox[{"addr_Integer", ",", "size_Integer", ",", 
+       RowBox[{"init_Integer:", "0"}]}], "]"}]}], ":=", 
+    RowBox[{
+     RowBox[{"FFI`WriteData", "[", 
+      RowBox[{"$", ".", "PtrSize"}], "]"}], "[", 
+     RowBox[{"addr", ",", 
+      RowBox[{"$", ".", 
+       RowBox[{"Buf", "[", 
+        RowBox[{"size", ",", "init"}], "]"}]}]}], "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FFI", ".", 
+     RowBox[{"write", "[", 
+      RowBox[{"addr_Integer", ",", "str_String"}], "]"}]}], ":=", 
+    RowBox[{
+     RowBox[{"FFI`WriteData", "[", 
+      RowBox[{"$", ".", "PtrSize"}], "]"}], "[", 
+     RowBox[{"addr", ",", 
+      RowBox[{"$", ".", 
+       RowBox[{"Str", "[", "str", "]"}]}]}], "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"FFI", ".", 
+    RowBox[{"write", "[", 
+     RowBox[{"addr_Integer", ",", 
+      RowBox[{"{", "data___", "}"}]}], "]"}]}], ":=", 
+   RowBox[{
+    RowBox[{"FFI`WriteData", "[", 
+     RowBox[{"$", ".", "PtrSize"}], "]"}], "[", 
+    RowBox[{"addr", ",", 
+     RowBox[{"$", ".", 
+      RowBox[{"ArgEncode", "[", "data", "]"}]}]}], "]"}]}], ";"}]}], "Code",
+ CellChangeTimes->{{3.690764262204926*^9, 3.6907642904829617`*^9}, {
+   3.6907643238333044`*^9, 3.690764326429613*^9}, {3.6907645993076816`*^9, 
+   3.690764654225892*^9}, {3.690764690894753*^9, 3.690764701372366*^9}, {
+   3.6907647343907533`*^9, 3.6907647924142866`*^9}, {3.6907648286121483`*^9, 
+   3.690764898745405*^9}, 3.690765539309695*^9, 3.690765658625845*^9, {
+   3.6907657274775486`*^9, 3.6907658039637904`*^9}, {3.6907658806059303`*^9, 
+   3.6907659107015657`*^9}, 3.6907659823753138`*^9, {3.6907725560931597`*^9, 
+   3.6907728036783023`*^9}, {3.6907728659685683`*^9, 
+   3.6907730061389046`*^9}, {3.690773423640045*^9, 3.6907734681732163`*^9}, 
+   3.6907739539031696`*^9, {3.6907740003173065`*^9, 3.690774000725543*^9}, {
+   3.6907740613096313`*^9, 3.690774073148655*^9}, {3.6907741105726376`*^9, 
+   3.6907746178534203`*^9}, {3.6907746479156437`*^9, 
+   3.6907747506986823`*^9}, {3.6907748184903464`*^9, 3.6907756886675353`*^9}, 
+   3.6907757308355846`*^9, {3.6907757697976274`*^9, 3.690775799635869*^9}, {
+   3.690775829726231*^9, 3.690775851582295*^9}, {3.6907758833200502`*^9, 
+   3.6907760075962315`*^9}, {3.6907760683945174`*^9, 
+   3.6907760764491124`*^9}, {3.690776158032878*^9, 3.6907762941591787`*^9}, {
+   3.6907764722260027`*^9, 3.6907764736191*^9}, 3.6907775770349135`*^9, {
+   3.6907784283636727`*^9, 3.6907784303150744`*^9}, {3.690778462537549*^9, 
+   3.690778462757964*^9}, {3.690778522725852*^9, 3.690778527726842*^9}, 
+   3.6907825068947*^9, {3.690786121156032*^9, 3.6907861230593557`*^9}, {
+   3.690786175016918*^9, 3.690786176119831*^9}, {3.6908054558583775`*^9, 
+   3.690805461764449*^9}, {3.6908055904251003`*^9, 3.6908055962516856`*^9}, {
+   3.6908111821208167`*^9, 3.690811212519349*^9}, {3.6908112588409004`*^9, 
+   3.6908112605686626`*^9}, {3.6908113613921423`*^9, 3.690811362084833*^9}, {
+   3.690811442508974*^9, 3.6908115533817167`*^9}, {3.6908116489793825`*^9, 
+   3.6908116503300533`*^9}, {3.690811699311177*^9, 3.690811702323168*^9}, {
+   3.690811784318638*^9, 3.6908119130323915`*^9}, {3.690812006370445*^9, 
+   3.690812025945642*^9}, {3.6908120740068197`*^9, 3.6908121121271067`*^9}, 
+   3.690812164089868*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["$FFI", "Subsection",
+ CellChangeTimes->{{3.690775990781705*^9, 3.6907760000158696`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Begin", "[", "\"\<FFI\>\"", "]"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", "\n", 
+    RowBox[{
+    "$", ",", "\n", "$Install", ",", "\n", "$Installed", ",", "\n", 
+     "$Uninstall", ",", "\n", "$Init", ",", "\n", "$Exit", ",", "\n", "$Call",
+      ",", "\n", "$Load", ",", "\n", "$Unload", ",", "\n", "$Find", ",", "\n",
+      "$NewData", ",", "\n", "$ReleaseData", ",", "\n", "$ReadData", ",", 
+     "\n", "$WriteData", ",", "\n", "$NewClosure", ",", "\n", 
+     "$ReleaseClosure", ",", "\n", "$ID", ",", "\n", "$CDefault", ",", "\n", 
+     "$Libs", ",", "\n", "$LibC", ",", "\n", "$LibML", ",", "\n", "$Str", ",",
+      "\n", "$Vars", ",", "\n", "$Scope", ",", "\n", "$Var"}], "\n", "]"}], 
+   ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"$", "=", 
+    RowBox[{"{", "\n", 
+     RowBox[{
+      RowBox[{"Init", "->", "$Init"}], ",", "\n", 
+      RowBox[{"Exit", "->", "$Exit"}], ",", "\n", 
+      RowBox[{"Call", "->", "$Call"}], ",", "\n", 
+      RowBox[{"Load", "->", "$Load"}], ",", "\n", 
+      RowBox[{"Unload", "->", "$Unload"}], ",", "\n", 
+      RowBox[{"Find", "->", "$Find"}], ",", "\n", 
+      RowBox[{"NewData", "->", "$NewData"}], ",", "\n", 
+      RowBox[{"ReleaseData", "->", "$ReleaseData"}], ",", "\n", 
+      RowBox[{"ReadData", "->", "$ReadData"}], ",", "\n", 
+      RowBox[{"WriteData", "->", "$WriteData"}], ",", "\n", 
+      RowBox[{"NewClosure", "->", "$NewClosure"}], ",", "\n", 
+      RowBox[{"ReleaseClosure", "->", "$ReleaseClosure"}], ",", "\n", 
+      RowBox[{"ID", "->", "$ID"}], ",", "\n", 
+      RowBox[{"CDefault", "->", "$CDefault"}], ",", "\n", 
+      RowBox[{"Run", "->", "$Run"}], ",", "\n", 
+      RowBox[{"Apply", "->", "$Apply"}], ",", "\n", 
+      RowBox[{"Def", "->", "$Def"}], ",", "\n", 
+      RowBox[{"CreateLibs", "->", "$CreateLibs"}], ",", "\n", 
+      RowBox[{"ClearLibs", "->", "$ClearLibs"}], ",", "\n", 
+      RowBox[{"CreateVars", "->", "$CreateVars"}], ",", "\n", 
+      RowBox[{"ClearVars", "->", "$ClearVars"}], ",", "\n", 
+      RowBox[{"Lib", "->", "$Lib"}], ",", "\n", 
+      RowBox[{"Unlib", "->", "$Unlib"}], ",", "\n", 
+      RowBox[{"Libs", "->", "$Libs"}], ",", "\n", 
+      RowBox[{"Func", "->", "$Func"}], ",", "\n", 
+      RowBox[{"LibC", "->", "$LibC"}], ",", "\n", 
+      RowBox[{"LibML", "->", "$LibML"}], ",", "\n", 
+      RowBox[{"LibObject", "->", "$LibObject"}], ",", "\n", 
+      RowBox[{"LibHandle", "->", "$LibHandle"}], ",", "\n", 
+      RowBox[{"FuncObject", "->", "$FuncObject"}], ",", "\n", 
+      RowBox[{"FuncHandle", "->", "$FuncHandle"}], ",", "\n", 
+      RowBox[{"FuncType", "->", "$FuncType"}], ",", "\n", 
+      RowBox[{"FuncProto", "->", "$FuncProto"}], ",", "\n", 
+      RowBox[{"DefaultClosureHandler", "->", "$DefaultClosureHandler"}], ",", 
+      "\n", 
+      RowBox[{"NewFunc", "->", "$NewFunc"}], ",", "\n", 
+      RowBox[{"ReleaseFunc", "->", "$ReleaseFunc"}], ",", "\n", 
+      RowBox[{"Str", "->", "$Str"}], ",", "\n", 
+      RowBox[{"Buf", "->", "$Buf"}], ",", "\n", 
+      RowBox[{"New", "->", "$New"}], ",", "\n", 
+      RowBox[{"Vars", "->", "$Vars"}], ",", "\n", 
+      RowBox[{"Var", "->", "$Var"}], ",", "\n", 
+      RowBox[{"Scope", "->", "$Scope"}], ",", "\n", 
+      RowBox[{"Begin", "->", "$Begin"}], ",", "\n", 
+      RowBox[{"End", "->", "$End"}], ",", "\n", 
+      RowBox[{"Block", "->", "$Block"}], ",", "\n", 
+      RowBox[{"Read", "->", "$Read"}], ",", "\n", 
+      RowBox[{"Write", "->", "$Write"}]}], "\n", "}"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"Begin", "[", "\"\<Private\>\"", "]"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "\n", "DLL", "\n", "]"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"DLL", "=", 
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{"DIR", ",", "\"\<ffi.dll\>\""}], "}"}], "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"End", "[", "]"}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"$Install", "[", "]"}], ":=", 
+    RowBox[{"Block", "[", 
+     RowBox[{
+      RowBox[{"{", "}"}], ",", "\n", 
+      RowBox[{
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"$Installed", "===", "True"}], ",", 
+         RowBox[{"Return", "[", "]"}], ",", 
+         RowBox[{"$Installed", "=", "True"}]}], "]"}], ";", "\n", 
+       RowBox[{"(*", " ", "OwnValues", " ", "*)"}], "\n", 
+       RowBox[{"ClearAll", "[", "\n", 
+        RowBox[{
+        "$Init", ",", "\n", "$Exit", ",", "\n", "$Call", ",", "\n", "$Load", 
+         ",", "\n", "$Unload", ",", "\n", "$Find", ",", "\n", "$NewData", ",",
+          "\n", "$ReleaseData", ",", "\n", "$ReadData", ",", "\n", 
+         "$WriteData", ",", "\n", "$NewClosure", ",", "\n", "$ReleaseClosure",
+          ",", "\n", "$ID", ",", "\n", "$CDefault", ",", "\n", "$Libs", ",", 
+         "\n", "$LibC", ",", "\n", "$LibML", ",", "\n", "$Str", ",", "\n", 
+         "$Vars", ",", "\n", "$Scope", ",", "\n", "$Var"}], "\n", "]"}], ";", 
+       "\n", 
+       RowBox[{"Each", "[", 
+        RowBox[{
+         RowBox[{"{", "\n", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"$Init", ",", 
+             RowBox[{"{", 
+              RowBox[{"Integer", ",", "Integer"}], "}"}], ",", "Integer"}], 
+            "}"}], ",", "\n", 
+           RowBox[{"{", 
+            RowBox[{"$Exit", ",", 
+             RowBox[{"{", "Integer", "}"}], ",", "\"\<Void\>\""}], "}"}], ",",
+            "\n", 
+           RowBox[{"{", 
+            RowBox[{"$Call", ",", "LinkObject", ",", "LinkObject"}], "}"}], 
+           ",", "\n", 
+           RowBox[{"{", 
+            RowBox[{"$Load", ",", 
+             RowBox[{"{", "\"\<UTF8String\>\"", "}"}], ",", "Integer"}], 
+            "}"}], ",", "\n", 
+           RowBox[{"{", 
+            RowBox[{"$Unload", ",", 
+             RowBox[{"{", "Integer", "}"}], ",", "\"\<Void\>\""}], "}"}], ",",
+            "\n", 
+           RowBox[{"{", 
+            RowBox[{"$Find", ",", 
+             RowBox[{"{", 
+              RowBox[{"Integer", ",", "\"\<UTF8String\>\""}], "}"}], ",", 
+             "Integer"}], "}"}], ",", "\n", 
+           RowBox[{"{", 
+            RowBox[{"$NewData", ",", "LinkObject", ",", "LinkObject"}], "}"}],
+            ",", "\n", 
+           RowBox[{"{", 
+            RowBox[{"$ReleaseData", ",", 
+             RowBox[{"{", "Integer", "}"}], ",", "\"\<Void\>\""}], "}"}], ",",
+            "\n", 
+           RowBox[{"{", 
+            RowBox[{"$ReadData", ",", "LinkObject", ",", "LinkObject"}], 
+            "}"}], ",", "\n", 
+           RowBox[{"{", 
+            RowBox[{"$WriteData", ",", "LinkObject", ",", "LinkObject"}], 
+            "}"}], ",", "\n", 
+           RowBox[{"{", 
+            RowBox[{"$NewClosure", ",", 
+             RowBox[{"{", 
+              RowBox[{"Integer", ",", "Integer"}], "}"}], ",", "Integer"}], 
+            "}"}], ",", "\n", 
+           RowBox[{"{", 
+            RowBox[{"$ReleaseClosure", ",", 
+             RowBox[{"{", "Integer", "}"}], ",", "\"\<Void\>\""}], "}"}], ",",
+            "\n", 
+           RowBox[{"{", 
+            RowBox[{"$ID", ",", 
+             RowBox[{"{", "}"}], ",", "Integer"}], "}"}]}], "\n", "}"}], ",", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"#1", "=", 
+            RowBox[{"LibraryFunctionLoad", "[", 
+             RowBox[{"PrivateDLL", ",", 
+              RowBox[{"\"\<FFI_\>\"", "<>", 
+               RowBox[{"SymbolName", "[", "#1", "]"}]}], ",", "#2", ",", 
+              "#3"}], "]"}]}], ")"}], "&"}]}], "]"}], ";", "\n", 
+       RowBox[{
+        RowBox[{"Options", "[", "$Apply", "]"}], "=", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"ReturnType", "->", "PtrType"}], ",", 
+          RowBox[{"ArgTypes", "->", " ", "Automatic"}], ",", 
+          RowBox[{"Convention", "->", "$CDefault"}]}], "}"}]}], ";", "\n", 
+       RowBox[{"SetAttributes", "[", 
+        RowBox[{"$Block", ",", "HoldAll"}], "]"}], ";", "\n", 
+       RowBox[{"$CDefault", "=", 
+        RowBox[{"$Init", "[", 
+         RowBox[{"4096", ",", "0"}], "]"}]}], ";", "\n", 
+       RowBox[{"$CreateLibs", "[", "]"}], ";", "\n", 
+       RowBox[{"$CreateVars", "[", "]"}], ";"}]}], "\n", "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"$Uninstall", "[", "]"}], ":=", 
+    RowBox[{"Block", "[", 
+     RowBox[{
+      RowBox[{"{", "}"}], ",", "\n", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"$Installed", "===", "True"}], ",", "\n", 
+        RowBox[{
+         RowBox[{"$ClearVars", "[", "]"}], ";", "\n", 
+         RowBox[{"$ClearLibs", "[", "]"}], ";", "\n", 
+         RowBox[{"$Exit", "[", "$CDefault", "]"}], ";", "\n", 
+         RowBox[{"LibraryUnload", "[", "PrivateDLL", "]"}], ";", "\n", 
+         RowBox[{"$Installed", "=", "False"}], ";"}]}], "]"}]}], "\n", 
+     "]"}]}], ";"}], "\n", "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"DownValues", "/", "SubValues"}], "/", 
+    RowBox[{"UpValues", "?"}]}], " ", "*)"}]}], "\n", 
+ RowBox[{
+  RowBox[{"ClearAll", "/@", 
+   RowBox[{"$", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", "2"}], "]"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"SetDelayed", "@@", 
+     RowBox[{"ReleaseHold", "[", "#", "]"}]}], "&"}], "/@", 
+   RowBox[{"Flatten", "[", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"DownValues", "/@", 
+       RowBox[{"$", "[", 
+        RowBox[{"[", 
+         RowBox[{"All", ",", "1"}], "]"}], "]"}]}], ")"}], "/.", "$"}], 
+    "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"SetDelayed", "@@", 
+      RowBox[{"ReleaseHold", "[", "#", "]"}]}], "&"}], "/@", 
+    RowBox[{"Flatten", "[", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"SubValues", "/@", 
+        RowBox[{"$", "[", 
+         RowBox[{"[", 
+          RowBox[{"All", ",", "1"}], "]"}], "]"}]}], ")"}], "/.", "$"}], 
+     "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"End", "[", "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"$ContextPath", "=", 
+     RowBox[{"Drop", "[", 
+      RowBox[{"$ContextPath", ",", " ", 
+       RowBox[{"-", "1"}]}], "]"}]}], ";"}], " ", "*)"}]}]}], "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Test", "Section",
+ CellChangeTimes->{{3.657114861771798*^9, 3.657114864344946*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Quit", "[", "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.6907614561832743`*^9, 3.690761458216608*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Get", "@", 
+   RowBox[{"FileNameJoin", "@", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"NotebookDirectory", "[", "]"}], ",", "\"\<..\>\"", ",", 
+      "\"\<Include.m\>\""}], "}"}]}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.684650590774811*^9, 3.6846506095467176`*^9}, {
+  3.684650656641252*^9, 3.684650693428135*^9}, {3.6907664078196726`*^9, 
+  3.6907664091189227`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"NotebookEvaluate", "[", 
+   RowBox[{
+    RowBox[{"EvaluationNotebook", "[", "]"}], ",", 
+    RowBox[{"EvaluationElements", "\[Rule]", "\"\<InitializationCell\>\""}]}],
+    "]"}], ";"}]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ffi", "=", 
+  RowBox[{"New", "@", 
+   RowBox[{"FFI", "[", "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.6907678855736084`*^9, 3.6907679167477436`*^9}, {
+  3.6907679553788414`*^9, 3.690767957049959*^9}}],
+
+Cell[BoxData["FFI$10"], "Output",
+ CellChangeTimes->{{3.6907678908496017`*^9, 3.690767917447255*^9}, 
+   3.690767957632802*^9, 3.6907683544725637`*^9, 3.6907695600397067`*^9, 
+   3.6907696565272303`*^9, 3.6907702673402696`*^9, 3.6907705976031227`*^9, 
+   3.6907711063420506`*^9, 3.690771295573186*^9, 3.6907713882695227`*^9, 
+   3.6907719964939127`*^9, 3.690772217188629*^9, 3.6907722898012733`*^9, 
+   3.6907767335908623`*^9, 3.690777410682304*^9, 3.690777477954134*^9, 
+   3.690777732635013*^9, 3.6907805991057663`*^9, 3.6907824432246027`*^9, 
+   3.690786204034049*^9, 3.6907862852815733`*^9, 3.6907863212389946`*^9, 
+   3.690803647878656*^9, 3.6908039462395916`*^9, 3.6908043064786797`*^9, 
+   3.6908046576977997`*^9, 3.690804709093978*^9, 3.6908053263954797`*^9, 
+   3.690805509225848*^9, 3.6908056421785297`*^9, 3.6908082123911242`*^9, 
+   3.690810182329527*^9, 3.690810214825263*^9, 3.690811058480762*^9, 
+   3.6908111065808783`*^9, 3.690811569534047*^9, 3.6908116660487995`*^9, 
+   3.6908117127156143`*^9, 3.6908119267086835`*^9, 3.6908122313238144`*^9, 
+   3.6908123058719797`*^9, {3.690812501886036*^9, 3.6908125305779953`*^9}, 
+   3.690815647778083*^9, 3.6908163140369873`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"ffi", ".", 
+  RowBox[{"install", "[", "]"}]}]], "Input",
+ CellChangeTimes->{{3.690803954387208*^9, 3.6908039588265576`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ffi", ".", 
+  RowBox[{"uninstall", "[", "]"}]}]], "Input",
+ CellChangeTimes->{{3.690786260276741*^9, 3.6907862624617896`*^9}}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ClearAll","ssym",
+   "\"\\!\\(\\*RowBox[{\\\"$\\\", \\\".\\\", \\\"Vars\\\"}]\\) is not a \
+symbol or a string.\"",2,57,1,26495024400035206369,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.6908116603336215`*^9, 3.6908117096254663`*^9, 
+  3.6908119244214764`*^9, 3.6908124993252635`*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ClearAll","ssym",
+   "\"\\!\\(\\*RowBox[{\\\"$\\\", \\\".\\\", \\\"Scope\\\"}]\\) is not a \
+symbol or a string.\"",2,57,2,26495024400035206369,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.6908116603336215`*^9, 3.6908117096254663`*^9, 
+  3.6908119244214764`*^9, 3.6908124993643637`*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ClearAll","ssym",
+   "\"\\!\\(\\*RowBox[{\\\"$\\\", \\\".\\\", \\\"Var\\\"}]\\) is not a symbol \
+or a string.\"",2,57,3,26495024400035206369,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.6908116603336215`*^9, 3.6908117096254663`*^9, 
+  3.6908119244214764`*^9, 3.6908124993844185`*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General","stop",
+   "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"ClearAll\\\", \
+\\\"::\\\", \\\"ssym\\\"}], \\\"MessageName\\\"]\\) will be suppressed during \
+this calculation.\"",2,57,4,26495024400035206369,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.6908116603336215`*^9, 3.6908117096254663`*^9, 
+  3.6908119244214764`*^9, 3.6908124994039726`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ffi", ".", "Libs"}]], "Input",
+ CellChangeTimes->{{3.69081094163701*^9, 3.690810942978625*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"ml64i4.dll\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"140706617360384", ",", 
+      RowBox[{"{", "}"}]}], "}"}]}], ",", 
+   RowBox[{"\<\"msvcrt.dll\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"140707156852736", ",", 
+      RowBox[{"{", "}"}]}], "}"}]}], ",", 
+   RowBox[{"\<\"FFI\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", 
+      RowBox[{"{", "}"}]}], "}"}]}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.690810943404637*^9, {3.6908111095506935`*^9, 3.690811113955019*^9}, 
+   3.6908115816049147`*^9, 3.6908116699831095`*^9, 3.6908122359001446`*^9, 
+   3.690812310732173*^9, {3.6908125054060135`*^9, 3.690812534187027*^9}, 
+   3.6908163184538927`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ffi", ".", 
+  RowBox[{"LibC", "[", "floor", "]"}]}]], "Input",
+ CellChangeTimes->{{3.6908106270321693`*^9, 3.6908106677680964`*^9}, {
+  3.6908107067301397`*^9, 3.6908107370657854`*^9}, {3.690810933161973*^9, 
+  3.690810936437643*^9}, {3.6908110440538435`*^9, 3.690811046326525*^9}, {
+  3.6908119335329742`*^9, 3.690811939255561*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"FFI$10", "[", "\<\"FuncObject\"\>", "]"}], "[", 
+  RowBox[{"\<\"msvcrt.dll\"\>", ",", "\<\"floor\"\>"}], "]"}]], "Output",
+ CellChangeTimes->{{3.6908106428354273`*^9, 3.690810668330373*^9}, {
+   3.6908107096410637`*^9, 3.690810737606991*^9}, 3.6908108037527933`*^9, 
+   3.69081084243956*^9, 3.6908109369397955`*^9, {3.6908110416620703`*^9, 
+   3.690811064031616*^9}, 3.69081111126947*^9, 3.6908115830757318`*^9, 
+   3.690811671056879*^9, 3.6908117169313245`*^9, {3.6908119351759725`*^9, 
+   3.6908119397304554`*^9}, 3.6908122369015465`*^9, 3.6908123118913116`*^9, {
+   3.6908125064528093`*^9, 3.690812534997795*^9}, 3.690816319554757*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ffi", ".", 
+  RowBox[{"run", "[", 
+   RowBox[{"\"\<double\>\"", ",", 
+    RowBox[{"ffi", ".", 
+     RowBox[{"FuncHandle", "[", 
+      RowBox[{"\"\<msvcrt.dll\>\"", ",", "\"\<floor\>\""}], "]"}]}], ",", 
+    RowBox[{"{", "\"\<double\>\"", "}"}], ",", 
+    RowBox[{"{", "3.14", "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.6907806056720176`*^9, 3.6907806349524326`*^9}, {
+  3.690780668548161*^9, 3.690780684967093*^9}, {3.6907807644069166`*^9, 
+  3.6907807876754274`*^9}, {3.690782482592165*^9, 3.69078248593871*^9}}],
+
+Cell[BoxData["3.`"], "Output",
+ CellChangeTimes->{
+  3.6908039735011806`*^9, 3.690811129693403*^9, 3.690811585406887*^9, 
+   3.690811672752925*^9, 3.690811717927636*^9, 3.690811942339879*^9, 
+   3.69081223843097*^9, 3.69081231344517*^9, {3.6908125103242292`*^9, 
+   3.6908125357116213`*^9}, 3.69081632115559*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ffi", ".", 
+  RowBox[{"apply", "[", 
+   RowBox[{
+    RowBox[{"ffi", ".", 
+     RowBox[{"FuncHandle", "[", 
+      RowBox[{"\"\<msvcrt.dll\>\"", ",", "\"\<floor\>\""}], "]"}]}], ",", 
+    RowBox[{"{", "3.14", "}"}], ",", "\"\<double\>\""}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.690811602374238*^9, 3.690811631922907*^9}}],
+
+Cell[BoxData["3.`"], "Output",
+ CellChangeTimes->{{3.6908116180699167`*^9, 3.690811632750046*^9}, 
+   3.690811673959793*^9, 3.690811718880372*^9, 3.690811943527171*^9, 
+   3.6908122405493746`*^9, 3.6908123144985533`*^9, {3.690812511371505*^9, 
+   3.690812536607359*^9}, 3.6908163221888013`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ffi", ".", 
+  RowBox[{
+   RowBox[{"LibC", "[", "floor", "]"}], "[", 
+   RowBox[{"3.14", ",", 
+    RowBox[{"ReturnType", "\[Rule]", "\"\<double\>\""}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.690812448509468*^9, 3.6908124522291665`*^9}}],
+
+Cell[BoxData["3.`"], "Output",
+ CellChangeTimes->{3.690812452782508*^9, 3.690812542817637*^9, 
+  3.690816323246992*^9}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{986, 833},
+WindowMargins->{{Automatic, 11}, {50, Automatic}},
+FontProperties->{"ScreenResolution"->Automatic},
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (2016\:5e747\:670828\
+\:65e5)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 377, 10, 35, "Input"],
+Cell[938, 32, 1015, 19, 104, "Code",
+ InitializationCell->True],
+Cell[CellGroupData[{
+Cell[1978, 55, 95, 1, 58, "Subsection"],
+Cell[CellGroupData[{
+Cell[2098, 60, 5174, 149, 1277, "Input",
+ InitializationCell->True],
+Cell[7275, 211, 86, 1, 35, "Output"],
+Cell[7364, 214, 87, 1, 35, "Output"],
+Cell[7454, 217, 97, 1, 35, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[7600, 224, 102, 1, 50, "Subsection"],
+Cell[7705, 227, 21252, 576, 2727, "Input",
+ InitializationCell->True],
+Cell[28960, 805, 68, 1, 35, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[29065, 811, 80, 1, 50, "Subsection"],
+Cell[29148, 814, 45084, 1326, 5507, "Code"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[74269, 2145, 94, 1, 58, "Subsection"],
+Cell[74366, 2148, 10119, 245, 3861, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[84522, 2398, 89, 1, 69, "Section"],
+Cell[84614, 2401, 138, 3, 35, "Input"],
+Cell[84755, 2406, 410, 10, 35, "Input"],
+Cell[85168, 2418, 230, 6, 35, "Input"],
+Cell[CellGroupData[{
+Cell[85423, 2428, 223, 5, 35, "Input"],
+Cell[85649, 2435, 1187, 16, 35, "Output"]
+}, Open  ]],
+Cell[86851, 2454, 148, 3, 35, "Input"],
+Cell[CellGroupData[{
+Cell[87024, 2461, 150, 3, 35, "Input"],
+Cell[87177, 2466, 344, 7, 28, "Message"],
+Cell[87524, 2475, 345, 7, 28, "Message"],
+Cell[87872, 2484, 343, 7, 28, "Message"],
+Cell[88218, 2493, 417, 8, 28, "Message"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[88672, 2506, 119, 2, 35, "Input"],
+Cell[88794, 2510, 735, 19, 35, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[89566, 2534, 357, 6, 35, "Input"],
+Cell[89926, 2542, 673, 10, 35, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[90636, 2557, 544, 11, 35, "Input"],
+Cell[91183, 2570, 312, 5, 35, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[91532, 2580, 347, 8, 35, "Input"],
+Cell[91882, 2590, 294, 4, 35, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[92213, 2599, 263, 6, 35, "Input"],
+Cell[92479, 2607, 119, 2, 35, "Output"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

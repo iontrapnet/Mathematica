@@ -1,0 +1,4 @@
+LIBRARY newt.dll
+
+EXPORTS
+newt

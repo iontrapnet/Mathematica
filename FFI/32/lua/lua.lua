@@ -1,0 +1,5 @@
+ffi = require("ffi")
+local file = io.open("lua.lua.h")
+ffi.cdef(file:read("*all"))
+file:close()
+lua = ffi.load("lua51.dll")

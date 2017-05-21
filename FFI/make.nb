@@ -1,0 +1,184 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      6469,        175]
+NotebookOptionsPosition[      5779,        146]
+NotebookOutlinePosition[      6134,        162]
+CellTagsIndexPosition[      6091,        159]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"Needs", "[", "\"\<CCompilerDriver`\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.65588901670289*^9, 3.655889022037404*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SetDirectory", "@", 
+   RowBox[{"NotebookDirectory", "[", "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.655889222505023*^9, 3.655889232285274*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Run", "[", "\"\<./mprep ffi.tm -o ffitm.cc\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.65589014757622*^9, 3.655890162355009*^9}}],
+
+Cell[BoxData["0"], "Output",
+ CellChangeTimes->{3.6558901628343163`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CreateLibrary", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"\"\<ffi.cc\>\"", ",", "\"\<ffitm.cc\>\""}], "}"}], ",", 
+   "\"\<ffi\>\"", ",", "\[IndentingNewLine]", 
+   RowBox[{"\"\<TargetDirectory\>\"", "\[Rule]", 
+    RowBox[{"Directory", "[", "]"}]}], ",", 
+   RowBox[{"\"\<ShellOutputFunction\>\"", "\[Rule]", "Print"}], ",", 
+   RowBox[{"\"\<IncludeDirectories\>\"", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"FileNameJoin", "@", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Directory", "[", "]"}], ",", 
+        "\"\<dyncall/osx/Darwin/include\>\""}], "}"}]}], "}"}]}], ",", 
+   RowBox[{"\"\<LibraryDirectories\>\"", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"FileNameJoin", "@", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Directory", "[", "]"}], ",", 
+         "\"\<dyncall/osx/Darwin/lib\>\""}], "}"}]}], ",", 
+      RowBox[{"FileNameJoin", "@", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Directory", "[", "]"}], ",", "\"\<lib\>\""}], "}"}]}]}], 
+     "}"}]}], ",", 
+   RowBox[{"\"\<Libraries\>\"", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<dyncall_s\>\"", ",", "\"\<dyncallback_s\>\"", ",", 
+      "\"\<dynload_s\>\"", ",", "\"\<MLi4\>\""}], "}"}]}], ",", 
+   RowBox[{
+   "\"\<CompileOptions\>\"", "\[Rule]", 
+    "\"\<-install_name \\\"@loader_path/ffi.dylib\\\"\>\""}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.6558892030906477`*^9, 3.655889306234358*^9}, {
+  3.655889407106162*^9, 3.6558895672219067`*^9}, {3.6558896237595863`*^9, 
+  3.6558896406266747`*^9}, {3.655889678103179*^9, 3.6558897563094378`*^9}, {
+  3.65588979553633*^9, 3.655889811037359*^9}, {3.6558899117815733`*^9, 
+  3.6558899234280443`*^9}, {3.655889977366775*^9, 3.655889982212432*^9}, {
+  3.655890018293787*^9, 3.655890022542466*^9}, {3.655890062556085*^9, 
+  3.6558901290869007`*^9}, {3.655890233011342*^9, 3.655890234437167*^9}, {
+  3.655890264644939*^9, 3.6558902659652843`*^9}, {3.655892466129642*^9, 
+  3.655892520165606*^9}, {3.6558927298489237`*^9, 3.655892765662929*^9}}],
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{
+  3.6558921025149937`*^9, 3.655892521537003*^9, {3.6558927424009237`*^9, 
+   3.6558927664082537`*^9}}],
+
+Cell[BoxData["\<\"/Users/zx/Mathematica/FFI/ffi.dylib\"\>"], "Output",
+ CellChangeTimes->{{3.6558895454711037`*^9, 3.6558895696792994`*^9}, 
+   3.6558896421682043`*^9, 3.6558896883080587`*^9, 3.655889723283317*^9, 
+   3.6558897574010363`*^9, {3.655889799089302*^9, 3.655889814986555*^9}, {
+   3.655889914788313*^9, 3.655889927159195*^9}, 3.655889982965929*^9, 
+   3.655890026184231*^9, {3.655890084479103*^9, 3.655890130711795*^9}, 
+   3.6558901804848022`*^9, {3.655890236899935*^9, 3.655890266845747*^9}, {
+   3.655892077629036*^9, 3.655892102520632*^9}, 3.6558925215423517`*^9, {
+   3.655892742554833*^9, 3.655892766413405*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CreateExecutable", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"\"\<ffimain.c\>\"", ",", "\"\<ffi.dylib\>\""}], "}"}], ",", 
+   "\"\<ffi\>\"", ",", "\[IndentingNewLine]", 
+   RowBox[{"\"\<TargetDirectory\>\"", "\[Rule]", 
+    RowBox[{"Directory", "[", "]"}]}], ",", 
+   RowBox[{"\"\<ShellOutputFunction\>\"", "\[Rule]", "Print"}], ",", 
+   RowBox[{"\"\<LibraryDirectories\>\"", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"FileNameJoin", "@", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Directory", "[", "]"}], ",", "\"\<lib\>\""}], "}"}]}], 
+     "}"}]}], ",", 
+   RowBox[{"\"\<Libraries\>\"", "\[Rule]", 
+    RowBox[{"{", "\"\<MLi4\>\"", "}"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.65589180877112*^9, 3.6558918632088842`*^9}, {
+  3.6558919036632013`*^9, 3.6558919282457848`*^9}, {3.6558919588277082`*^9, 
+  3.655891990139008*^9}, {3.655892069902464*^9, 3.655892070484799*^9}, {
+  3.655892122615033*^9, 3.655892124787199*^9}, {3.6558928052626677`*^9, 
+  3.6558928521806707`*^9}, {3.655892893454768*^9, 3.655892893942487*^9}}],
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{{3.655892104487883*^9, 3.655892126053094*^9}, 
+   3.655892524190547*^9, 3.6558927679159613`*^9, {3.655892832815865*^9, 
+   3.655892852630926*^9}, 3.655892898498904*^9}],
+
+Cell[BoxData["\<\"/Users/zx/Mathematica/FFI/ffi\"\>"], "Output",
+ CellChangeTimes->{
+  3.6558918651025047`*^9, {3.655891907469039*^9, 3.655891934169766*^9}, {
+   3.655891969422592*^9, 3.655891994264514*^9}, 3.655892073214938*^9, {
+   3.6558921044930887`*^9, 3.65589212605884*^9}, 3.655892524196916*^9, 
+   3.655892767921056*^9, {3.655892832821731*^9, 3.6558928526371603`*^9}, 
+   3.655892898507554*^9}]
+}, Open  ]]
+},
+WindowSize->{808, 652},
+WindowMargins->{{Automatic, 201}, {21, Automatic}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (June 27, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 146, 2, 32, "Input"],
+Cell[707, 24, 184, 4, 32, "Input"],
+Cell[CellGroupData[{
+Cell[916, 32, 154, 2, 32, "Input"],
+Cell[1073, 36, 72, 1, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1182, 42, 2054, 46, 147, "Input"],
+Cell[3239, 90, 157, 3, 24, "Print"],
+Cell[3399, 95, 630, 8, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4066, 108, 1067, 22, 71, "Input"],
+Cell[5136, 132, 222, 3, 24, "Print"],
+Cell[5361, 137, 402, 6, 32, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

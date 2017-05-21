@@ -1,0 +1,5 @@
+ffi = require("ffi")
+local file = io.open("libtcc.lua.h")
+ffi.cdef(file:read("*all"))
+file:close()
+libtcc = ffi.load("libtcc.dll")

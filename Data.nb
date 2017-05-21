@@ -1,0 +1,1832 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     61049,       1824]
+NotebookOptionsPosition[     60316,       1794]
+NotebookOutlinePosition[     60684,       1810]
+CellTagsIndexPosition[     60641,       1807]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{"System`WholeCellGroupOpener", ";", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"NotebookWrite", "[", 
+      RowBox[{"#", ",", 
+       RowBox[{"Append", "[", 
+        RowBox[{
+         RowBox[{"NotebookRead", "@", "#"}], ",", 
+         RowBox[{"Unevaluated", "@", 
+          RowBox[{"Sequence", "[", 
+           RowBox[{
+            RowBox[{"WholeCellGroupOpener", "\[Rule]", "True"}], ",", 
+            RowBox[{"ShowGroupOpener", "\[Rule]", "True"}]}], 
+           RowBox[{"(*", 
+            RowBox[{",", 
+             RowBox[{"ShowCellBracket", "\[Rule]", "False"}]}], "*)"}], 
+           "]"}]}]}], "]"}], ",", 
+       RowBox[{"AutoScroll", "\[Rule]", "False"}]}], "]"}], "&"}], "/@", 
+    RowBox[{
+     RowBox[{"Cells", "[", 
+      RowBox[{"CellStyle", "\[Rule]", "\"\<Section\>\""}], "]"}], 
+     "\[LeftDoubleBracket]", 
+     RowBox[{"1", ";;", "3"}], "\[RightDoubleBracket]"}]}], ";"}], 
+  "*)"}]], "Input",
+ CellChangeTimes->{{3.6569857199426565`*^9, 3.656985901536043*^9}, {
+  3.656985985317835*^9, 3.656986025894156*^9}, {3.656986100102401*^9, 
+  3.6569861035225964`*^9}, {3.6569862057184415`*^9, 3.6569862092126412`*^9}, {
+  3.657114588282156*^9, 3.657114590922307*^9}, {3.6846517895240517`*^9, 
+  3.6846517913856277`*^9}, {3.684651946563871*^9, 3.6846519504825897`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Declaration", "Section",
+ ShowGroupOpener->True,
+ WholeCellGroupOpener->True,
+ CellChangeTimes->{{3.6846517085312233`*^9, 3.6846517159467154`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{"Begin", "[", "\"\<System`\>\"", "]"}], "\n", 
+ RowBox[{
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{"!", 
+     RowBox[{"ValueQ", "@", "$DataFolder"}]}], ",", 
+    RowBox[{"$DataFolder", "=", 
+     RowBox[{"ParentDirectory", "@", "$Directory"}]}]}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{"$VersionNumber", ">=", "10."}], ",", "\n", 
+    RowBox[{
+     RowBox[{"SetSystemOptions", "[", 
+      RowBox[{"\"\<DataOptions\>\"", "->", 
+       RowBox[{"\"\<ReturnQuantities\>\"", "->", "False"}]}], "]"}], ";"}]}], 
+   "\n", "]"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"$DateStringFormat", "=", 
+   RowBox[{"Join", "[", 
+    RowBox[{
+     RowBox[{"Riffle", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"\"\<Year\>\"", ",", "\"\<Month\>\"", ",", "\"\<Day\>\""}], 
+        "}"}], ",", "\"\<-\>\""}], "]"}], ",", 
+     RowBox[{"{", "\"\< \>\"", "}"}], ",", 
+     RowBox[{"Riffle", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "\"\<Hour\>\"", ",", "\"\<Minute\>\"", ",", "\"\<Second\>\""}], "}"}],
+        ",", "\"\<:\>\""}], "]"}]}], "]"}]}], ";"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.6846519011943607`*^9, 3.6846519254111223`*^9}, {
+  3.684652042034542*^9, 3.684652048500599*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"BeginPackage", "[", "\"\<IonTrap`\>\"", "]"}], 
+  "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"DarkState", "=", "0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"MinusState", "=", "1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"ZeroState", "=", "2"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"PlusState", "=", "3"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"StateName", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{"\"\<-\>\"", ",", " ", "\"\<0\>\"", ",", " ", "\"\<+\>\""}], 
+    "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"DarkThreshold", "=."}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"DarkEfficiency", "=."}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"StateEfficiency", "=."}], ";"}], "\n", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"BrightEfficiency", ":=", 
+     RowBox[{"Mean", "[", "StateEfficiency", "]"}]}], ";"}], "*)"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"BrightEfficiency", ":=", 
+    RowBox[{"Mean", "[", 
+     RowBox[{"StateEfficiency", "/@", 
+      RowBox[{"Range", "[", "PlusState", "]"}]}], "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", 
+   RowBox[{
+   "System`Each", ",", "System`Spread", ",", "DateFolder", ",", 
+    "DataDateString", ",", " ", "DataDate", ",", "DataTime", ",", 
+    "DataFolder", ",", "DataPath", ",", "LoadData", ",", "CountsData", ",", 
+    "SplitCounts", ",", "FromCounts", ",", "ToState", ",", "StateCorrection", 
+    ",", "Average", ",", "StdErr", ",", "ListLinesPlot", ",", 
+    "ListLinesPlotData", ",", "AveragePlot", ",", "C0", ",", "C1", ",", "C2", 
+    ",", "C3", ",", "C4", ",", "C12", ",", "S0", ",", "S1", ",", "S2", ",", 
+    "S3", ",", "S4", ",", "S12", ",", "P0", ",", "P1", ",", "AllCounts", ",", 
+    "AllStates", ",", "CurrentDateString", ",", "CurrentTimeString", ",", 
+    "NewData", ",", "MergeList", ",", "MergeData", ",", "DataString", ",", 
+    "WriteData", ",", "AppendData", ",", "ListGrep", ",", "StringGrep", ",", 
+    "FileGrep", ",", "ListFolder", ",", "GrepData", ",", "LastData", ",", 
+    "RecentData", ",", "LogFile", ",", "WriteLog", ",", "PrintLog", ",", 
+    "LoadLog", ",", "GrepLog", ",", "LastLog", ",", "RecentLogs", ",", 
+    "PrettyName", ",", "PrettyPattern", ",", "PrettyValue", ",", "LastValue", 
+    ",", "RecentValues", ",", "LogValue", ",", "RestoreValue", ",", 
+    "FilePath", ",", "GrepFile", ",", "ImportEfficiency"}], "]"}], 
+  "\n"}], "\n", 
+ RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.6846518134652233`*^9, {3.684651868817679*^9, 3.684651917115884*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Definition", "Section",
+ ShowGroupOpener->True,
+ WholeCellGroupOpener->True,
+ CellChangeTimes->{{3.68465172817677*^9, 3.6846517325778103`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Each", "[", 
+    RowBox[{"lst_", ",", "expr_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"expr", "@@", "#"}], ")"}], "&"}], "/@", "lst"}]}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Spread", "[", "lst_", "]"}], ":=", 
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Head", "[", 
+       RowBox[{"lst", "[", 
+        RowBox[{"[", 
+         RowBox[{"1", ",", "2"}], "]"}], "]"}], "]"}], "===", "List"}], ",", 
+     RowBox[{"Transpose", "[", 
+      RowBox[{"Thread", "/@", "lst"}], "]"}], ",", "lst"}], "]"}]}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"DateFolder", "[", "date_String", "]"}], ":=", 
+   RowBox[{"FileNameJoin", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"DataFolder", "[", "]"}], ",", 
+      RowBox[{"StringTake", "[", 
+       RowBox[{"date", ",", "4"}], "]"}], ",", "\n", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"StringLength", "[", "date", "]"}], ">=", "6"}], ",", 
+        RowBox[{"StringTake", "[", 
+         RowBox[{"date", ",", "6"}], "]"}], ",", "\"\<\>\""}], "]"}], ",", 
+      "\n", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"StringLength", "[", "date", "]"}], ">=", "8"}], ",", 
+        RowBox[{"StringTake", "[", 
+         RowBox[{"date", ",", "8"}], "]"}], ",", "\"\<\>\""}], "]"}]}], "}"}],
+     "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"DateFolder", "[", 
+     RowBox[{"date_List:", 
+      RowBox[{"DateList", "[", "]"}]}], "]"}], ":=", 
+    RowBox[{"DateFolder", "@", 
+     RowBox[{"DateString", "[", 
+      RowBox[{"date", ",", "\n", 
+       RowBox[{"Take", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"\"\<Year\>\"", ",", "\"\<Month\>\"", ",", "\"\<Day\>\""}], 
+          "}"}], ",", 
+         RowBox[{"Min", "[", 
+          RowBox[{"3", ",", 
+           RowBox[{"Length", "[", "date", "]"}]}], "]"}]}], "]"}]}], 
+      "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"DataDateString", "[", "s_String", "]"}], ":=", 
+    RowBox[{"StringTake", "[", 
+     RowBox[{
+      RowBox[{"FileBaseName", "[", "s", "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "14"}], ",", 
+        RowBox[{"-", "7"}]}], "}"}]}], "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"DataDate", "[", "s_String", "]"}], ":=", 
+    RowBox[{"DateList", "@", 
+     RowBox[{"DataDateString", "[", "s", "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"DataTime", "[", "s_String", "]"}], ":=", 
+    RowBox[{"ToExpression", "/@", 
+     RowBox[{"StringTake", "[", 
+      RowBox[{
+       RowBox[{"FileBaseName", "[", "s", "]"}], ",", "\n", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "14"}], ",", 
+           RowBox[{"-", "11"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "10"}], ",", 
+           RowBox[{"-", "9"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "8"}], ",", 
+           RowBox[{"-", "7"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "6"}], ",", 
+           RowBox[{"-", "5"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "4"}], ",", 
+           RowBox[{"-", "3"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "2"}], ",", 
+           RowBox[{"-", "1"}]}], "}"}]}], "}"}]}], "]"}]}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"DataFolder", "[", "]"}], "=", 
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{"ValueQ", "@", "$DataFolder"}], ",", "$DataFolder", ",", 
+     RowBox[{"NotebookDirectory", "[", "]"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"DataFolder", "[", "s_String", "]"}], ":=", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"!", 
+       RowBox[{"StringFreeQ", "[", 
+        RowBox[{"s", ",", 
+         RowBox[{"\"\<\\\\\>\"", "|", "\"\</\>\""}]}], "]"}]}], ",", 
+      RowBox[{"DataFolder", "[", "]"}], ",", 
+      RowBox[{"DateFolder", "@", 
+       RowBox[{"DataDateString", "[", "s", "]"}]}]}], "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"DataPath", "[", "s_String", "]"}], ":=", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"!", 
+       RowBox[{"StringFreeQ", "[", 
+        RowBox[{"s", ",", "\"\<:\>\""}], "]"}]}], ",", "s", ",", 
+      RowBox[{"FileNameJoin", "[", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"DataFolder", "[", "s", "]"}], ",", "\n", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"FileExtension", "[", "s", "]"}], "===", "\"\<\>\""}], "&&", 
+            RowBox[{"StringFreeQ", "[", 
+             RowBox[{
+              RowBox[{"StringTake", "[", 
+               RowBox[{"s", ",", 
+                RowBox[{"-", "1"}]}], "]"}], ",", 
+              RowBox[{"\"\<\\\\\>\"", "|", "\"\</\>\""}]}], "]"}]}], ",", 
+           RowBox[{"s", "<>", "\"\<.txt\>\""}], ",", "s"}], "]"}]}], "}"}], 
+       "]"}]}], "]"}]}], ";"}], "\n", "\n", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"LoadData", "[", "stream_InputStream", "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"str", ",", "item", ",", "value", ",", 
+        RowBox[{"data", "=", 
+         RowBox[{"{", "}"}]}]}], "}"}], ",", "\n", 
+      RowBox[{
+       RowBox[{"While", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"str", "=", 
+            RowBox[{"Read", "[", 
+             RowBox[{"stream", ",", "String"}], "]"}]}], ")"}], "=!=", 
+          "EndOfFile"}], ",", "\n", 
+         RowBox[{
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"StringTake", "[", 
+              RowBox[{"str", ",", 
+               RowBox[{"-", "1"}]}], "]"}], "===", "\"\<=\>\""}], ",", "\n", 
+            RowBox[{
+             RowBox[{"item", "=", 
+              RowBox[{
+               RowBox[{"StringSplit", "[", 
+                RowBox[{"str", ",", "\"\<=\>\""}], "]"}], "[", 
+               RowBox[{"[", "1", "]"}], "]"}]}], ";", "\n", 
+             RowBox[{"value", "=", 
+              RowBox[{"Read", "[", 
+               RowBox[{"stream", ",", "Record", ",", 
+                RowBox[{"RecordSeparators", "->", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"{", "\"\<{\\n\>\"", "}"}], ",", 
+                   RowBox[{"{", "\"\<\\n}\>\"", "}"}]}], "}"}]}]}], "]"}]}], 
+             ";", "\n", 
+             RowBox[{"Read", "[", 
+              RowBox[{"stream", ",", "String"}], "]"}]}], ",", "\n", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"item", ",", "value"}], "}"}], "=", 
+             RowBox[{"StringSplit", "[", 
+              RowBox[{"str", ",", "\"\<=\>\"", ",", "2"}], "]"}]}]}], "]"}], 
+          ";", "\n", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"data", ",", 
+            RowBox[{"item", "->", "value"}]}], "]"}]}]}], "]"}], ";", "\n", 
+       "data"}]}], "\n", "]"}]}], "*)"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LoadData", "[", "stream_InputStream", "]"}], ":=", 
+   RowBox[{"Module", "[", "\n", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"items", "=", 
+        RowBox[{"{", "}"}]}], ",", 
+       RowBox[{"item", "=", "\"\<\>\""}], ",", 
+       RowBox[{"value", "=", "\"\<\>\""}], ",", 
+       RowBox[{"mode", "=", "0"}], ",", 
+       RowBox[{"depth", "=", "0"}], ",", 
+       RowBox[{"separator", "=", "\"\<\>\""}], ",", "lines", ",", "line", ",",
+        "pos"}], "}"}], ",", "\n", 
+     RowBox[{
+      RowBox[{"lines", "=", 
+       RowBox[{"ReadList", "[", 
+        RowBox[{"stream", ",", "String"}], "]"}]}], ";", "\n", 
+      RowBox[{"Do", "[", "\n", 
+       RowBox[{
+        RowBox[{"Switch", "[", 
+         RowBox[{"mode", ",", "\n", "0", ",", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"StringTake", "[", 
+              RowBox[{"line", ",", 
+               RowBox[{"-", "1"}]}], "]"}], "==", "\"\<=\>\""}], ",", "\n", 
+            RowBox[{
+             RowBox[{"item", "=", 
+              RowBox[{"StringTake", "[", 
+               RowBox[{"line", ",", 
+                RowBox[{"{", 
+                 RowBox[{"1", ",", 
+                  RowBox[{"-", "2"}]}], "}"}]}], "]"}]}], ";", "\n", 
+             RowBox[{"mode", "=", "1"}]}], ",", "\n", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"pos", "=", 
+                 RowBox[{"StringPosition", "[", 
+                  RowBox[{"line", ",", "\"\<=\>\""}], "]"}]}], ")"}], "=!=", 
+               RowBox[{"{", "}"}]}], ",", "\n", 
+              RowBox[{
+               RowBox[{"item", "=", 
+                RowBox[{"StringTake", "[", 
+                 RowBox[{"line", ",", 
+                  RowBox[{
+                   RowBox[{"pos", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"1", ",", "1"}], "]"}], "]"}], "-", "1"}]}], 
+                 "]"}]}], ";", "\n", 
+               RowBox[{"value", "=", 
+                RowBox[{"StringTake", "[", 
+                 RowBox[{"line", ",", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"pos", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"1", ",", "2"}], "]"}], "]"}], "+", "1"}], ",", 
+                    RowBox[{"-", "1"}]}], "}"}]}], "]"}]}], ";", "\n", 
+               RowBox[{"AppendTo", "[", 
+                RowBox[{"items", ",", 
+                 RowBox[{"item", "->", "value"}]}], "]"}], ";"}]}], "\n", 
+             "]"}]}], "]"}], ",", "\n", "1", ",", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"StringTake", "[", 
+              RowBox[{"line", ",", 
+               RowBox[{"-", "1"}]}], "]"}], "==", "\"\<{\>\""}], ",", "\n", 
+            RowBox[{
+             RowBox[{"value", "=", "\"\<\>\""}], ";", "\n", 
+             RowBox[{"mode", "=", "2"}], ";", "\n", 
+             RowBox[{"depth", "=", "1"}], ";", "\n", 
+             RowBox[{"separator", "=", 
+              RowBox[{"StringTake", "[", 
+               RowBox[{"line", ",", 
+                RowBox[{"{", 
+                 RowBox[{"1", ",", 
+                  RowBox[{"-", "2"}]}], "}"}]}], "]"}]}]}]}], "]"}], ",", 
+          "\n", "2", ",", 
+          RowBox[{
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{"line", "==", 
+              RowBox[{"separator", "<>", "\"\<{\>\""}]}], ",", 
+             RowBox[{"++", "depth"}], ",", "\n", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"line", "==", 
+                RowBox[{"\"\<}\>\"", "<>", "separator"}]}], ",", 
+               RowBox[{"--", "depth"}]}], "]"}]}], "]"}], ";", "\n", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{"depth", "==", "0"}], ",", "\n", 
+             RowBox[{
+              RowBox[{"AppendTo", "[", 
+               RowBox[{"items", ",", 
+                RowBox[{"item", "->", "value"}]}], "]"}], ";", 
+              RowBox[{"mode", "=", "0"}]}], ",", "\n", 
+             RowBox[{"value", "=", 
+              RowBox[{"value", "<>", "line", "<>", "\"\<\\n\>\""}]}]}], 
+            "]"}]}]}], "\n", "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"line", ",", "lines"}], "}"}]}], "]"}], ";", "\n", 
+      "items"}]}], "\n", "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"LoadData", "[", "s_String", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"file", "=", 
+       RowBox[{"DataPath", "[", "s", "]"}]}], ",", "data"}], "}"}], ",", "\n", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"FileExistsQ", "[", "file", "]"}], ",", 
+       RowBox[{"file", "=", 
+        RowBox[{"OpenRead", "[", "file", "]"}]}], ",", 
+       RowBox[{"Return", "[", "]"}]}], "]"}], ";", "\n", 
+     RowBox[{"data", "=", 
+      RowBox[{"LoadData", "[", "file", "]"}]}], ";", "\n", 
+     RowBox[{"Close", "[", "file", "]"}], ";", "\n", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"StringFreeQ", "[", 
+        RowBox[{"s", ",", 
+         RowBox[{"\"\<\\\\\>\"", "|", "\"\</\>\""}]}], "]"}], ",", 
+       RowBox[{
+        RowBox[{"LoadData", "[", "s", "]"}], "=", "data"}]}], "]"}], ";", 
+     "\n", "data"}]}], "\n", "]"}]}], "\n", 
+ RowBox[{
+  RowBox[{"LoadData", "[", 
+   RowBox[{"s_String", ",", "item_String"}], "]"}], ":=", 
+  RowBox[{"item", "/.", 
+   RowBox[{"LoadData", "[", "s", "]"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LoadData", "[", 
+    RowBox[{"s_String", ",", "item__String"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"List", "[", "item", "]"}], "/.", 
+    RowBox[{"LoadData", "[", "s", "]"}]}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CountsData", "[", "s_String", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"data", "=", 
+        RowBox[{"LoadData", "[", 
+         RowBox[{"s", ",", "\"\<Counts\>\""}], "]"}]}], ",", "variable", ",", 
+       "count"}], "}"}], ",", "\n", 
+     RowBox[{
+      RowBox[{"data", "=", 
+       RowBox[{"StringSplit", "[", 
+        RowBox[{"data", ",", "\"\<\\n\>\""}], "]"}]}], ";", "\n", 
+      RowBox[{"data", "=", 
+       RowBox[{"Transpose", "[", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"StringSplit", "[", "x", "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"x", ",", "data"}], "}"}]}], "]"}], "]"}]}], ";", "\n", 
+      RowBox[{"variable", "=", 
+       RowBox[{"ToExpression", "[", 
+        RowBox[{
+         RowBox[{"Take", "[", 
+          RowBox[{"data", ",", "1"}], "]"}], "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ";", "\n", 
+      RowBox[{"count", "=", 
+       RowBox[{"ToExpression", "[", 
+        RowBox[{"Transpose", "[", 
+         RowBox[{"Take", "[", 
+          RowBox[{"data", ",", 
+           RowBox[{"{", 
+            RowBox[{"3", ",", 
+             RowBox[{"-", "1"}]}], "}"}]}], "]"}], "]"}], "]"}]}], ";", "\n", 
+      
+      RowBox[{
+       RowBox[{"CountsData", "[", "s", "]"}], "=", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"variable", "[", 
+           RowBox[{"[", "i", "]"}], "]"}], "->", 
+          RowBox[{"Partition", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"count", "[", 
+                RowBox[{"[", "i", "]"}], "]"}], "/", "\n", 
+               RowBox[{"If", "[", 
+                RowBox[{
+                 RowBox[{"#", ">=", "256"}], ",", "#", ",", "1"}], "]"}]}], 
+              "&"}], "[", 
+             RowBox[{"GCD", "@@", 
+              RowBox[{"(", 
+               RowBox[{"count", "[", 
+                RowBox[{"[", "i", "]"}], "]"}], ")"}]}], "]"}], ",", "4"}], 
+           "]"}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", 
+           RowBox[{"Length", "[", "variable", "]"}]}], "}"}]}], "]"}]}]}]}], 
+    "\n", "]"}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"SplitCounts", "[", "s_String", "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"steps", "=", 
+         RowBox[{"Floor", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"#2", "-", "#1"}], ")"}], "/", "#3"}], "+", "1"}], 
+            "&"}], "@@", 
+           RowBox[{"ToExpression", "[", 
+            RowBox[{"LoadData", "[", 
+             RowBox[{
+             "s", ",", "\"\<Start\>\"", ",", "\"\<End\>\"", ",", 
+              "\"\<Step\>\""}], "]"}], "]"}]}], "]"}]}], ",", "\n", 
+        RowBox[{"totalsteps", "=", 
+         RowBox[{"Length", "[", 
+          RowBox[{"CountsData", "[", "s", "]"}], "]"}]}]}], "}"}], ",", "\n", 
+      
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"CountsData", "[", "s", "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"i", "-", "1"}], ")"}], "*", "steps"}], "+", "1"}], ";;", 
+           RowBox[{"i", "*", "steps"}]}], "]"}], "]"}], ",", "\n", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", 
+          RowBox[{"Floor", "[", 
+           RowBox[{"totalsteps", "/", "steps"}], "]"}]}], "}"}]}], "]"}]}], 
+     "\n", "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"FromCounts", "[", 
+   RowBox[{"lst_List", ",", "expr_"}], "]"}], ":=", 
+  RowBox[{"Each", "[", 
+   RowBox[{"lst", ",", 
+    RowBox[{
+     RowBox[{"#1", "->", 
+      RowBox[{"Each", "[", 
+       RowBox[{"#2", ",", "expr"}], "]"}]}], "&"}]}], "]"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"FromCounts", "[", 
+    RowBox[{"s_String", ",", "expr_"}], "]"}], ":=", 
+   RowBox[{"FromCounts", "[", 
+    RowBox[{
+     RowBox[{"CountsData", "[", "s", "]"}], 
+     RowBox[{"(*", 
+      RowBox[{
+       RowBox[{"SplitCounts", "[", "s", "]"}], "[", 
+       RowBox[{"[", "1", "]"}], "]"}], "*)"}], ",", "expr"}], "]"}]}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"ToState", "[", 
+   RowBox[{"x_", "?", "NumberQ"}], "]"}], ":=", 
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{"x", ">", "DarkThreshold"}], ",", "1.", ",", "0."}], 
+   "]"}]}], "\n", 
+ RowBox[{
+  RowBox[{"ToState", "[", "lst_List", "]"}], ":=", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"#", ">", "DarkThreshold"}], ",", "1.", ",", "0."}], "]"}], 
+     "&"}], ")"}], "/@", "lst"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ToState", "[", 
+    RowBox[{"lst__", "?", "NumberQ"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"#", ">", "DarkThreshold"}], ",", "1.", ",", "0."}], "]"}], 
+      "&"}], ")"}], "/@", 
+    RowBox[{"(", 
+     RowBox[{"List", "@", "lst"}], ")"}]}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"StateCorrection", "[", 
+   RowBox[{"state_Integer", ",", 
+    RowBox[{"x_", "?", "NumberQ"}]}], "]"}], ":=", "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Piecewise", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0.", ",", 
+          RowBox[{"#", "<", "0"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"1.", ",", 
+          RowBox[{"#", ">", "1"}]}], "}"}]}], "}"}], ",", "#"}], "]"}], "&"}],
+    "[", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"DarkEfficiency", "+", "x", "-", "1"}], ")"}], "/", 
+    RowBox[{"(", 
+     RowBox[{"DarkEfficiency", "+", 
+      RowBox[{"StateEfficiency", "[", 
+       RowBox[{"[", "state", "]"}], "]"}], "-", "1"}], ")"}]}], "]"}]}], "\n", 
+ RowBox[{
+  RowBox[{"StateCorrection", "[", 
+   RowBox[{"x_", "?", "NumberQ"}], "]"}], ":=", "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Piecewise", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0.", ",", 
+          RowBox[{"#", "<", "0"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"1.", ",", 
+          RowBox[{"#", ">", "1"}]}], "}"}]}], "}"}], ",", "#"}], "]"}], "&"}],
+    "[", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"DarkEfficiency", "+", "x", "-", "1"}], ")"}], "/", 
+    RowBox[{"(", 
+     RowBox[{"DarkEfficiency", "+", "BrightEfficiency", "-", "1"}], ")"}]}], 
+   "]"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"StateCorrection", "[", "lst_List", "]"}], ":=", 
+    RowBox[{"Each", "[", 
+     RowBox[{"lst", ",", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"#1", ",", 
+         RowBox[{"StateCorrection", "@", "#2"}]}], "}"}], "&"}]}], "]"}]}], 
+   ";"}], "\n", "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"List", "@@", "#"}], "&"}], "/@"}], " ", "*)"}]}], "\n", 
+ RowBox[{
+  RowBox[{"Average", "[", 
+   RowBox[{"lst_List", ",", "n_Integer", ",", 
+    RowBox[{"func_:", "Mean"}]}], "]"}], ":=", 
+  RowBox[{"Each", "[", 
+   RowBox[{"lst", ",", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"#1", ",", 
+       RowBox[{"func", "[", 
+        RowBox[{"Partition", "[", 
+         RowBox[{"#2", ",", "n"}], "]"}], "]"}]}], "}"}], "&"}]}], 
+   "]"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Average", "[", 
+    RowBox[{"s_String", ",", "expr_", ",", "n_Integer", ",", 
+     RowBox[{"func_:", "Mean"}]}], "]"}], ":=", 
+   RowBox[{"Average", "[", 
+    RowBox[{
+     RowBox[{"FromCounts", "[", 
+      RowBox[{"s", ",", "expr"}], "]"}], ",", "n", ",", "func"}], "]"}]}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"Average", "[", 
+   RowBox[{"lst_List", ",", 
+    RowBox[{"func_:", "Mean"}]}], "]"}], ":=", 
+  RowBox[{"Each", "[", 
+   RowBox[{"lst", ",", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"#1", ",", 
+       RowBox[{"func", "[", "#2", "]"}]}], "}"}], "&"}]}], "]"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Average", "[", 
+    RowBox[{"s_String", ",", "expr_", ",", 
+     RowBox[{"func_:", "Mean"}]}], "]"}], ":=", 
+   RowBox[{"Average", "[", 
+    RowBox[{
+     RowBox[{"FromCounts", "[", 
+      RowBox[{"s", ",", "expr"}], "]"}], ",", "func"}], "]"}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"StdErr", "[", 
+    RowBox[{"lst_List", ",", 
+     RowBox[{"n_Integer:", "1"}]}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"StandardDeviation", "[", 
+     RowBox[{"Mean", "/@", 
+      RowBox[{"Partition", "[", 
+       RowBox[{"lst", ",", "n"}], "]"}]}], "]"}], "/", 
+    RowBox[{"Sqrt", "[", 
+     RowBox[{
+      RowBox[{"Length", "[", "lst", "]"}], "/", "n"}], "]"}]}]}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ListLinesPlot", "[", 
+    RowBox[{"lst_List", ",", 
+     RowBox[{"opts", ":", 
+      RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", 
+   RowBox[{"ListLinePlot", "[", 
+    RowBox[{
+     RowBox[{"Tooltip", "/@", 
+      RowBox[{"Spread", "[", "lst", "]"}]}], ",", 
+     RowBox[{"PlotMarkers", "->", "Automatic"}], ",", "opts"}], "]"}]}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ListLinesPlotData", "[", "graph_Graphics", "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"parts", "=", 
+         RowBox[{"Position", "[", 
+          RowBox[{"graph", ",", "GraphicsComplex"}], "]"}]}], ",", "pos", ",",
+         "data", ",", "r"}], "}"}], ",", "\n", 
+      RowBox[{
+       RowBox[{"r", "=", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"data", "=", 
+            RowBox[{"Part", "[", 
+             RowBox[{"graph", ",", 
+              RowBox[{"Sequence", "@@", 
+               RowBox[{"Most", "[", "pos", "]"}]}]}], "]"}]}], ";", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Part", "[", 
+              RowBox[{
+               RowBox[{"data", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], ",", "#"}], "]"}], "&"}], "/@", 
+            RowBox[{"Cases", "[", 
+             RowBox[{
+              RowBox[{"data", "[", 
+               RowBox[{"[", 
+                RowBox[{"2", ",", "1"}], "]"}], "]"}], ",", 
+              RowBox[{
+               RowBox[{"Line", "[", "line_", "]"}], ":>", "line"}], ",", 
+              "Infinity"}], "]"}]}]}], ",", 
+          RowBox[{"{", 
+           RowBox[{"pos", ",", "parts"}], "}"}]}], "]"}]}], ";", "\n", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Length", "[", "r", "]"}], "==", "1"}], ",", 
+         RowBox[{"r", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], ",", "r"}], "]"}]}]}], "\n", 
+     "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"AveragePlot", "[", 
+   RowBox[{"lst_List", ",", 
+    RowBox[{"opts", ":", 
+     RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", 
+  RowBox[{"ListLinesPlot", "[", 
+   RowBox[{
+    RowBox[{"Average", "[", "lst", "]"}], ",", "opts"}], "]"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"AveragePlot", "[", 
+    RowBox[{"s_String", ",", "expr_", ",", 
+     RowBox[{"opts", ":", 
+      RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", 
+   RowBox[{"AveragePlot", "[", 
+    RowBox[{
+     RowBox[{"FromCounts", "[", 
+      RowBox[{"s", ",", "expr"}], "]"}], ",", "opts"}], "]"}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"C1", " ", "=", " ", 
+   RowBox[{"#1", "&"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"C2", " ", "=", " ", 
+   RowBox[{"#2", "&"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"C3", " ", "=", " ", 
+   RowBox[{"#3", "&"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"C4", " ", "=", " ", 
+   RowBox[{"#4", "&"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"C12", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"#1", "+", "#2"}], ")"}], "&"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"C0", " ", "=", " ", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"#1", "+", "#2", "+", "#3", "+", "#4"}], ")"}], "&"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"S1", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"ToState", "[", "#1", "]"}], "&"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"S2", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"ToState", "[", "#2", "]"}], "&"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"S3", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"ToState", "[", "#3", "]"}], "&"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"S4", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"ToState", "[", "#4", "]"}], "&"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"S12", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"ToState", "[", 
+     RowBox[{"#1", "+", "#2"}], "]"}], "&"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"S0", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"ToState", "[", 
+     RowBox[{"#1", "+", "#2", "+", "#3", "+", "#4"}], "]"}], "&"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"P0", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"1", "-", 
+     RowBox[{"ToState", "[", 
+      RowBox[{"#1", "+", "#2", "+", "#3", "+", "#4"}], "]"}]}], "&"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"P1", " ", "=", " ", 
+    RowBox[{
+     RowBox[{"1", "-", 
+      RowBox[{"ToState", "[", 
+       RowBox[{"#1", "+", "#2", "+", "#3", "+", "#4"}], "]"}]}], "&"}]}], 
+   ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"AllCounts", "[", "lst_List", "]"}], ":=", 
+  RowBox[{"Flatten", "[", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"x", "[", 
+      RowBox[{"[", "2", "]"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", "lst"}], "}"}]}], "]"}], "]"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"AllCounts", "[", "s_String", "]"}], ":=", 
+   RowBox[{"AllCounts", "[", 
+    RowBox[{"CountsData", "[", "s", "]"}], "]"}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"AllStates", "[", "lst_List", "]"}], ":=", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"x", "[", 
+       RowBox[{"[", "1", "]"}], "]"}], ",", 
+      RowBox[{"ToState", "[", 
+       RowBox[{"x", "[", 
+        RowBox[{"[", "2", "]"}], "]"}], "]"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"x", ",", "lst"}], "}"}]}], "]"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"AllStates", "[", "s_String", "]"}], ":=", 
+   RowBox[{"AllStates", "[", 
+    RowBox[{
+     RowBox[{"SplitCounts", "[", "s", "]"}], "[", 
+     RowBox[{"[", "1", "]"}], "]"}], "]"}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CurrentDateString", "[", 
+    RowBox[{"offset", ":", 
+     RowBox[{"(", 
+      RowBox[{"_", "?", "NumberQ"}], ")"}], ":", "0"}], "]"}], ":=", 
+   RowBox[{"DateString", "[", 
+    RowBox[{
+     RowBox[{"DatePlus", "[", 
+      RowBox[{
+       RowBox[{"DateList", "[", "]"}], ",", "offset"}], "]"}], ",", "\n", 
+     RowBox[{"{", 
+      RowBox[{"\"\<Year\>\"", ",", "\"\<Month\>\"", ",", "\"\<Day\>\""}], 
+      "}"}]}], "]"}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CurrentTimeString", "[", 
+    RowBox[{"offset", ":", 
+     RowBox[{"(", 
+      RowBox[{"_", "?", "NumberQ"}], ")"}], ":", "0"}], "]"}], ":=", 
+   RowBox[{"DateString", "[", 
+    RowBox[{
+     RowBox[{"DatePlus", "[", 
+      RowBox[{
+       RowBox[{"DateList", "[", "]"}], ",", "offset"}], "]"}], ",", "\n", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<Year\>\"", ",", "\"\<Month\>\"", ",", "\"\<Day\>\"", ",", 
+       "\"\<Hour\>\"", ",", "\"\<Minute\>\"", ",", "\"\<Second\>\""}], 
+      "}"}]}], "]"}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"NewData", "[", "prefix_String", "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"data", ",", "path", ",", "dir"}], "}"}], ",", "\n", 
+      RowBox[{
+       RowBox[{"data", "=", 
+        RowBox[{"prefix", "<>", 
+         RowBox[{"CurrentTimeString", "[", "]"}]}]}], ";", "\n", 
+       RowBox[{"path", "=", 
+        RowBox[{"DataPath", "[", "data", "]"}]}], ";", "\n", 
+       RowBox[{"dir", "=", 
+        RowBox[{"DirectoryName", "[", "path", "]"}]}], ";", "\n", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"!", 
+          RowBox[{"DirectoryQ", "[", "dir", "]"}]}], ",", 
+         RowBox[{"CreateDirectory", "[", "dir", "]"}]}], "]"}], ";", "\n", 
+       RowBox[{"Close", "[", 
+        RowBox[{"OpenAppend", "[", "path", "]"}], "]"}], ";", "\n", 
+       "data"}]}], "\n", "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MergeList", "[", 
+    RowBox[{"lst1_List", ",", "lst2_List"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"pos", "=", 
+       RowBox[{"Position", "[", 
+        RowBox[{"lst1", ",", " ", 
+         RowBox[{"lst2", "[", 
+          RowBox[{"[", 
+           RowBox[{"1", ",", "1"}], "]"}], "]"}]}], "]"}]}], "}"}], ",", "\n", 
+     RowBox[{
+      RowBox[{"pos", "=", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"pos", "===", 
+          RowBox[{"{", "}"}]}], ",", "0", ",", 
+         RowBox[{"pos", "[", 
+          RowBox[{"[", 
+           RowBox[{"1", ",", "1"}], "]"}], "]"}]}], "]"}]}], ";", "\n", 
+      RowBox[{"Join", "[", 
+       RowBox[{
+        RowBox[{"lst1", "[", 
+         RowBox[{"[", 
+          RowBox[{"1", " ", ";;", " ", 
+           RowBox[{"pos", " ", "-", " ", "1"}]}], "]"}], "]"}], ",", " ", 
+        "lst2"}], "]"}]}]}], "\n", "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"MergeList", "[", "lsts__List", "]"}], ":=", 
+    RowBox[{"Fold", "[", 
+     RowBox[{"MergeList", ",", 
+      RowBox[{"{", "}"}], ",", 
+      RowBox[{"{", "lsts", "}"}]}], "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"MergeData", "[", "files__String", "]"}], ":=", 
+    RowBox[{"MergeList", "@@", 
+     RowBox[{"LoadData", "/@", 
+      RowBox[{"{", "files", "}"}]}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"DataString", "[", 
+    RowBox[{"item_", ",", "value_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"ToString", "[", "item", "]"}], "<>", "\"\<=\>\"", "<>", "\n", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"StringPosition", "[", 
+           RowBox[{"#", ",", "\"\<\\n\>\""}], "]"}], "===", 
+          RowBox[{"{", "}"}]}], ",", "#", ",", 
+         RowBox[{"\"\<\\n{\\n\>\"", "<>", "#", "<>", "\"\<\\n}\>\""}]}], 
+        "]"}], "&"}], "@", 
+      RowBox[{"ToString", "[", "value", "]"}]}], ")"}], "<>", 
+    "\"\<\\n\>\""}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"DataString", "[", "items_List", "]"}], ":=", 
+    RowBox[{"StringJoin", "@@", 
+     RowBox[{"Each", "[", 
+      RowBox[{"items", ",", "DataString"}], "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"WriteData", "[", 
+     RowBox[{"s_String", ",", "items_List"}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"fp", "=", 
+        RowBox[{"OpenWrite", "[", 
+         RowBox[{"DataPath", "[", "s", "]"}], "]"}]}], "}"}], ",", "\n", 
+      RowBox[{
+       RowBox[{"WriteString", "[", 
+        RowBox[{"fp", ",", 
+         RowBox[{"DataString", "[", "items", "]"}]}], "]"}], ";", "\n", 
+       RowBox[{"Close", "[", "fp", "]"}], ";", "s"}]}], "\n", "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"AppendData", "[", 
+     RowBox[{"s_String", ",", "items_List"}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"fp", "=", 
+        RowBox[{"OpenAppend", "[", 
+         RowBox[{"DataPath", "[", "s", "]"}], "]"}]}], "}"}], ",", "\n", 
+      RowBox[{
+       RowBox[{"WriteString", "[", 
+        RowBox[{"fp", ",", 
+         RowBox[{"DataString", "[", "items", "]"}]}], "]"}], ";", "\n", 
+       RowBox[{"Close", "[", "fp", "]"}], ";", "s"}]}], "\n", "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ListGrep", "[", 
+     RowBox[{"data_List", ",", "patt_"}], "]"}], ":=", "\n", 
+    RowBox[{"Pick", "[", 
+     RowBox[{
+      RowBox[{"Transpose", "@", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Range", "[", 
+          RowBox[{"Length", "[", "data", "]"}], "]"}], ",", "data"}], "}"}]}],
+       ",", 
+      RowBox[{"StringFreeQ", "[", 
+       RowBox[{"data", ",", "patt"}], "]"}], ",", "False"}], "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"StringGrep", "[", 
+     RowBox[{"str_String", ",", "patt_"}], "]"}], ":=", 
+    RowBox[{"ListGrep", "[", 
+     RowBox[{
+      RowBox[{"StringSplit", "[", 
+       RowBox[{"str", ",", "\"\<\\n\>\""}], "]"}], ",", "patt"}], "]"}]}], 
+   ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FileGrep", "[", 
+     RowBox[{"file_String", ",", "patt_"}], "]"}], ":=", 
+    RowBox[{"ListGrep", "[", 
+     RowBox[{
+      RowBox[{"Import", "[", 
+       RowBox[{"file", ",", "\"\<Lines\>\""}], "]"}], ",", "patt"}], "]"}]}], 
+   ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ListFolder", "[", 
+     RowBox[{"dir_String", ",", 
+      RowBox[{"n_:", "1"}]}], "]"}], ":=", 
+    RowBox[{"GatherBy", "[", 
+     RowBox[{
+      RowBox[{"FileNames", "[", 
+       RowBox[{"__", ",", "dir", ",", "n"}], "]"}], ",", "DirectoryQ"}], 
+     "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"GrepData", "[", 
+    RowBox[{"patt_", ",", "dir_String"}], "]"}], ":=", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Length", "[", "#", "]"}], ">", "0"}], ",", 
+       RowBox[{"FileBaseName", "/@", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"ListGrep", "[", 
+           RowBox[{
+            RowBox[{"Last", "@", "#"}], ",", "patt"}], "]"}], "[", 
+          RowBox[{"[", 
+           RowBox[{"All", ",", "2"}], "]"}], "]"}], ")"}]}], ",", "#"}], 
+      "]"}], "&"}], "@", 
+    RowBox[{"ListFolder", "[", 
+     RowBox[{"dir", ",", "Infinity"}], "]"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"GrepData", "[", 
+    RowBox[{"patt_", ",", "date_List"}], "]"}], ":=", 
+   RowBox[{"GrepData", "[", 
+    RowBox[{"patt", ",", 
+     RowBox[{"DateFolder", "@", "date"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"GrepData", "[", 
+     RowBox[{"patt_", ",", 
+      RowBox[{"offset_Integer:", "0"}]}], "]"}], ":=", 
+    RowBox[{"GrepData", "[", 
+     RowBox[{"patt", ",", 
+      RowBox[{"DatePlus", "[", "offset", "]"}]}], "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LastData", "[", 
+    RowBox[{"patt_", ",", "Null"}], "]"}], ":=", "Null"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LastData", "[", 
+    RowBox[{"patt_", ",", "time_List"}], "]"}], ":=", 
+   RowBox[{"Module", "[", "\n", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"i", "=", 
+        RowBox[{
+         RowBox[{"Ceiling", "@", 
+          RowBox[{"DateDifference", "[", "time", "]"}]}], "+", "1"}]}], ",", 
+       RowBox[{"n", "=", 
+        RowBox[{"DateDifference", "[", 
+         RowBox[{"{", 
+          RowBox[{"2014", ",", "4", ",", "1"}], "}"}], "]"}]}], ",", "r"}], 
+      "}"}], ",", "\n", 
+     RowBox[{"While", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"--", "i"}], ">=", "n"}], ",", 
+       RowBox[{
+        RowBox[{"r", "=", 
+         RowBox[{"Select", "[", 
+          RowBox[{
+           RowBox[{"Reverse", "@", 
+            RowBox[{"SortBy", "[", 
+             RowBox[{
+              RowBox[{"GrepData", "[", 
+               RowBox[{"patt", ",", "i"}], "]"}], ",", "DataTime"}], "]"}]}], 
+           ",", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Order", "[", 
+              RowBox[{
+               RowBox[{"DataTime", "[", "#", "]"}], ",", "time"}], "]"}], ">",
+              "0"}], "&"}], ",", "1"}], "]"}]}], ";", "\n", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Length", "[", "r", "]"}], ">", "0"}], ",", 
+          RowBox[{"Return", "[", 
+           RowBox[{"r", "[", 
+            RowBox[{"[", 
+             RowBox[{"-", "1"}], "]"}], "]"}], "]"}]}], "]"}]}]}], "]"}]}], 
+    "\n", "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LastData", "[", "patt_", "]"}], ":=", 
+   RowBox[{"LastData", "[", 
+    RowBox[{"patt", ",", 
+     RowBox[{"DateList", "[", "]"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LastData", "[", 
+    RowBox[{"patt_", ",", "n_Integer"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"RecentData", "[", 
+     RowBox[{"patt", ",", "n"}], "]"}], "[", 
+    RowBox[{"[", 
+     RowBox[{"-", "1"}], "]"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LastData", "[", 
+    RowBox[{"patt_", ",", "data_Rule"}], "]"}], ":=", 
+   RowBox[{"LastData", "[", 
+    RowBox[{"patt", ",", 
+     RowBox[{"data", "[", 
+      RowBox[{"[", "1", "]"}], "]"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"LastData", "[", 
+     RowBox[{"patt_", ",", "datapatt_"}], "]"}], ":=", 
+    RowBox[{"LastData", "[", 
+     RowBox[{"patt", ",", 
+      RowBox[{"DataTime", "@", 
+       RowBox[{"LastData", "[", "datapatt", "]"}]}]}], "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"RecentData", "[", 
+     RowBox[{"patt_", ",", "n_Integer"}], "]"}], ":=", 
+    RowBox[{"NestList", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"LastData", "[", 
+        RowBox[{"patt", ",", "#"}], "]"}], "&"}], ",", 
+      RowBox[{"LastData", "[", "patt", "]"}], ",", 
+      RowBox[{"n", "-", "1"}]}], "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LogFile", "[", "path_String", "]"}], ":=", 
+   RowBox[{"\"\<Log/\>\"", "<>", "path", "<>", "\"\<.log\>\""}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LogFile", "[", 
+    RowBox[{"offset_Integer:", "0"}], "]"}], ":=", 
+   RowBox[{"LogFile", "@", 
+    RowBox[{"CurrentDateString", "[", "offset", "]"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"LogFile", "[", "filter_", "]"}], ":=", 
+    RowBox[{"LogFile", "/@", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"Reap", "[", 
+        RowBox[{
+         RowBox[{"SetDirectory", "[", 
+          RowBox[{"DataPath", "[", "\"\<Log/\>\"", "]"}], "]"}], ";", "\n", 
+         RowBox[{"Sow", "[", 
+          RowBox[{"ToString", "/@", 
+           RowBox[{"Select", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"ToExpression", "[", 
+                RowBox[{"FileBaseName", "[", "#", "]"}], "]"}], "&"}], "/@", 
+              RowBox[{"FileNames", "[", "__", "]"}]}], ",", "\n", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"filter", "===", "All"}], ",", 
+               RowBox[{"True", "&"}], ",", "filter"}], "]"}]}], "]"}]}], 
+          "]"}], ";", 
+         RowBox[{"ResetDirectory", "[", "]"}], ";"}], "]"}], "[", 
+       RowBox[{"[", 
+        RowBox[{"2", ",", "1", ",", "1"}], "]"}], "]"}], ")"}]}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Options", "[", "WriteLog", "]"}], "=", 
+   RowBox[{"{", 
+    RowBox[{"LogFile", ":>", 
+     RowBox[{"LogFile", "[", "]"}]}], "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"WriteLog", "[", 
+     RowBox[{"log__", ",", 
+      RowBox[{"OptionsPattern", "[", "]"}]}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"StringFreeQ", "[", 
+         RowBox[{"#", ",", "\"\<Private\>\""}], "]"}], ",", 
+        RowBox[{"AppendData", "[", 
+         RowBox[{
+          RowBox[{"OptionValue", "[", "LogFile", "]"}], ",", "\n", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"CurrentTimeString", "[", "]"}], "->", "#"}], "}"}]}], 
+         "]"}]}], "]"}], "&"}], "@", 
+     RowBox[{"StringJoin", "[", 
+      RowBox[{"ToString", "/@", 
+       RowBox[{"{", "log", "}"}]}], "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"PrintLog", "[", 
+     RowBox[{"log__", ",", 
+      RowBox[{"opt", ":", 
+       RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"FreeQ", "[", 
+         RowBox[{
+          RowBox[{"{", "log", "}"}], ",", "$Failed"}], "]"}], ",", 
+        RowBox[{
+         RowBox[{"Print", "[", "log", "]"}], ";", 
+         RowBox[{"WriteLog", "[", 
+          RowBox[{"log", ",", "opt"}], "]"}]}]}], "]"}], ";"}], ")"}]}], 
+   ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LoadLog", "[", "file_String", "]"}], ":=", 
+   RowBox[{"Each", "[", 
+    RowBox[{
+     RowBox[{"LoadData", "[", "file", "]"}], ",", "\n", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"ToExpression", "/@", 
+        RowBox[{"StringTake", "[", 
+         RowBox[{"#1", ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"1", ",", "4"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"5", ",", "6"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"7", ",", "8"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"9", ",", "10"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"11", ",", "12"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"13", ",", "14"}], "}"}]}], "}"}]}], "]"}]}], "->", "\n", 
+       RowBox[{"ToExpression", "[", 
+        RowBox[{"\"\<\\\"\>\"", "<>", 
+         RowBox[{"StringReplace", "[", 
+          RowBox[{"#2", ",", 
+           RowBox[{"\"\<\\\"\>\"", "->", "\"\<\\\\\\\"\>\""}]}], "]"}], "<>", 
+         "\"\<\\\"\>\""}], "]"}]}], "&"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LoadLog", "[", "files_List", "]"}], ":=", 
+   RowBox[{"Join", "@@", 
+    RowBox[{"(", 
+     RowBox[{"LoadLog", "/@", "files"}], ")"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"LoadLog", "[", 
+     RowBox[{"filter_:", "0"}], "]"}], ":=", 
+    RowBox[{"LoadLog", "@", 
+     RowBox[{"LogFile", "[", "filter", "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"GrepLog", "[", 
+    RowBox[{"patt_", ",", "logs_List"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Pick", "[", 
+      RowBox[{"#", ",", 
+       RowBox[{"StringFreeQ", "[", 
+        RowBox[{
+         RowBox[{"#", "[", 
+          RowBox[{"[", 
+           RowBox[{"All", ",", "2"}], "]"}], "]"}], ",", "patt"}], "]"}], ",",
+        "False"}], "]"}], "&"}], "@", "logs"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"GrepLog", "[", 
+     RowBox[{"patt_", ",", 
+      RowBox[{"filter_:", "0"}]}], "]"}], ":=", 
+    RowBox[{"GrepLog", "[", 
+     RowBox[{"patt", ",", 
+      RowBox[{"LoadLog", "[", "filter", "]"}]}], "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LastLog", "[", 
+    RowBox[{"patt_", ",", "Null"}], "]"}], ":=", "Null"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LastLog", "[", 
+    RowBox[{"patt_", ",", "time_List"}], "]"}], ":=", 
+   RowBox[{"Module", "[", "\n", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"i", "=", 
+        RowBox[{
+         RowBox[{"Ceiling", "@", 
+          RowBox[{"DateDifference", "[", "time", "]"}]}], "+", "1"}]}], ",", 
+       RowBox[{"n", "=", 
+        RowBox[{"DateDifference", "[", 
+         RowBox[{"{", 
+          RowBox[{"2014", ",", "4", ",", "1"}], "}"}], "]"}]}], ",", "r"}], 
+      "}"}], ",", "\n", 
+     RowBox[{"While", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"--", "i"}], ">=", "n"}], ",", 
+       RowBox[{
+        RowBox[{"r", "=", 
+         RowBox[{"Select", "[", 
+          RowBox[{
+           RowBox[{"Reverse", "@", 
+            RowBox[{"GrepLog", "[", 
+             RowBox[{"patt", ",", "i"}], "]"}]}], ",", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Order", "[", 
+              RowBox[{
+               RowBox[{"#", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], ",", "time"}], "]"}], ">", 
+             "0"}], "&"}], ",", "1"}], "]"}]}], ";", "\n", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Length", "[", "r", "]"}], ">", "0"}], ",", 
+          RowBox[{"Return", "[", 
+           RowBox[{"r", "[", 
+            RowBox[{"[", 
+             RowBox[{"-", "1"}], "]"}], "]"}], "]"}]}], "]"}]}]}], "]"}]}], 
+    "\n", "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LastLog", "[", "patt_", "]"}], ":=", 
+   RowBox[{"LastLog", "[", 
+    RowBox[{"patt", ",", 
+     RowBox[{"DateList", "[", "]"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LastLog", "[", 
+    RowBox[{"patt_", ",", "n_Integer"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"RecentLogs", "[", 
+     RowBox[{"patt", ",", "n"}], "]"}], "[", 
+    RowBox[{"[", 
+     RowBox[{"-", "1"}], "]"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LastLog", "[", 
+    RowBox[{"patt_", ",", "log_Rule"}], "]"}], ":=", 
+   RowBox[{"LastLog", "[", 
+    RowBox[{"patt", ",", 
+     RowBox[{"log", "[", 
+      RowBox[{"[", "1", "]"}], "]"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"LastLog", "[", 
+     RowBox[{"patt_", ",", "logpatt_"}], "]"}], ":=", 
+    RowBox[{"LastLog", "[", 
+     RowBox[{"patt", ",", 
+      RowBox[{"LastLog", "[", "logpatt", "]"}]}], "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"RecentLogs", "[", 
+     RowBox[{"patt_", ",", "n_Integer"}], "]"}], ":=", 
+    RowBox[{"DeleteCases", "[", 
+     RowBox[{
+      RowBox[{"NestWhileList", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"LastLog", "[", 
+          RowBox[{"patt", ",", 
+           RowBox[{"#", "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}], "]"}], "&"}], ",", 
+        RowBox[{"LastLog", "[", "patt", "]"}], ",", 
+        RowBox[{
+         RowBox[{"#", "=!=", "Null"}], "&"}], ",", "1", ",", 
+        RowBox[{"n", "-", "1"}]}], "]"}], ",", "Null"}], "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"PrettyName", ",", "HoldFirst"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"PrettyName", "[", "expr_", "]"}], ":=", 
+    RowBox[{"StringTrim", "@", 
+     RowBox[{"StringReplace", "[", 
+      RowBox[{
+       RowBox[{"ToString", "@", 
+        RowBox[{"HoldForm", "@", "expr"}]}], ",", 
+       RowBox[{
+        RowBox[{"c_", "?", "UpperCaseQ"}], ":>", 
+        RowBox[{"\"\< \>\"", "<>", "c"}]}]}], "]"}]}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"PrettyPattern", ",", "HoldFirst"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"PrettyPattern", "[", "expr_", "]"}], ":=", 
+    RowBox[{"StartOfString", "~~", 
+     RowBox[{"PrettyName", "@", 
+      RowBox[{"Unevaluated", "@", "expr"}]}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"PrettyValue", ",", "HoldFirst"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"PrettyValue", "[", "expr_", "]"}], ":=", 
+   RowBox[{
+    RowBox[{"PrettyName", "[", 
+     RowBox[{"Unevaluated", "@", "expr"}], "]"}], "<>", "\"\< = \>\"", "<>", 
+    RowBox[{"ToString", "[", "expr", "]"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"PrettyValue", "[", 
+     RowBox[{"expr_", ",", "n_Integer"}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{"PrettyName", "[", 
+      RowBox[{"Unevaluated", "@", "expr"}], "]"}], "<>", "\"\< = \>\"", "<>", 
+     
+     RowBox[{"ToString", "@", 
+      RowBox[{"SetAccuracy", "[", 
+       RowBox[{"expr", ",", "n"}], "]"}]}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"LastValue", ",", "HoldFirst"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"LastValue", "[", 
+     RowBox[{"expr_", ",", 
+      RowBox[{"param_:", "1"}]}], "]"}], ":=", 
+    RowBox[{"LastLog", "[", 
+     RowBox[{
+      RowBox[{"PrettyPattern", "@", 
+       RowBox[{"Unevaluated", "@", "expr"}]}], ",", "param"}], "]"}]}], ";"}],
+   "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"RecentValues", ",", "HoldFirst"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"RecentValues", "[", 
+     RowBox[{"expr_", ",", "n_Integer"}], "]"}], ":=", 
+    RowBox[{"RecentLogs", "[", 
+     RowBox[{
+      RowBox[{"PrettyPattern", "@", 
+       RowBox[{"Unevaluated", "@", "expr"}]}], ",", "n"}], "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LogValue", "[", "Null", "]"}], ":=", "Null"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"LogValue", "[", "log_Rule", "]"}], ":=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"StringMatchQ", "[", 
+         RowBox[{"#", ",", "NumberString"}], "]"}], ",", 
+        RowBox[{"ToExpression", "[", "#", "]"}], ",", "#"}], "]"}], "&"}], 
+     "@", 
+     RowBox[{"Last", "@", 
+      RowBox[{"StringSplit", "[", 
+       RowBox[{"log", "[", 
+        RowBox[{"[", "2", "]"}], "]"}], "]"}]}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"RestoreValue", ",", "HoldFirst"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"RestoreValue", "[", 
+    RowBox[{"expr_", ",", "param_"}], "]"}], ":=", 
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Head", "[", "expr", "]"}], "===", "Rule"}], ",", "\n", 
+     RowBox[{
+      RowBox[{"Print", "[", 
+       RowBox[{"\"\<Restore \>\"", ",", 
+        RowBox[{"StringJoin", "@@", 
+         RowBox[{"StringSplit", "[", 
+          RowBox[{
+           RowBox[{"StringSplit", "[", 
+            RowBox[{
+             RowBox[{"expr", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], ",", "\"\<=\>\""}], "]"}], "[", 
+           
+           RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ",", "\"\< to \>\"", ",", 
+        
+        RowBox[{"DateString", "@", 
+         RowBox[{"expr", "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}]}], "]"}], ";", "\n", 
+      RowBox[{"ToExpression", "[", 
+       RowBox[{"StringJoin", "@@", 
+        RowBox[{"StringSplit", "[", 
+         RowBox[{"expr", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], "]"}]}], "]"}]}], ",", "\n", 
+     RowBox[{"RestoreValue", "[", 
+      RowBox[{"LastValue", "[", 
+       RowBox[{
+        RowBox[{"Unevaluated", "@", "expr"}], ",", "param"}], "]"}], "]"}]}], 
+    "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"RestoreValue", "[", "expr_", "]"}], ":=", 
+    RowBox[{"RestoreValue", "[", 
+     RowBox[{
+      RowBox[{"Unevaluated", "@", "expr"}], ",", "1"}], "]"}]}], ";"}], "\n"}]
+  , "\n", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"FilePath", ",", "HoldFirst"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FilePath", "[", 
+     RowBox[{"expr_", ",", "dir_String", ",", 
+      RowBox[{"ext_String:", "\"\<.txt\>\""}]}], "]"}], ":=", 
+    RowBox[{"DataPath", "[", 
+     RowBox[{"dir", "<>", 
+      RowBox[{"StringReplace", "[", 
+       RowBox[{
+        RowBox[{"ToString", "@", 
+         RowBox[{"HoldForm", "@", "expr"}]}], ",", 
+        RowBox[{"\"\< \>\"", "->", "\"\<\>\""}]}], "]"}], "<>", "ext"}], 
+     "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"GrepFile", "[", 
+     RowBox[{"patt_", ",", "dir_String"}], "]"}], ":=", 
+    RowBox[{"Flatten", "[", 
+     RowBox[{
+      RowBox[{"StringCases", "[", 
+       RowBox[{
+        RowBox[{"FileNames", "[", 
+         RowBox[{"\"\<*\>\"", ",", 
+          RowBox[{"DataPath", "[", "dir", "]"}]}], "]"}], ",", "patt"}], 
+       "]"}], ",", "1"}], "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"ImportEfficiency", "[", 
+   RowBox[{"param_:", "1"}], "]"}], ":=", 
+  RowBox[{"(", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"RestoreValue", "[", 
+      RowBox[{"DarkEfficiency", ",", "param"}], "]"}], ";", "\n", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"RestoreValue", "[", 
+        RowBox[{
+         RowBox[{"StateEfficiency", "[", "#", "]"}], ",", "param"}], "]"}], 
+       "&"}], "/@", 
+      RowBox[{"Range", "[", "PlusState", "]"}]}], ";"}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"DarkEfficiency", "=", "0.99"}], ";", "\n", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"StateEfficiency", "[", "#", "]"}], "=", "0.98"}], ")"}], 
+      "&"}], "/@", 
+     RowBox[{"Range", "[", "PlusState", "]"}]}], ";"}], ")"}]}]}], "Code",
+ CellChangeTimes->{{3.684651152879923*^9, 3.684651233328743*^9}, {
+  3.684651297670045*^9, 3.684651306285634*^9}, {3.684651404621011*^9, 
+  3.68465143739178*^9}, {3.684651468652372*^9, 3.684651524222961*^9}, {
+  3.6846515555697603`*^9, 3.684651588059555*^9}, {3.6846517491723127`*^9, 
+  3.684651749833152*^9}, {3.68465193457845*^9, 3.684651934810055*^9}, {
+  3.684657904867373*^9, 3.6846579395462227`*^9}, {3.684716252154559*^9, 
+  3.684716257427267*^9}, {3.684731002935927*^9, 3.684731012702018*^9}, {
+  3.684731073658208*^9, 3.6847310771342783`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["End", "Section",
+ ShowGroupOpener->True,
+ WholeCellGroupOpener->True,
+ CellChangeTimes->{{3.684651751025302*^9, 3.684651754184716*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"End", "[", "]"}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"EndPackage", "[", "]"}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"DarkThreshold", "=", "1"}], ";"}], "\n", 
+ RowBox[{"ImportEfficiency", "[", "]"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]]
+},
+WindowSize->{808, 756},
+WindowMargins->{{190, Automatic}, {-55, Automatic}},
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (2016\:5e747\
+\:670828\:65e5)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 1340, 30, 96, "Input"],
+Cell[CellGroupData[{
+Cell[1923, 54, 153, 3, 64, "Section"],
+Cell[2079, 59, 1383, 39, 238, "Input",
+ InitializationCell->True],
+Cell[3465, 100, 2568, 59, 532, "Input",
+ InitializationCell->True]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6070, 164, 149, 3, 64, "Section"],
+Cell[6222, 169, 53588, 1602, 5186, "Code"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[59847, 1776, 141, 3, 64, "Section"],
+Cell[59991, 1781, 309, 10, 154, "Input",
+ InitializationCell->True]
+}, Open  ]]
+}
+]
+*)
+
