@@ -1,0 +1,102 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      3230,         94]
+NotebookOptionsPosition[      2949,         79]
+NotebookOutlinePosition[      3305,         95]
+CellTagsIndexPosition[      3262,         92]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "DDS", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"DDS", "[", 
+    RowBox[{"id_Integer", ",", "key_String", ",", 
+     RowBox[{"val_:", "Null"}]}], "]"}], ":=", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Quiet", "@", 
+         RowBox[{"Check", "[", 
+          RowBox[{
+           RowBox[{"Socket`SocketInformation", "@", "$DDS"}], ",", "Null", 
+           ",", 
+           RowBox[{"Socket`SocketInformation", "::", "nosocket"}]}], "]"}]}], 
+        "===", "Null"}], ",", 
+       RowBox[{
+        RowBox[{"Quiet", "@", 
+         RowBox[{"Close", "@", "$DDS"}]}], ";", 
+        RowBox[{"$DDS", "=", 
+         RowBox[{"SocketConnect", "[", 
+          RowBox[{"{", 
+           RowBox[{"\"\<127.0.0.1\>\"", ",", "9999"}], "}"}], "]"}]}]}]}], 
+      "]"}], ";", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"val", "=!=", "Null"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"WriteString", "[", 
+         RowBox[{"$DDS", ",", 
+          RowBox[{"key", "<>", "\"\< \>\"", "<>", 
+           RowBox[{"ToString", "@", "id"}], "<>", "\"\< \>\"", "<>", 
+           RowBox[{"ToString", "@", "val"}], "<>", "\"\<\\n\>\""}]}], "]"}], 
+        ";", "\[IndentingNewLine]", 
+        RowBox[{"Pause", "[", "0.1", "]"}], ";"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"WriteString", "[", 
+         RowBox[{"$DDS", ",", 
+          RowBox[{"key", "<>", "\"\<? \>\"", "<>", 
+           RowBox[{"ToString", "@", "id"}], "<>", "\"\<\\n\>\""}]}], "]"}], 
+        ";", "\[IndentingNewLine]", 
+        RowBox[{"Pause", "[", "0.1", "]"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"ToExpression", "@", 
+         RowBox[{"StringTrim", "@", 
+          RowBox[{"ReadString", "[", 
+           RowBox[{"$DDS", ",", "EndOfBuffer"}], "]"}]}]}]}]}], "]"}]}], 
+    ")"}]}], ";"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.754524828236849*^9, 3.7545248306121635`*^9}, {
+  3.75452489637302*^9, 3.754524956557049*^9}, {3.7545249937509556`*^9, 
+  3.754524997210144*^9}, {3.7545250359220777`*^9, 3.7545251764868355`*^9}, {
+  3.754525267636568*^9, 3.754525318829689*^9}, {3.754525355014906*^9, 
+  3.7545254543961573`*^9}, {3.7545551813528748`*^9, 3.754555199014868*^9}, {
+  3.7546396395640073`*^9, 3.75463965870549*^9}}]
+},
+WindowSize->{978, 950},
+WindowMargins->{{395, Automatic}, {Automatic, 0}},
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (2016\:5e747\:670828\
+\:65e5)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 2387, 57, 233, "Input",
+ InitializationCell->True]
+}
+]
+*)
+

@@ -231,7 +231,8 @@ ClearAll[
 `End,
 `Block,
 `Read,
-`Write
+`Write,
+`Object
 ]
 
 Begin["`Private`"]
@@ -244,7 +245,7 @@ ClearAll[
 ]
 
 `DIR=DirectoryName[$InputFileName];
-`EXE=FileNameJoin[{`DIR,"ffi.exe"}];
+`EXE=FileNameJoin@{`DIR,If[$OperatingSystem=="Windows","ffi.exe","ffi"]};
 
 End[];
 
@@ -267,6 +268,7 @@ ClearAll[
 `CDefault,
 `Libs,
 `LibC,
+`LibM,
 `LibML,
 `Str,
 `Vars,
@@ -315,9 +317,9 @@ Off[General::args];Do[If[(r=`Func[lib[[1]],name])=!=$Failed,Break[]],{lib,`Libs}
 On[General::args];r
 ];
 `Func[name_Symbol]:=`Func[ToString[name]];
-If[$OperatingSystem == "Windows",
-`LibC=`Lib["msvcrt.dll"];
-`LibML=`Lib["ml"<>ToString[8*`PtrSize]<>"i4.dll"];
+Switch[$OperatingSystem,
+"Windows",`LibC=`Lib["msvcrt.dll"];`LibM=`LibC;`LibML=`Lib["ml"<>ToString[8*`PtrSize]<>"i4.dll"];,
+"Unix",`LibC=`Lib["libc.so.6"];`LibM=`Lib["libm.so.6"];`LibML=`Lib["libML"<>ToString[8*`PtrSize]<>"i4.so"];
 ];
 ];
 
@@ -506,6 +508,50 @@ r
 
 `Write[addr_Integer,{data___}]:=`WriteData[addr,`ArgEncode[data]];
 
+(* $,$$,!,!! *)
+`Object /: Factorial[`Object[ptr_Integer, args___]] := ptr;
+`Object /: Format[`Object[ptr_Integer]] := 
+  "String: " <> IntegerString[ptr, 16, 2 `PtrSize];
+`Object /: 
+  Format[`Object[ptr_Integer, type_String, size_Integer: 1]] := 
+  `Type@type <> "[" <> ToString@size <> "]: " <> 
+   IntegerString[ptr, 16, 2 `PtrSize];
+`Object /: 
+  Format[`Object[ptr_Integer, types : {__String}, 
+    size_Integer: 1]] := 
+  "{" <> StringJoin[Riffle[`Type /@ types, ","]] <> "}[" <> 
+   ToString@size <> "]: " <> IntegerString[ptr, 16, 2 `PtrSize];
+
+`Object[str_String] := `Object[`Var@str];
+`Object[data : {___?NumericQ}, type_String] := 
+  `Object[`Var[{data, {type}}], type, Length@data];
+`Object[data : {(_?NumericQ -> _String) ...}] := 
+  `Object[`Var[data], Last /@ data];
+`Object[data : {{__?NumericQ} ...}, types : {__String}] :=
+  `Object[`Var[{Flatten@data, types}], types, Length@data];
+
+`Object[ptr_Integer, args___][] := `Read[ptr, args];
+`Object[ptr_Integer, type_String, size_Integer: 1][k_Integer] := 
+  `Read[ptr + k `TypeSize@type, type][[1]];
+`Object[ptr_Integer, type_String, size_Integer: 1][
+   k_Integer -> v_] := 
+  `Write[ptr + k `TypeSize@type, Data@`ArgEncode[v -> type]];
+`Object[ptr_Integer, types : {__String}, size_Integer: 1][
+   k_Integer] := 
+  `Read[ptr + 
+     Total[`TypeSize@types[[Mod[# - 1, Length@types] + 1]] & /@ 
+       Range[k]], types[[Mod[k, Length@types] + 1]]][[1]];
+`Object[ptr_Integer, types : {__String}, size_Integer: 1][
+   k_Integer -> v_] := 
+  `Write[
+   ptr + Total[
+     `TypeSize@types[[Mod[# - 1, Length@types] + 1]] & /@ 
+      Range[k]], 
+   Data@`ArgEncode[v -> types[[Mod[k, Length@types] + 1]]]];
+`Object[ptr_Integer, args___][
+   kv : {(_Integer | (_Integer -> _)) ...}] := 
+  `Object[ptr, args] /@ kv;
+
 End[];
 
 (* AppendTo[$ContextPath, "FFI`"]; *)
@@ -532,6 +578,7 @@ ClearAll[
 `$CDefault,
 `$Libs,
 `$LibC,
+`$LibM,
 `$LibML,
 `$Str,
 `$Vars,
@@ -566,6 +613,7 @@ ClearAll[
 `Libs->`$Libs,
 `Func->`$Func,
 `LibC->`$LibC,
+`LibM->`$LibM,
 `LibML->`$LibML,
 `LibObject->`$LibObject,
 `LibHandle->`$LibHandle,
@@ -586,7 +634,8 @@ ClearAll[
 `End->`$End,
 `Block->`$Block,
 `Read->`$Read,
-`Write->`$Write
+`Write->`$Write,
+`Object->`$Object
 };
 
 Begin["`Private`"]
@@ -595,7 +644,11 @@ ClearAll[
 `DLL
 ]
 
-`DLL=FileNameJoin[{`DIR,"ffi.dll"}];
+`DLL=FileNameJoin@{`DIR,
+Switch[$OperatingSystem,
+"Windows","ffi.dll",
+"Unix","libffi.so"
+]};
 
 End[];
 
@@ -619,6 +672,7 @@ ClearAll[
 `$CDefault,
 `$Libs,
 `$LibC,
+`$LibM,
 `$LibML,
 `$Str,
 `$Vars,
@@ -661,6 +715,20 @@ ClearAll/@`$[[All,2]];
 SetDelayed@@ReleaseHold[#]&/@Flatten[(DownValues/@`$[[All,1]])/.`$];
 SetDelayed@@ReleaseHold[#]&/@Flatten[(SubValues/@`$[[All,1]])/.`$];
 
+(* $,$$,!,!! *)
+`$Object /: Factorial[`$Object[ptr_Integer, args___]] := ptr;
+`$Object /: Format[`$Object[ptr_Integer]] := 
+  "String: " <> IntegerString[ptr, 16, 2 `PtrSize];
+`$Object /: 
+  Format[`$Object[ptr_Integer, type_String, size_Integer: 1]] := 
+  `Type@type <> "[" <> ToString@size <> "]: " <> 
+   IntegerString[ptr, 16, 2 `PtrSize];
+`$Object /: 
+  Format[`$Object[ptr_Integer, types : {__String}, 
+    size_Integer: 1]] := 
+  "{" <> StringJoin[Riffle[`Type /@ types, ","]] <> "}[" <> 
+   ToString@size <> "]: " <> IntegerString[ptr, 16, 2 `PtrSize];
+   
 End[];
 (* $ContextPath=Drop[$ContextPath, -1]; *)
 

@@ -9,4 +9,4 @@ If[FileExtension@#=="nb",Import[#,"Initialization"],Get@#]]&@FileNameJoin@{path}
 Include[path_String]:=Include[$Directory,path];
 $File=$Input;
 (*If[!ValueQ@$File,$File=NotebookFileName[]];*)
-$Directory:=DirectoryName@$File;
+$Directory:=If[#==="",NotebookDirectory[],#]&@DirectoryName@$File;

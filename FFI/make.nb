@@ -10,32 +10,71 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      6469,        175]
-NotebookOptionsPosition[      5779,        146]
-NotebookOutlinePosition[      6134,        162]
-CellTagsIndexPosition[      6091,        159]
+NotebookDataLength[      9004,        210]
+NotebookOptionsPosition[      7583,        180]
+NotebookOutlinePosition[      7929,        195]
+CellTagsIndexPosition[      7886,        192]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
 Cell[BoxData[
  RowBox[{"Needs", "[", "\"\<CCompilerDriver`\>\"", "]"}]], "Input",
- CellChangeTimes->{{3.65588901670289*^9, 3.655889022037404*^9}}],
+ CellChangeTimes->{{3.65588901670289*^9, 3.655889022037404*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"100a4a32-860f-42a7-b178-3947cda05dac"],
 
 Cell[BoxData[
  RowBox[{
   RowBox[{"SetDirectory", "@", 
    RowBox[{"NotebookDirectory", "[", "]"}]}], ";"}]], "Input",
- CellChangeTimes->{{3.655889222505023*^9, 3.655889232285274*^9}}],
+ CellChangeTimes->{{3.655889222505023*^9, 3.655889232285274*^9}},
+ CellLabel->"In[2]:=",ExpressionUUID->"d94462b3-9540-4dc6-b19f-b2ca418cb8aa"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"mldir", "=", 
+   RowBox[{"FileNameJoin", "@", 
+    RowBox[{"{", 
+     RowBox[{
+     "$InstallationDirectory", ",", "\"\<SystemFiles\>\"", ",", 
+      "\"\<Links\>\"", ",", "\"\<MathLink\>\"", ",", "\"\<DeveloperKit\>\"", 
+      ",", "$SystemID", ",", "\"\<CompilerAdditions\>\""}], "}"}]}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.7593868203612213`*^9, 3.7593868593136044`*^9}},
+ CellLabel->"In[31]:=",ExpressionUUID->"2b0fc0c6-729a-4b65-821f-108c5775656d"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"dcdir", "=", 
+   RowBox[{"FileNameJoin", "@", 
+    RowBox[{"{", 
+     RowBox[{"$HomeDirectory", ",", "\"\<dyncall\>\""}], "}"}]}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.75938687057749*^9, 3.759386890113859*^9}},
+ CellLabel->"In[33]:=",ExpressionUUID->"0dab9f0d-04a4-4690-834a-076071869738"],
 
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"Run", "[", "\"\<./mprep ffi.tm -o ffitm.cc\>\"", "]"}]], "Input",
- CellChangeTimes->{{3.65589014757622*^9, 3.655890162355009*^9}}],
+ RowBox[{"Run", "[", 
+  RowBox[{"StringJoin", "@@", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"FileNameJoin", "@", 
+      RowBox[{"{", 
+       RowBox[{"mldir", ",", "\"\<mprep\>\""}], "}"}]}], ",", 
+     "\"\< ffi64.tm -o ffitm.c\>\""}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.759385009382017*^9, {3.759386030052113*^9, 3.759386129361903*^9}, 
+   3.7593868179326353`*^9, {3.759386863264676*^9, 3.759386863885832*^9}},
+ CellLabel->"In[32]:=",ExpressionUUID->"69a633e8-6eee-45a4-af4f-31c384199904"],
 
 Cell[BoxData["0"], "Output",
- CellChangeTimes->{3.6558901628343163`*^9}]
+ CellChangeTimes->{
+  3.7593860316135483`*^9, 3.759386084286936*^9, {3.759386121511423*^9, 
+   3.7593861301242332`*^9}, 3.759386165323325*^9, 3.759386555488253*^9, 
+   3.759386753882394*^9, 3.759386864871188*^9},
+ CellLabel->"Out[32]=",ExpressionUUID->"b49303cc-0a8f-4440-8461-39a09a677a58"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -44,40 +83,27 @@ Cell[BoxData[
  RowBox[{"CreateLibrary", "[", 
   RowBox[{
    RowBox[{"{", 
-    RowBox[{"\"\<ffi.cc\>\"", ",", "\"\<ffitm.cc\>\""}], "}"}], ",", 
-   "\"\<ffi\>\"", ",", "\[IndentingNewLine]", 
+    RowBox[{"\"\<ffi.cc\>\"", ",", "\"\<ffitm.c\>\""}], "}"}], ",", 
+   "\"\<libffi\>\"", ",", "\[IndentingNewLine]", 
    RowBox[{"\"\<TargetDirectory\>\"", "\[Rule]", 
     RowBox[{"Directory", "[", "]"}]}], ",", 
    RowBox[{"\"\<ShellOutputFunction\>\"", "\[Rule]", "Print"}], ",", 
    RowBox[{"\"\<IncludeDirectories\>\"", "\[Rule]", 
-    RowBox[{"{", 
-     RowBox[{"FileNameJoin", "@", 
-      RowBox[{"{", 
-       RowBox[{
-        RowBox[{"Directory", "[", "]"}], ",", 
-        "\"\<dyncall/osx/Darwin/include\>\""}], "}"}]}], "}"}]}], ",", 
+    RowBox[{"FileNameJoin", "@", 
+     RowBox[{"{", 
+      RowBox[{"dcdir", ",", "\"\<include\>\""}], "}"}]}]}], ",", 
    RowBox[{"\"\<LibraryDirectories\>\"", "\[Rule]", 
     RowBox[{"{", 
      RowBox[{
       RowBox[{"FileNameJoin", "@", 
        RowBox[{"{", 
-        RowBox[{
-         RowBox[{"Directory", "[", "]"}], ",", 
-         "\"\<dyncall/osx/Darwin/lib\>\""}], "}"}]}], ",", 
-      RowBox[{"FileNameJoin", "@", 
-       RowBox[{"{", 
-        RowBox[{
-         RowBox[{"Directory", "[", "]"}], ",", "\"\<lib\>\""}], "}"}]}]}], 
+        RowBox[{"dcdir", ",", "\"\<lib\>\""}], "}"}]}], ",", "mldir"}], 
      "}"}]}], ",", 
    RowBox[{"\"\<Libraries\>\"", "\[Rule]", 
     RowBox[{"{", 
      RowBox[{
      "\"\<dyncall_s\>\"", ",", "\"\<dyncallback_s\>\"", ",", 
-      "\"\<dynload_s\>\"", ",", "\"\<MLi4\>\""}], "}"}]}], ",", 
-   RowBox[{
-   "\"\<CompileOptions\>\"", "\[Rule]", 
-    "\"\<-install_name \\\"@loader_path/ffi.dylib\\\"\>\""}]}], 
-  "]"}]], "Input",
+      "\"\<dynload_s\>\""}], "}"}]}]}], "]"}]], "Input",
  CellChangeTimes->{{3.6558892030906477`*^9, 3.655889306234358*^9}, {
   3.655889407106162*^9, 3.6558895672219067`*^9}, {3.6558896237595863`*^9, 
   3.6558896406266747`*^9}, {3.655889678103179*^9, 3.6558897563094378`*^9}, {
@@ -86,22 +112,29 @@ Cell[BoxData[
   3.655890018293787*^9, 3.655890022542466*^9}, {3.655890062556085*^9, 
   3.6558901290869007`*^9}, {3.655890233011342*^9, 3.655890234437167*^9}, {
   3.655890264644939*^9, 3.6558902659652843`*^9}, {3.655892466129642*^9, 
-  3.655892520165606*^9}, {3.6558927298489237`*^9, 3.655892765662929*^9}}],
+  3.655892520165606*^9}, {3.6558927298489237`*^9, 3.655892765662929*^9}, {
+  3.75938492127849*^9, 3.759384951127665*^9}, {3.759384983505725*^9, 
+  3.7593849944136763`*^9}, {3.759385076376523*^9, 3.7593850913133574`*^9}, {
+  3.759386886326858*^9, 3.759386975511801*^9}, {3.759387025300809*^9, 
+  3.759387025599432*^9}},
+ CellLabel->"In[38]:=",ExpressionUUID->"5eb02358-df11-465a-84dd-779062312463"],
 
 Cell[BoxData["\<\"\"\>"], "Print",
- CellChangeTimes->{
-  3.6558921025149937`*^9, 3.655892521537003*^9, {3.6558927424009237`*^9, 
-   3.6558927664082537`*^9}}],
+ CellChangeTimes->{3.75938699310686*^9, 3.7593870269366302`*^9},
+ CellLabel->
+  "\:6b63\:5728\:8ba1\:7b97In[38]:=",ExpressionUUID->"d47dc57b-c8c3-4e78-878a-\
+71c062aa2fb5"],
 
-Cell[BoxData["\<\"/Users/zx/Mathematica/FFI/ffi.dylib\"\>"], "Output",
- CellChangeTimes->{{3.6558895454711037`*^9, 3.6558895696792994`*^9}, 
-   3.6558896421682043`*^9, 3.6558896883080587`*^9, 3.655889723283317*^9, 
-   3.6558897574010363`*^9, {3.655889799089302*^9, 3.655889814986555*^9}, {
-   3.655889914788313*^9, 3.655889927159195*^9}, 3.655889982965929*^9, 
-   3.655890026184231*^9, {3.655890084479103*^9, 3.655890130711795*^9}, 
-   3.6558901804848022`*^9, {3.655890236899935*^9, 3.655890266845747*^9}, {
-   3.655892077629036*^9, 3.655892102520632*^9}, 3.6558925215423517`*^9, {
-   3.655892742554833*^9, 3.655892766413405*^9}}]
+Cell[BoxData["\<\"/mnt/c/Code/Mathematica/FFI/libffi.so\"\>"], "Output",
+ CellChangeTimes->{
+  3.759384995570002*^9, {3.75938507765289*^9, 3.7593850946929293`*^9}, 
+   3.7593851480801697`*^9, {3.759385327665374*^9, 3.759385341142311*^9}, 
+   3.759385402353285*^9, 3.759385474060113*^9, 3.759385737532908*^9, 
+   3.75938577159921*^9, {3.759386140903892*^9, 3.759386166773488*^9}, 
+   3.759386254748897*^9, {3.7593863687703648`*^9, 3.759386388747862*^9}, 
+   3.759386556953059*^9, 3.7593867555858803`*^9, {3.75938695950921*^9, 
+   3.7593869931112223`*^9}, 3.759387026978272*^9},
+ CellLabel->"Out[38]=",ExpressionUUID->"95f683c8-dda6-4de9-8143-1853ceb06019"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -110,44 +143,44 @@ Cell[BoxData[
  RowBox[{"CreateExecutable", "[", 
   RowBox[{
    RowBox[{"{", 
-    RowBox[{"\"\<ffimain.c\>\"", ",", "\"\<ffi.dylib\>\""}], "}"}], ",", 
+    RowBox[{"\"\<ffimain.c\>\"", ",", "\"\<libffi.so\>\""}], "}"}], ",", 
    "\"\<ffi\>\"", ",", "\[IndentingNewLine]", 
    RowBox[{"\"\<TargetDirectory\>\"", "\[Rule]", 
     RowBox[{"Directory", "[", "]"}]}], ",", 
    RowBox[{"\"\<ShellOutputFunction\>\"", "\[Rule]", "Print"}], ",", 
-   RowBox[{"\"\<LibraryDirectories\>\"", "\[Rule]", 
-    RowBox[{"{", 
-     RowBox[{"FileNameJoin", "@", 
-      RowBox[{"{", 
-       RowBox[{
-        RowBox[{"Directory", "[", "]"}], ",", "\"\<lib\>\""}], "}"}]}], 
-     "}"}]}], ",", 
-   RowBox[{"\"\<Libraries\>\"", "\[Rule]", 
-    RowBox[{"{", "\"\<MLi4\>\"", "}"}]}]}], "]"}]], "Input",
+   RowBox[{"\"\<LibraryDirectories\>\"", "\[Rule]", "mldir"}], ",", 
+   RowBox[{"\"\<Libraries\>\"", "\[Rule]", "\"\<ML64i4\>\""}]}], 
+  "]"}]], "Input",
  CellChangeTimes->{{3.65589180877112*^9, 3.6558918632088842`*^9}, {
   3.6558919036632013`*^9, 3.6558919282457848`*^9}, {3.6558919588277082`*^9, 
   3.655891990139008*^9}, {3.655892069902464*^9, 3.655892070484799*^9}, {
   3.655892122615033*^9, 3.655892124787199*^9}, {3.6558928052626677`*^9, 
-  3.6558928521806707`*^9}, {3.655892893454768*^9, 3.655892893942487*^9}}],
+  3.6558928521806707`*^9}, {3.655892893454768*^9, 3.655892893942487*^9}, {
+  3.759387020204115*^9, 3.7593871242961817`*^9}},
+ CellLabel->"In[42]:=",ExpressionUUID->"6882098d-d1d2-4da5-ace9-1689c705d38d"],
 
 Cell[BoxData["\<\"\"\>"], "Print",
  CellChangeTimes->{{3.655892104487883*^9, 3.655892126053094*^9}, 
    3.655892524190547*^9, 3.6558927679159613`*^9, {3.655892832815865*^9, 
-   3.655892852630926*^9}, 3.655892898498904*^9}],
+   3.655892852630926*^9}, 3.655892898498904*^9, {3.759387068212473*^9, 
+   3.7593871249676647`*^9}},
+ CellLabel->
+  "\:6b63\:5728\:8ba1\:7b97In[42]:=",ExpressionUUID->"ef2688af-011a-41d3-ba3a-\
+369212690699"],
 
-Cell[BoxData["\<\"/Users/zx/Mathematica/FFI/ffi\"\>"], "Output",
+Cell[BoxData["\<\"/mnt/c/Code/Mathematica/FFI/ffi\"\>"], "Output",
  CellChangeTimes->{
   3.6558918651025047`*^9, {3.655891907469039*^9, 3.655891934169766*^9}, {
    3.655891969422592*^9, 3.655891994264514*^9}, 3.655892073214938*^9, {
    3.6558921044930887`*^9, 3.65589212605884*^9}, 3.655892524196916*^9, 
    3.655892767921056*^9, {3.655892832821731*^9, 3.6558928526371603`*^9}, 
-   3.655892898507554*^9}]
+   3.655892898507554*^9, {3.759387068304717*^9, 3.7593871250033073`*^9}},
+ CellLabel->"Out[42]=",ExpressionUUID->"6e796525-c3bb-4a4d-8e9c-b4f033c6c541"]
 }, Open  ]]
 },
 WindowSize->{808, 652},
-WindowMargins->{{Automatic, 201}, {21, Automatic}},
-FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (June 27, \
-2014)",
+WindowMargins->{{65, Automatic}, {Automatic, 135}},
+FrontEndVersion->"11.3 for Linux x86 (64-bit) (2018\:5e743\:67086\:65e5)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -161,24 +194,25 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 146, 2, 32, "Input"],
-Cell[707, 24, 184, 4, 32, "Input"],
+Cell[558, 20, 224, 3, 31, "Input",ExpressionUUID->"100a4a32-860f-42a7-b178-3947cda05dac"],
+Cell[785, 25, 262, 5, 31, "Input",ExpressionUUID->"d94462b3-9540-4dc6-b19f-b2ca418cb8aa"],
+Cell[1050, 32, 496, 11, 55, "Input",ExpressionUUID->"2b0fc0c6-729a-4b65-821f-108c5775656d"],
+Cell[1549, 45, 331, 8, 31, "Input",ExpressionUUID->"0dab9f0d-04a4-4690-834a-076071869738"],
 Cell[CellGroupData[{
-Cell[916, 32, 154, 2, 32, "Input"],
-Cell[1073, 36, 72, 1, 32, "Output"]
+Cell[1905, 57, 523, 12, 31, "Input",ExpressionUUID->"69a633e8-6eee-45a4-af4f-31c384199904"],
+Cell[2431, 71, 320, 5, 35, "Output",ExpressionUUID->"b49303cc-0a8f-4440-8461-39a09a677a58"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1182, 42, 2054, 46, 147, "Input"],
-Cell[3239, 90, 157, 3, 24, "Print"],
-Cell[3399, 95, 630, 8, 32, "Output"]
+Cell[2788, 81, 1944, 38, 124, "Input",ExpressionUUID->"5eb02358-df11-465a-84dd-779062312463"],
+Cell[4735, 121, 207, 4, 25, "Print",ExpressionUUID->"d47dc57b-c8c3-4e78-878a-71c062aa2fb5"],
+Cell[4945, 127, 655, 9, 35, "Output",ExpressionUUID->"95f683c8-dda6-4de9-8143-1853ceb06019"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[4066, 108, 1067, 22, 71, "Input"],
-Cell[5136, 132, 222, 3, 24, "Print"],
-Cell[5361, 137, 402, 6, 32, "Output"]
+Cell[5637, 141, 1011, 18, 78, "Input",ExpressionUUID->"6882098d-d1d2-4da5-ace9-1689c705d38d"],
+Cell[6651, 161, 382, 7, 25, "Print",ExpressionUUID->"ef2688af-011a-41d3-ba3a-369212690699"],
+Cell[7036, 170, 531, 7, 35, "Output",ExpressionUUID->"6e796525-c3bb-4a4d-8e9c-b4f033c6c541"]
 }, Open  ]]
 }
 ]
 *)
 
-(* End of internal cache information *)

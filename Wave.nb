@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     28448,        754]
-NotebookOptionsPosition[     27764,        725]
-NotebookOutlinePosition[     28128,        741]
-CellTagsIndexPosition[     28085,        738]
+NotebookDataLength[     29334,        773]
+NotebookOptionsPosition[     28633,        743]
+NotebookOutlinePosition[     29014,        760]
+CellTagsIndexPosition[     28971,        757]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -57,10 +57,6 @@ Cell["Declaration", "Section",
 Cell[BoxData[{
  RowBox[{
   RowBox[{
-   RowBox[{"BeginPackage", "[", "\"\<IonTrap`\>\"", "]"}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
   "WaveHead", " ", "=", " ", 
    "\"\<Frequency (MHz),Duration (us),Amplitude,Phase (Pi),Gap \
 (us),Formula\\n\>\""}], ";"}], "\[IndentingNewLine]", 
@@ -80,20 +76,17 @@ Cell[BoxData[{
        RowBox[{"Global`exp", "[", "1", "]"}]}], ",", 
       RowBox[{"Sign", "\[Rule]", "Global`sign"}], ",", 
       RowBox[{"UnitStep", "\[Rule]", "Global`step"}]}], "}"}]}], ";"}], 
-  "\n"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{
-  RowBox[{
-   RowBox[{"ClearAll", "[", 
-    RowBox[{
-    "System`Each", ",", "ToFormula", ",", "ToFormulaString", ",", 
-     "ToNumberString", ",", "ToWaveString", ",", "ExportWaveString", ",", 
-     "FromFormula", ",", "FromFormulaString", ",", "FormulaVariable", ",", 
-     "NormalWave", ",", "WaveVariable", ",", "FinalWave", ",", 
-     "FromWaveString", ",", "ImportWaveString", ",", "Horn", ",", "Laser", 
-     ",", "WaveType", ",", "WaveInterval"}], "]"}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}], ";"}]}], "Input",
+  RowBox[{"ClearAll", "[", 
+   RowBox[{
+   "System`Each", ",", "ToFormula", ",", "ToFormulaString", ",", 
+    "ToNumberString", ",", "ToWaveString", ",", "ExportWaveString", ",", 
+    "ExportWaveFile", ",", "FromFormula", ",", "FromFormulaString", ",", 
+    "FormulaVariable", ",", "NormalWave", ",", "WaveVariable", ",", 
+    "FinalWave", ",", "FromWaveString", ",", "ImportWaveString", ",", 
+    "ImportWaveFile", ",", "Horn", ",", "Laser", ",", "WaveType", ",", 
+    "WaveInterval"}], "]"}], ";"}]}], "Input",
  InitializationCell->True,
  CellChangeTimes->{{3.6048340166833825`*^9, 3.6048340408267636`*^9}, {
    3.604834097540007*^9, 3.6048340995871243`*^9}, {3.6048341481068993`*^9, 
@@ -111,7 +104,8 @@ Cell[BoxData[{
    3.656948632938401*^9, 3.6569486394207726`*^9}, {3.65708766286811*^9, 
    3.6570876657732763`*^9}, {3.6570878000049543`*^9, 3.657087920468844*^9}, {
    3.6588112055232015`*^9, 3.658811209891451*^9}, {3.6588114176353335`*^9, 
-   3.65881143348324*^9}}]
+   3.65881143348324*^9}, {3.7538465003185167`*^9, 3.7538465088507557`*^9}, {
+   3.75501698589474*^9, 3.7550170046836944`*^9}}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -218,14 +212,14 @@ Cell[BoxData[{
       RowBox[{"ToNumberString", "[", 
        RowBox[{"expr", ",", "n"}], "]"}], ",", 
       RowBox[{"ToFormulaString", "[", "expr", "]"}]}], "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\n", 
+  "\n"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"ToNumberString", "[", 
     RowBox[{"x_", "?", "NumberQ"}], "]"}], ":=", 
    RowBox[{"If", "[", 
     RowBox[{
-     RowBox[{"x", "==", "0"}], ",", "\"\<0\>\"", ",", 
+     RowBox[{"x", "\[LessEqual]", "0.0001"}], ",", "\"\<0\>\"", ",", 
      RowBox[{"ToString", "[", 
       RowBox[{"x", ",", "FortranForm"}], "]"}]}], "]"}]}], ";"}], "\n", 
  RowBox[{
@@ -237,7 +231,7 @@ Cell[BoxData[{
     RowBox[{"ToNumberString", "[", 
      RowBox[{"SetAccuracy", "[", 
       RowBox[{"x", ",", "n"}], "]"}], "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\n", 
+  "\n"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"ToWaveString", "[", "]"}], ":=", 
@@ -269,7 +263,7 @@ Cell[BoxData[{
     RowBox[{"ToWaveString", "[", "waves_List", "]"}], ":=", 
     RowBox[{"Each", "[", 
      RowBox[{"waves", ",", "ToWaveString"}], "]"}]}], ";"}], 
-  "\n"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{"ExportWaveString", "[", "]"}], ":=", "\"\<\\n\>\""}], ";"}], "\n", 
@@ -299,7 +293,23 @@ Cell[BoxData[{
      RowBox[{"StringJoin", "@@", 
       RowBox[{"Each", "[", 
        RowBox[{"waves", ",", "ExportWaveString"}], "]"}]}]}]}], ";"}], 
-  "\n"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ExportWaveFile", "[", 
+     RowBox[{"path_String", ",", "lst_List"}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"StringQ", "[", "#", "]"}], ",", 
+        RowBox[{"Export", "[", 
+         RowBox[{
+          RowBox[{"DataPath", "[", "path", "]"}], ",", "#", ",", 
+          "\"\<TEXT\>\""}], "]"}]}], "]"}], "&"}], "@", 
+     RowBox[{"ExportWaveString", "[", "lst", "]"}]}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"FromFormula", "[", "str_String", "]"}], ":=", 
@@ -590,6 +600,15 @@ Cell[BoxData[{
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
+   RowBox[{
+    RowBox[{"ImportWaveFile", "[", "path_String", "]"}], ":=", 
+    RowBox[{"ImportWaveString", "@", 
+     RowBox[{"Import", "[", 
+      RowBox[{
+       RowBox[{"DataPath", "[", "path", "]"}], ",", "\"\<TEXT\>\""}], 
+      "]"}]}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
    RowBox[{"WaveType", "[", 
     RowBox[{"waves", ":", 
      RowBox[{"{", 
@@ -701,7 +720,10 @@ Cell[BoxData[{
    3.6618519451374855`*^9}, {3.6618520644663105`*^9, 3.661852102825505*^9}, {
    3.6618521665141478`*^9, 3.661852170985403*^9}, {3.6618522155469522`*^9, 
    3.661852240579384*^9}, {3.6618524047907763`*^9, 3.661852424395898*^9}, {
-   3.6618524966110277`*^9, 3.6618524979791064`*^9}}]
+   3.6618524966110277`*^9, 3.6618524979791064`*^9}, {3.755016948106256*^9, 
+   3.755016968963687*^9}, {3.755017019031845*^9, 3.755017044067414*^9}, {
+   3.7562484013325586`*^9, 3.7562484105871377`*^9}, {3.75624852446806*^9, 
+   3.7562485251736712`*^9}}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -711,22 +733,19 @@ Cell["End", "Section",
  WholeCellGroupOpener->True,
  CellChangeTimes->{{3.6046429928574605`*^9, 3.604642995613618*^9}}],
 
-Cell[BoxData[{
- RowBox[{
-  RowBox[{"End", "[", "]"}], ";"}], "\n", 
- RowBox[{
-  RowBox[{"EndPackage", "[", "]"}], ";"}]}], "Input",
+Cell[BoxData[""], "Input",
  InitializationCell->True,
  CellChangeTimes->{{3.6046437797924705`*^9, 3.6046437831126604`*^9}, {
-  3.604834055114581*^9, 3.604834055482602*^9}, {3.657086674979606*^9, 
-  3.6570867114946947`*^9}, {3.657086880948387*^9, 3.6570868893728685`*^9}, {
-  3.6570871996116133`*^9, 3.65708719990063*^9}}]
+   3.604834055114581*^9, 3.604834055482602*^9}, {3.657086674979606*^9, 
+   3.6570867114946947`*^9}, {3.657086880948387*^9, 3.6570868893728685`*^9}, {
+   3.6570871996116133`*^9, 3.65708719990063*^9}, 3.753846521758027*^9}]
 }, Open  ]]
 },
 WindowSize->{1216, 710},
-WindowMargins->{{Automatic, 162}, {Automatic, 23}},
+WindowMargins->{{Automatic, -124}, {Automatic, 112}},
 ShowSelection->True,
-FrontEndVersion->"10.0 for Microsoft Windows (32-bit) (July 1, 2014)",
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (2016\:5e747\:670828\
+\:65e5)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -740,24 +759,23 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 1040, 26, 72, "Input"],
+Cell[558, 20, 1040, 26, 69, "Input"],
 Cell[CellGroupData[{
-Cell[1623, 50, 202, 4, 70, "Section"],
-Cell[1828, 56, 2853, 57, 232, "Input",
+Cell[1623, 50, 202, 4, 63, "Section"],
+Cell[1828, 56, 2726, 51, 161, "Input",
  InitializationCell->True]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[4718, 118, 150, 3, 70, "Section"],
-Cell[4871, 123, 22268, 580, 1412, "Input",
+Cell[4591, 112, 150, 3, 63, "Section"],
+Cell[4744, 117, 23344, 608, 1402, "Input",
  InitializationCell->True]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[27176, 708, 143, 3, 70, "Section"],
-Cell[27322, 713, 426, 9, 52, "Input",
+Cell[28125, 730, 143, 3, 63, "Section"],
+Cell[28271, 735, 346, 5, 46, "Input",
  InitializationCell->True]
 }, Open  ]]
 }
 ]
 *)
 
-(* End of internal cache information *)

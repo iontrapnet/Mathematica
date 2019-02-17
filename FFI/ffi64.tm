@@ -1,28 +1,21 @@
 #include <stddef.h>
 
-#ifdef _WIN64
-#define ptr_t int64
-#else
-#define ptr_t int32
-#endif
-
-typedef unsigned char byte;
-typedef __int32 int32;
-typedef __int64 int64;
+#define byte unsigned char
+#define ptr_t mlint64
 
 #ifdef __cplusplus
-#define EXTERNC extern "C" 
+#define EXTERNC extern "C"
 #else
-#define EXTERNC extern
+#define EXTERNC
 #endif
 
-EXTERNC ptr_t FFI_Init P(( size_t, int ));
+EXTERNC ptr_t FFI_Init P(( int, int ));
 
 :Begin:
 :Function:       FFI_Init
 :Pattern:        FFI`Init[size_Integer, mode_Integer]
 :Arguments:      { size, mode }
-:ArgumentTypes:  { Integer64, Integer }
+:ArgumentTypes:  { Integer, Integer }
 :ReturnType:     Integer64
 :End:
 

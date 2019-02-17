@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     46456,       1234]
-NotebookOptionsPosition[     45500,       1195]
-NotebookOutlinePosition[     45839,       1210]
-CellTagsIndexPosition[     45796,       1207]
+NotebookDataLength[     47075,       1241]
+NotebookOptionsPosition[     46291,       1208]
+NotebookOutlinePosition[     46645,       1224]
+CellTagsIndexPosition[     46602,       1221]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -22,13 +22,11 @@ Notebook[{
 Cell[CellGroupData[{
 Cell["Declaration", "Section",
  CellChangeTimes->{{3.596256784940527*^9, 3.5962567950771065`*^9}, {
-  3.5962568419007845`*^9, 3.596256845363983*^9}}],
-
-Cell[CellGroupData[{
+  3.5962568419007845`*^9, 
+  3.596256845363983*^9}},ExpressionUUID->"40e01c09-6623-4801-b53b-\
+154a1e518e69"],
 
 Cell[BoxData[{
- RowBox[{
-  RowBox[{"BeginPackage", "[", "\"\<IonTrap`\>\"", "]"}], "\n"}], "\n", 
  RowBox[{
   RowBox[{"DarkCenter", " ", "=", " ", "0.01"}], ";"}], "\n", 
  RowBox[{
@@ -60,7 +58,9 @@ Cell[BoxData[{
    RowBox[{"Mean", "[", "StateHistogram", "]"}]}], ";"}], "\n", 
  RowBox[{
   RowBox[{
-   RowBox[{"MaxCount", "=", "40"}], ";"}], "\[IndentingNewLine]"}], "\n", 
+   RowBox[{"MaxCount", "=", "40"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"ClearAll", "[", "FakeCounts", "]"}], "\n", 
  RowBox[{"ClearAll", "[", "ToHistogram", "]"}], "\n", 
  RowBox[{"ClearAll", "[", "InitDarkCenter", "]"}], "\n", 
  RowBox[{"ClearAll", "[", "InitStateCenter", "]"}], "\n", 
@@ -75,10 +75,7 @@ Cell[BoxData[{
  RowBox[{"ClearAll", "[", "RabiFrequencyFit", "]"}], "\[IndentingNewLine]", 
  RowBox[{"ClearAll", "[", "DriveFrequencyFit", "]"}], "\[IndentingNewLine]", 
  RowBox[{"ClearAll", "[", "RamseyFitPlot", "]"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"ClearAll", "[", "PhaseFitPlot", "]"}], 
-  "\n"}], "\[IndentingNewLine]", 
- RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}]}], "Input",
+ RowBox[{"ClearAll", "[", "PhaseFitPlot", "]"}]}], "Input",
  InitializationCell->True,
  CellChangeTimes->{{3.596256846270035*^9, 3.5962568462710347`*^9}, {
   3.5962572393585176`*^9, 3.596257240076559*^9}, {3.596266529530469*^9, 
@@ -90,35 +87,47 @@ Cell[BoxData[{
   3.6031674940104175`*^9, 3.603167495085479*^9}, {3.626667878254902*^9, 
   3.626667882695156*^9}, {3.6267604941212263`*^9, 3.6267605166975183`*^9}, {
   3.6273695650721626`*^9, 3.6273695675123024`*^9}, {3.627644420518359*^9, 
-  3.627644422092449*^9}, {3.629438238390566*^9, 3.6294382427908177`*^9}}],
-
-Cell[BoxData["\<\"IonTrap`\"\>"], "Output",
- CellChangeTimes->{
-  3.5962685893518476`*^9, {3.5965139698116617`*^9, 3.596513969901662*^9}, {
-   3.603166872376862*^9, 3.603166872762884*^9}, 3.6031670181481996`*^9, 
-   3.603167209237129*^9, 3.603167522869068*^9, 3.6031732698127747`*^9, 
-   3.603176636382331*^9, 3.626667707247121*^9, 3.626760690607465*^9, 
-   3.626772626562233*^9}],
-
-Cell[BoxData["\<\"IonTrap`Private`\"\>"], "Output",
- CellChangeTimes->{
-  3.5962685893518476`*^9, {3.5965139698116617`*^9, 3.596513969901662*^9}, {
-   3.603166872376862*^9, 3.603166872762884*^9}, 3.6031670181481996`*^9, 
-   3.603167209237129*^9, 3.603167522869068*^9, 3.6031732698127747`*^9, 
-   3.603176636382331*^9, 3.626667707247121*^9, 3.626760690607465*^9, 
-   3.6267726265632334`*^9}]
-}, Open  ]]
+  3.627644422092449*^9}, {3.629438238390566*^9, 3.6294382427908177`*^9}, {
+  3.7389123418695903`*^9, 3.7389123479819403`*^9}, {3.756128495148134*^9, 
+  3.7561284994606023`*^9}},
+ ExpressionUUID -> "5ab39a6b-fcab-4091-918f-7fa9bbc28299"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
 Cell["Definition", "Section",
- CellChangeTimes->{3.5962568575086775`*^9}],
+ CellChangeTimes->{
+  3.5962568575086775`*^9},ExpressionUUID->"91464281-346a-4dbc-90ab-\
+c73a721e0b5a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"FakeCounts", "[", 
+    RowBox[{"x_", ",", 
+     RowBox[{"n_Integer:", "1000"}]}], "]"}], ":=", 
+   RowBox[{"RandomVariate", "[", 
+    RowBox[{
+     RowBox[{"MixtureDistribution", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"1", "-", "x"}], ",", "x"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"PoissonDistribution", "[", "DarkCenter", "]"}], ",", 
+         RowBox[{"PoissonDistribution", "[", "BrightCenter", "]"}]}], "}"}]}],
+       "]"}], ",", "n"}], "]"}]}], ";"}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7545702330767107`*^9, 3.7545702898185835`*^9}, {
+   3.7545704187423887`*^9, 3.7545704205100884`*^9}, 3.756217822613621*^9}],
 
 Cell[CellGroupData[{
 
 Cell["StateFit", "Subsection",
- CellChangeTimes->{{3.5962569924673967`*^9, 3.5962569972216682`*^9}}],
+ CellChangeTimes->{{3.5962569924673967`*^9, 
+  3.5962569972216682`*^9}},ExpressionUUID->"5a4efb6f-9314-4289-b013-\
+3c85e33f5033"],
 
 Cell[BoxData[{
  RowBox[{
@@ -656,14 +665,17 @@ Cell[BoxData[{
    3.596269214722723*^9}, {3.5962693877029653`*^9, 3.5962694307630253`*^9}, {
    3.596269603203267*^9, 3.5962696294633036`*^9}, {3.596270533608671*^9, 
    3.5962705443986864`*^9}, {3.5962708181690693`*^9, 
-   3.5962708378190975`*^9}, {3.596272708952412*^9, 3.5962727517769327`*^9}}]
-}, Closed]],
+   3.5962708378190975`*^9}, {3.596272708952412*^9, 
+   3.5962727517769327`*^9}},ExpressionUUID->"8c876faf-9125-47b5-a8a5-\
+ad8b0974fb66"]
+}, Open  ]],
 
 Cell[CellGroupData[{
 
 Cell["FindFitPlot", "Subsection",
  CellChangeTimes->{{3.6031656221573534`*^9, 3.603165629988802*^9}, 
-   3.6031660558351583`*^9}],
+   3.6031660558351583`*^9},ExpressionUUID->"5b81d3c7-5403-4513-ab0f-\
+c412df34deb1"],
 
 Cell[BoxData[{
  RowBox[{
@@ -715,8 +727,9 @@ Cell[BoxData[{
              RowBox[{"func", ",", 
               RowBox[{"{", 
                RowBox[{"x", ",", "xmin", ",", "xmax"}], "}"}], ",", 
-              RowBox[{"PlotStyle", "\[Rule]", "Blue"}]}], "]"}]}], "]"}], 
-          "]"}]}], "]"}], ";", "\n", 
+              RowBox[{"PlotStyle", "\[Rule]", "Blue"}]}], "]"}], ",", 
+            RowBox[{"PlotRange", "\[Rule]", "All"}]}], "]"}], "]"}]}], "]"}], 
+       ";", "\n", 
        RowBox[{"{", 
         RowBox[{"fits", ",", 
          RowBox[{"expr", "/.", "fits"}]}], "}"}]}]}], "\n", "]"}]}], ";"}], 
@@ -762,8 +775,9 @@ Cell[BoxData[{
              RowBox[{"func", ",", 
               RowBox[{"{", 
                RowBox[{"x", ",", "xmin", ",", "xmax"}], "}"}], ",", 
-              RowBox[{"PlotStyle", "\[Rule]", "Blue"}]}], "]"}]}], "]"}], 
-          "]"}]}], "]"}], ";", "\n", "func"}]}], "\n", "]"}]}], ";"}], 
+              RowBox[{"PlotStyle", "\[Rule]", "Blue"}]}], "]"}], ",", 
+            RowBox[{"PlotRange", "\[Rule]", "All"}]}], "]"}], "]"}]}], "]"}], 
+       ";", "\n", "func"}]}], "\n", "]"}]}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -963,27 +977,32 @@ Cell[BoxData[{
     RowBox[{"Module", "[", 
      RowBox[{
       RowBox[{"{", 
-       RowBox[{"f0", "=", 
-        RowBox[{
-         RowBox[{"1", "/", "3"}], "/", 
+       RowBox[{
+       "a", ",", "b", ",", "c", ",", "f", ",", "t", ",", "\[Phi]", ",", 
+        RowBox[{"f0", "=", 
          RowBox[{
-          RowBox[{"PeakWidth", "[", 
-           RowBox[{"data", ",", "0.25"}], "]"}], "[", 
-          RowBox[{"[", "2", "]"}], "]"}]}]}], "}"}], ",", 
-      RowBox[{"FindFitPlot", "[", 
-       RowBox[{"data", ",", 
-        RowBox[{
-         RowBox[{"a", " ", 
-          RowBox[{"Sin", "[", 
-           RowBox[{
-            RowBox[{"2", "\[Pi]", " ", "f", " ", "t"}], "-", 
-            FractionBox["\[Pi]", "2"], "-", "\[Phi]"}], "]"}]}], "+", "b"}], 
-        ",", "\[IndentingNewLine]", 
-        RowBox[{"{", 
-         RowBox[{"a", ",", "b", ",", 
+          RowBox[{"1", "/", "3"}], "/", 
+          RowBox[{
+           RowBox[{"PeakWidth", "[", 
+            RowBox[{"data", ",", "0.25"}], "]"}], "[", 
+           RowBox[{"[", "2", "]"}], "]"}]}]}]}], "}"}], ",", 
+      RowBox[{
+       RowBox[{"0.5", "/", "f"}], "/.", 
+       RowBox[{"First", "@", 
+        RowBox[{"FindFitPlot", "[", 
+         RowBox[{"data", ",", 
+          RowBox[{
+           RowBox[{"a", " ", 
+            RowBox[{"Sin", "[", 
+             RowBox[{
+              RowBox[{"2", "\[Pi]", " ", "f", " ", "t"}], "-", 
+              FractionBox["\[Pi]", "2"], "-", "\[Phi]"}], "]"}]}], "+", "b"}],
+           ",", "\[IndentingNewLine]", 
           RowBox[{"{", 
-           RowBox[{"f", ",", "f0"}], "}"}], ",", "\[Phi]"}], "}"}], ",", "t", 
-        ",", "plot"}], "]"}]}], 
+           RowBox[{"a", ",", "b", ",", 
+            RowBox[{"{", 
+             RowBox[{"f", ",", "f0"}], "}"}], ",", "\[Phi]"}], "}"}], ",", 
+          "t", ",", "plot"}], "]"}]}]}]}], 
      RowBox[{"(*", 
       RowBox[{"\[LeftDoubleBracket]", 
        RowBox[{"1", ",", "3", ",", "2"}], "\[RightDoubleBracket]"}], "*)"}], 
@@ -996,7 +1015,9 @@ Cell[BoxData[{
       RowBox[{"plot_Symbol:", "False"}]}], "]"}], ":=", 
     RowBox[{"Module", "[", 
      RowBox[{
-      RowBox[{"{", "peakwidth", "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{"\[Theta]", ",", "F", ",", "F0", ",", "f", ",", "peakwidth"}], 
+       "}"}], ",", "\[IndentingNewLine]", 
       RowBox[{
        RowBox[{"peakwidth", "=", 
         RowBox[{"PeakWidth", "[", 
@@ -1014,38 +1035,40 @@ Cell[BoxData[{
              RowBox[{"[", 
               RowBox[{"1", ",", "2", ",", "2"}], "]"}], "]"}]}], "}"}], "&"}],
           "@"}], "*)"}], 
-       RowBox[{"FindFitPlot", "[", 
-        RowBox[{"data", ",", 
-         RowBox[{
-          RowBox[{
-           SuperscriptBox[
-            RowBox[{"(", 
-             FractionBox[
-              RowBox[{"Sin", "[", 
-               RowBox[{"\[Theta]", "#"}], "]"}], "#"], ")"}], "2"], "&"}], 
-          "[", 
-          SqrtBox[
-           RowBox[{"1", "+", 
-            SuperscriptBox[
-             RowBox[{"(", 
-              FractionBox[
-               RowBox[{"F", "-", "F0"}], "f"], ")"}], "2"]}]], "]"}], ",", 
-         "\[IndentingNewLine]", 
-         RowBox[{"{", 
-          RowBox[{"\[Theta]", ",", 
+       RowBox[{"F0", "/.", 
+        RowBox[{"First", "@", 
+         RowBox[{"FindFitPlot", "[", 
+          RowBox[{"data", ",", 
+           RowBox[{
+            RowBox[{
+             SuperscriptBox[
+              RowBox[{"(", 
+               FractionBox[
+                RowBox[{"Sin", "[", 
+                 RowBox[{"\[Theta]", "#"}], "]"}], "#"], ")"}], "2"], "&"}], 
+            "[", 
+            SqrtBox[
+             RowBox[{"1", "+", 
+              SuperscriptBox[
+               RowBox[{"(", 
+                FractionBox[
+                 RowBox[{"F", "-", "F0"}], "f"], ")"}], "2"]}]], "]"}], ",", 
+           "\[IndentingNewLine]", 
            RowBox[{"{", 
-            RowBox[{"f", ",", 
-             FractionBox[
-              RowBox[{"3", 
-               RowBox[{"peakwidth", "[", 
-                RowBox[{"[", "2", "]"}], "]"}]}], 
-              SqrtBox["7"]]}], "}"}], ",", 
-           RowBox[{"{", 
-            RowBox[{"F0", ",", 
-             RowBox[{
-             "peakwidth", "\[LeftDoubleBracket]", "1", 
-              "\[RightDoubleBracket]"}]}], "}"}]}], "}"}], ",", "F", ",", 
-         "plot"}], "]"}]}]}], "]"}]}], ";"}], 
+            RowBox[{"\[Theta]", ",", 
+             RowBox[{"{", 
+              RowBox[{"f", ",", 
+               FractionBox[
+                RowBox[{"3", 
+                 RowBox[{"peakwidth", "[", 
+                  RowBox[{"[", "2", "]"}], "]"}]}], 
+                SqrtBox["7"]]}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"F0", ",", 
+               RowBox[{
+               "peakwidth", "\[LeftDoubleBracket]", "1", 
+                "\[RightDoubleBracket]"}]}], "}"}]}], "}"}], ",", "F", ",", 
+           "plot"}], "]"}]}]}]}]}], "]"}]}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -1175,27 +1198,18 @@ Cell[BoxData[{
    3.6524939900313473`*^9}, {3.652494127343201*^9, 3.652494134159591*^9}, {
    3.652494180321232*^9, 3.6524941985392733`*^9}, {3.658188369613179*^9, 
    3.658188374331449*^9}, {3.6581884795344667`*^9, 3.6581884823096247`*^9}, {
-   3.6587585556378*^9, 3.658758618001367*^9}}]
+   3.6587585556378*^9, 3.658758618001367*^9}, {3.7558438769829273`*^9, 
+   3.755843878060793*^9}, {3.755844201588702*^9, 3.755844302268957*^9}, {
+   3.7558443343406553`*^9, 3.7558443406654725`*^9}, {3.7559596234639144`*^9, 
+   3.7559596624124775`*^9}},
+ ExpressionUUID -> "c1bc0ab0-6a5f-4033-8f00-39d780e32cba"]
 }, Open  ]]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell["End", "Section",
- CellChangeTimes->{{3.5962568941137714`*^9, 3.596256897955991*^9}}],
-
-Cell[BoxData[{
- RowBox[{
-  RowBox[{
-   RowBox[{"End", "[", "]"}], ";"}], "\n"}], "\n", 
- RowBox[{
-  RowBox[{"EndPackage", "[", "]"}], ";"}]}], "Input",
- InitializationCell->True]
-}, Closed]]
+}, Open  ]]
 },
-WindowSize->{824, 952},
+WindowSize->{824, 766},
 WindowMargins->{{Automatic, 0}, {Automatic, 0}},
-FrontEndVersion->"10.0 for Microsoft Windows (32-bit) (July 1, 2014)",
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (2016\:5e747\:670828\
+\:65e5)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -1210,34 +1224,26 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[580, 22, 149, 2, 70, "Section"],
+Cell[580, 22, 209, 4, 63, "Section"],
+Cell[792, 28, 3155, 64, 522, "Input",
+ InitializationCell->True]
+}, Open  ]],
 Cell[CellGroupData[{
-Cell[754, 28, 3098, 64, 592, "Input",
+Cell[3984, 97, 133, 3, 63, "Section"],
+Cell[4120, 102, 757, 20, 85, "Input",
  InitializationCell->True],
-Cell[3855, 94, 380, 6, 31, "Output"],
-Cell[4238, 102, 390, 6, 31, "Output"]
-}, Open  ]]
+Cell[CellGroupData[{
+Cell[4902, 126, 160, 3, 43, "Subsection"],
+Cell[5065, 131, 20149, 538, 1391, "Input",
+ InitializationCell->True]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[4677, 114, 73, 1, 70, "Section"],
-Cell[CellGroupData[{
-Cell[4775, 119, 100, 1, 49, "Subsection"],
-Cell[4878, 122, 20088, 536, 7659, "Input",
- InitializationCell->True]
-}, Closed]],
-Cell[CellGroupData[{
-Cell[25003, 663, 129, 2, 41, "Subsection"],
-Cell[25135, 667, 20029, 510, 1342, "Input",
+Cell[25251, 674, 186, 3, 43, "Subsection"],
+Cell[25440, 679, 20823, 525, 1268, "Input",
  InitializationCell->True]
 }, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[45213, 1183, 90, 1, 70, "Section"],
-Cell[45306, 1186, 178, 6, 7659, "Input",
- InitializationCell->True]
-}, Closed]]
+}, Open  ]]
 }
 ]
 *)
 
-(* End of internal cache information *)

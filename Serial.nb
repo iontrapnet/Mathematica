@@ -10,61 +10,15 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     17975,        458]
-NotebookOptionsPosition[     17242,        427]
-NotebookOutlinePosition[     17584,        442]
-CellTagsIndexPosition[     17541,        439]
+NotebookDataLength[     15059,        377]
+NotebookOptionsPosition[     14384,        348]
+NotebookOutlinePosition[     14743,        364]
+CellTagsIndexPosition[     14700,        361]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-
-Cell[CellGroupData[{
 Cell[BoxData[{
- RowBox[{
-  RowBox[{"BeginPackage", "[", "\"\<IonTrap`\>\"", "]"}], "\n"}], "\n", 
- RowBox[{
-  RowBox[{"ClearAll", "[", "DriveLetter", "]"}], ";"}], "\n", 
- RowBox[{
-  RowBox[{
-   RowBox[{
-    RowBox[{"DriveLetter", "[", "]"}], "=", 
-    RowBox[{"If", "[", 
-     RowBox[{
-      RowBox[{"$Input", 
-       RowBox[{"(*", "FileName", "*)"}], "===", "\"\<\>\""}], ",", "\n", 
-      RowBox[{
-       RowBox[{
-        RowBox[{"If", "[", 
-         RowBox[{
-          RowBox[{
-           RowBox[{"DirectoryQ", "[", 
-            RowBox[{"#", "<>", "\"\<\\\\\>\""}], "]"}], "&&", 
-           RowBox[{"DirectoryQ", "[", 
-            RowBox[{"#", "<>", "\"\<\\\\Mathematica\>\""}], "]"}], "&&", 
-           RowBox[{"DirectoryQ", "[", 
-            RowBox[{"#", "<>", "\"\<\\\\Data\>\""}], "]"}]}], ",", "#", ",", 
-          "\"\<E:\>\""}], "]"}], "\n", "&"}], "@", 
-       RowBox[{"If", "[", 
-        RowBox[{
-         RowBox[{"$UserName", "===", "\"\<lab2\>\""}], ",", "\"\<F:\>\"", 
-         ",", "\"\<G:\>\""}], "]"}]}], ",", "\n", 
-      RowBox[{
-       RowBox[{"FileNameSplit", "[", "$Input", 
-        RowBox[{"(*", "FileName", "*)"}], "]"}], "[", 
-       RowBox[{"[", "1", "]"}], "]"}]}], "\n", "]"}]}], ";"}], "\n"}], "\n", 
- RowBox[{
-  RowBox[{
-   RowBox[{"EndPackage", "[", "]"}], ";"}], "\n", "\n", 
-  RowBox[{"(*", 
-   RowBox[{
-    RowBox[{"Get", "[", 
-     RowBox[{"FileNameJoin", "[", 
-      RowBox[{"{", 
-       RowBox[{
-        RowBox[{"DriveLetter", "[", "]"}], ",", "\"\<Mathematica\>\"", ",", 
-        "\"\<Sequence.m\>\""}], "}"}], "]"}], "]"}], ";"}], "*)"}], 
-  "\n"}], "\n", 
  RowBox[{
   RowBox[{"Needs", "[", "\"\<NETLink`\>\"", "]"}], ";"}], "\n", 
  RowBox[{
@@ -87,22 +41,8 @@ Cell[BoxData[{
    3.604643659289578*^9}, 3.6313521394171896`*^9, {3.650254934900054*^9, 
    3.650254974132298*^9}, {3.650261263672039*^9, 3.6502612723905377`*^9}, {
    3.6502615091500797`*^9, 3.6502615094060946`*^9}, {3.6502628533079615`*^9, 
-   3.650262853588977*^9}, {3.650262888740988*^9, 3.6502629034598293`*^9}}],
-
-Cell[BoxData["\<\"IonTrap`\"\>"], "Output",
- CellChangeTimes->{{3.6210542596201396`*^9, 3.6210542597371464`*^9}, 
-   3.6230272027857175`*^9, 3.623181313421466*^9, 3.6234905320779223`*^9, {
-   3.624005960574746*^9, 3.6240059607357554`*^9}, {3.6249474083693924`*^9, 
-   3.624947408667409*^9}, {3.6266079403760214`*^9, 3.626607940896022*^9}, 
-   3.6266079728460665`*^9, 3.626608872997327*^9, 3.6266089201173925`*^9, 
-   3.626608972157466*^9, 3.626609062547592*^9, 3.6266093092679377`*^9, {
-   3.6266094174480886`*^9, 3.6266094500781345`*^9}, 3.6266099022687674`*^9, {
-   3.6266101894091697`*^9, 3.6266102019691873`*^9}, {3.6266104106994796`*^9, 
-   3.6266104201594925`*^9}, 3.626611027660343*^9, 3.626611381070838*^9, 
-   3.62661194654163*^9, 3.6266129824730797`*^9, 3.62661318268336*^9, 
-   3.626613452443738*^9, 3.626613505643812*^9, 3.62661356088389*^9, {
-   3.626657938274829*^9, 3.6266579464032936`*^9}}]
-}, Open  ]],
+   3.650262853588977*^9}, {3.650262888740988*^9, 3.6502629034598293`*^9}, {
+   3.756016150843028*^9, 3.756016153010798*^9}}],
 
 Cell[CellGroupData[{
 
@@ -111,9 +51,6 @@ Cell["Declaration", "Section",
   3.5962568419007845`*^9, 3.596256845363983*^9}}],
 
 Cell[BoxData[{
- RowBox[{
-  RowBox[{"BeginPackage", "[", "\"\<IonTrap`\>\"", "]"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"SerialDevices", "=", 
@@ -136,10 +73,7 @@ Cell[BoxData[{
  RowBox[{"ClearAll", "[", "SerialOpen", "]"}], "\n", 
  RowBox[{"ClearAll", "[", "SerialClose", "]"}], "\n", 
  RowBox[{"ClearAll", "[", "SerialWrite", "]"}], "\n", 
- RowBox[{
-  RowBox[{"ClearAll", "[", "SerialRead", "]"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
- RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}]}], "Input",
+ RowBox[{"ClearAll", "[", "SerialRead", "]"}]}], "Input",
  InitializationCell->True,
  CellChangeTimes->{{3.582065653762785*^9, 3.5820656542178416`*^9}, {
    3.582066015137226*^9, 3.5820660856533737`*^9}, {3.5820661349626083`*^9, 
@@ -169,7 +103,8 @@ Cell[BoxData[{
    3.651801054792491*^9}, {3.6521502459313097`*^9, 3.6521502534267387`*^9}, {
    3.6521502921159515`*^9, 3.652150311595065*^9}, {3.6521503419628024`*^9, 
    3.652150345219989*^9}, {3.652152482753172*^9, 3.6521524910716476`*^9}, {
-   3.6566525659551353`*^9, 3.656652567019196*^9}}]
+   3.6566525659551353`*^9, 3.656652567019196*^9}, {3.7560161582743797`*^9, 
+   3.756016161667212*^9}}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -207,8 +142,14 @@ Cell[BoxData[{
       RowBox[{"parity_Integer:", "0"}]}], "]"}], ":=", 
     RowBox[{"Module", "[", 
      RowBox[{
-      RowBox[{"{", "port", "}"}], ",", "\n", 
+      RowBox[{"{", "port", "}"}], ",", "\[IndentingNewLine]", 
       RowBox[{
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"KeyExistsQ", "[", 
+          RowBox[{"SerialDevices", ",", "name"}], "]"}], ",", 
+         RowBox[{"Return", "@", 
+          RowBox[{"SerialDevices", "@", "name"}]}]}], "]"}], ";", "\n", 
        RowBox[{"port", "=", 
         RowBox[{"NETLink`NETNew", "[", 
          RowBox[{
@@ -305,7 +246,7 @@ Cell[BoxData[{
       RowBox[{"(*", 
        RowBox[{",", "0", ",", 
         RowBox[{"Length", "[", "chars", "]"}]}], "*)"}], "]"}]}]}], ";"}], 
-  "\n"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{"SerialRead", "[", 
@@ -316,40 +257,22 @@ Cell[BoxData[{
      RowBox[{"{", 
       RowBox[{
        RowBox[{"port", "=", 
-        RowBox[{"SerialDevice", "[", "dev", "]"}]}], ",", 
-       RowBox[{"wait", "=", "True"}], ",", "buf", ",", "cnt", ",", 
+        RowBox[{"SerialDevice", "[", "dev", "]"}]}], ",", "buf", ",", "cnt", 
+       ",", 
        RowBox[{"r", "=", 
         RowBox[{"{", "}"}]}]}], "}"}], ",", "\[IndentingNewLine]", 
      RowBox[{
-      RowBox[{"cnt", "=", 
-       RowBox[{"port", "@", 
-        StyleBox["AvailableNumber",
-         FontWeight->"Bold"]}]}], 
-      StyleBox[";",
-       FontWeight->"Bold"], "\[IndentingNewLine]", 
-      RowBox[{"If", "[", 
-       RowBox[{
-        RowBox[{"cnt", "<", "len"}], ",", 
-        RowBox[{"PrintTemporary", "[", 
-         RowBox[{"Button", "[", 
-          RowBox[{"\"\<STOP\>\"", ",", 
-           RowBox[{"wait", "=", "False"}]}], "]"}], "]"}]}], "]"}], ";", "\n", 
-      RowBox[{"While", "[", 
-       RowBox[{
-        RowBox[{"wait", "&&", 
-         RowBox[{"cnt", "<", "len"}]}], ",", 
-        RowBox[{"cnt", "=", 
-         RowBox[{"port", "@", 
-          StyleBox["AvailableNumber",
-           FontWeight->"Bold"]}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"cnt", "=", "len"}], ";", "\[IndentingNewLine]", 
       RowBox[{"While", "[", 
        RowBox[{
         RowBox[{"cnt", ">", "0"}], ",", "\[IndentingNewLine]", 
         RowBox[{
          RowBox[{"buf", "=", 
           RowBox[{"port", "@", 
-           RowBox[{"ReadByteArray", "[", "cnt", "]"}]}]}], ";", 
-         "\[IndentingNewLine]", 
+           RowBox[{"ReadByteArray", "[", 
+            RowBox[{"port", "@", 
+             StyleBox["AvailableNumber",
+              FontWeight->"Bold"]}], "]"}]}]}], ";", "\[IndentingNewLine]", 
          RowBox[{"cnt", "-=", 
           RowBox[{"Length", "@", "buf"}]}], ";", "\[IndentingNewLine]", 
          RowBox[{"r", "=", 
@@ -402,7 +325,11 @@ Cell[BoxData[{
    3.6521531299541903`*^9}, {3.6524081654294615`*^9, 3.652408192251995*^9}, 
    3.6524083441486835`*^9, {3.652408396652686*^9, 3.6524084616444035`*^9}, {
    3.652408542252014*^9, 3.6524085471402936`*^9}, {3.6524102849246893`*^9, 
-   3.652410298132445*^9}, {3.6566525396636314`*^9, 3.6566525446929193`*^9}}]
+   3.652410298132445*^9}, {3.6566525396636314`*^9, 3.6566525446929193`*^9}, {
+   3.7560164553549776`*^9, 3.7560164555555105`*^9}, {3.7560165048602886`*^9, 
+   3.7560165050357537`*^9}, 3.756017361359948*^9, 3.7560878016353235`*^9, {
+   3.7560878701646023`*^9, 3.7560879118996763`*^9}, {3.756088151380497*^9, 
+   3.75608819700342*^9}, {3.7561197970590267`*^9, 3.7561198660335345`*^9}}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -410,24 +337,19 @@ Cell[CellGroupData[{
 Cell["End", "Section",
  CellChangeTimes->{{3.6046429928574605`*^9, 3.604642995613618*^9}}],
 
-Cell[BoxData[{
+Cell[BoxData[
  RowBox[{
-  RowBox[{"End", "[", "]"}], ";"}], "\n", 
- RowBox[{
-  RowBox[{
-   RowBox[{"EndPackage", "[", "]"}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"SerialClose", "[", "]"}], ";"}]}], "Input",
+  RowBox[{"SerialClose", "[", "]"}], ";"}]], "Input",
  InitializationCell->True,
  CellChangeTimes->{{3.6046437797924705`*^9, 3.6046437831126604`*^9}, {
   3.604834055114581*^9, 3.604834055482602*^9}, {3.652408232978325*^9, 
-  3.6524082403387456`*^9}}]
+  3.6524082403387456`*^9}, {3.75601616493089*^9, 3.756016165618719*^9}}]
 }, Open  ]]
 },
 WindowSize->{701, 800},
-WindowMargins->{{133, Automatic}, {14, Automatic}},
-FrontEndVersion->"10.0 for Microsoft Windows (64-bit) (July 1, 2014)",
+WindowMargins->{{Automatic, 491}, {-113, Automatic}},
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (2016\:5e747\:670828\
+\:65e5)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -441,27 +363,23 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
+Cell[558, 20, 1071, 24, 123, "Code"],
 Cell[CellGroupData[{
-Cell[580, 22, 2604, 67, 393, "Code"],
-Cell[3187, 91, 906, 12, 31, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[4130, 108, 149, 2, 70, "Section"],
-Cell[4282, 112, 3350, 59, 312, "Input",
+Cell[1654, 48, 149, 2, 63, "Section"],
+Cell[1806, 52, 3168, 54, 237, "Input",
  InitializationCell->True]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[7669, 176, 97, 1, 70, "Section"],
-Cell[7769, 179, 8881, 225, 972, "Input",
+Cell[5011, 111, 97, 1, 63, "Section"],
+Cell[5111, 114, 8808, 217, 883, "Input",
  InitializationCell->True]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[16687, 409, 90, 1, 70, "Section"],
-Cell[16780, 412, 446, 12, 92, "Input",
+Cell[13956, 336, 90, 1, 63, "Section"],
+Cell[14049, 339, 319, 6, 46, "Input",
  InitializationCell->True]
 }, Open  ]]
 }
 ]
 *)
 
-(* End of internal cache information *)

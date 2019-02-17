@@ -1,0 +1,791 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     31330,        783]
+NotebookOptionsPosition[     30991,        768]
+NotebookOutlinePosition[     31347,        784]
+CellTagsIndexPosition[     31304,        781]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+  "SequencerVI", "=", "\"\<E:\\\\LabVIEW\\\\Sequencer\\\\Sequencer.vi\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"sequencer", "=", 
+    RowBox[{"GetAllCtrls", "@", "SequencerVI"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"laserpanel", "=", 
+    RowBox[{
+    "GetAllCtrls", "@", 
+     "\"\<E:\\\\LabVIEW\\\\LaserPanel\\\\LaserPanel.vi\>\""}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SequencerPort", "=", "\"\<COM5\>\""}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "SequenceFile", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"SequenceFile", "[", 
+     RowBox[{"file_String", ",", 
+      RowBox[{"seq_List:", 
+       RowBox[{"{", "}"}]}]}], "]"}], ":=", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"seq", "=!=", 
+         RowBox[{"{", "}"}]}], ",", 
+        RowBox[{"ExportSequenceFile", "[", 
+         RowBox[{"file", ",", "seq"}], "]"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"CtrlSignalValue", "[", 
+       RowBox[{
+        RowBox[{"sequencer", "@", "\"\<Sequence File\>\""}], ",", 
+        RowBox[{"DataPath", "@", "file"}]}], "]"}]}], ")"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"SequencerCompiled", "[", 
+     RowBox[{"sequence_String:", "\"\<\>\""}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "ctrl", "}"}], ",", "\n", 
+      RowBox[{
+       RowBox[{"ctrl", "=", 
+        RowBox[{"sequencer", "@", "\"\<CompiledSequence\>\""}]}], ";", "\n", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"sequence", "===", "\"\<\>\""}], ",", "\n", 
+         RowBox[{"Return", "[", 
+          RowBox[{"CtrlGetValue", "[", "ctrl", "]"}], "]"}], ",", "\n", 
+         RowBox[{
+          RowBox[{"CtrlSetValue", "[", 
+           RowBox[{"ctrl", ",", " ", "sequence"}], "]"}], ";", "\n", 
+          RowBox[{"ctrl", "=", 
+           RowBox[{"sequencer", "@", "\"\<Compile\>\""}]}], ";", "\n", 
+          RowBox[{"CtrlSignalValue", "[", 
+           RowBox[{"ctrl", ",", " ", "True"}], "]"}], ";", "\n", 
+          RowBox[{"While", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"CtrlGetValue", "[", "ctrl", "]"}], " ", "===", " ", 
+             "True"}], ",", "Null"}], "]"}]}]}], "]"}]}]}], "\n", "]"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"SequencerAxis", "[", 
+     RowBox[{
+      RowBox[{"start_", "?", "NumberQ"}], ",", 
+      RowBox[{"end_", "?", "NumberQ"}], ",", 
+      RowBox[{"step_", "?", "NumberQ"}]}], "]"}], ":=", 
+    RowBox[{"(", "\n", 
+     RowBox[{
+      RowBox[{"CtrlSignalValue", "[", 
+       RowBox[{
+        RowBox[{"sequencer", "@", "\"\<Clear\>\""}], ",", "True"}], "]"}], 
+      ";", "\n", 
+      RowBox[{"CallVI", "[", 
+       RowBox[{"\"\<SetXScale\>\"", ",", 
+        RowBox[{"{", 
+         RowBox[{
+         "\"\<reference\>\"", ",", "\"\<Start\>\"", ",", "\"\<End\>\"", ",", 
+          "\"\<Step\>\""}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"sequencer", "@", "\"\<Average Plot\>\""}], ",", "start", 
+          ",", "end", ",", "step"}], "}"}]}], "]"}], ";"}], "\n", ")"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"CoolingPackets", ",", "IonPackets"}], "}"}], "=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"ExportSequencePacket", "@@", 
+       RowBox[{"Reverse", "@", 
+        RowBox[{"ImportSequenceFile", "[", 
+         RowBox[{"\"\<Sequence/\>\"", "<>", "#", "<>", "\"\<.seq\>\""}], 
+         "]"}]}]}], "&"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{"\"\<Cooling\>\"", ",", "\"\<Ion\>\""}], "}"}]}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "SequencerOpen", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"SequencerOpen", "[", "]"}], ":=", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"CtrlSetValue", "[", 
+       RowBox[{
+        RowBox[{"sequencer", "@", "\"\<Protect\>\""}], ",", "False"}], "]"}], 
+      ";", 
+      RowBox[{"SerialOpen", "@", "SequencerPort"}], ";", 
+      RowBox[{"$SequencerStatus", "=", "True"}], ";"}], ")"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "SequencerClose", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"SequencerClose", "[", "]"}], ":=", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"SerialClose", "@", "SequencerPort"}], ";", 
+      RowBox[{"CtrlSetValue", "[", 
+       RowBox[{
+        RowBox[{"sequencer", "@", "\"\<Protect\>\""}], ",", "True"}], "]"}], 
+      ";", 
+      RowBox[{"$SequencerStatus", "=", "False"}], ";"}], ")"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "SequencerCounts", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SequencerCounts", "[", 
+    RowBox[{
+     RowBox[{"packets", ":", 
+      RowBox[{"{", "__Integer", "}"}]}], ",", 
+     RowBox[{"repeats_Integer:", "100"}]}], "]"}], ":=", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"SerialWrite", "[", 
+      RowBox[{"SequencerPort", ",", "packets"}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Partition", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"FromDigits", "[", 
+           RowBox[{"#", ",", "256"}], "]"}], "&"}], "/@", 
+         RowBox[{"Partition", "[", 
+          RowBox[{
+           RowBox[{"ToCharacterCode", "@", 
+            RowBox[{"SerialRead", "[", 
+             RowBox[{"SequencerPort", ",", 
+              RowBox[{"12", "*", "repeats"}]}], "]"}]}], ",", "3"}], "]"}]}], 
+        ",", "4"}], "]"}], "\[LeftDoubleBracket]", 
+      RowBox[{"All", ",", "1"}], "\[RightDoubleBracket]"}]}], ")"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"SequencerCounts", "[", "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "ctrl", "}"}], ",", "\n", 
+      RowBox[{
+       RowBox[{"ctrl", "=", 
+        RowBox[{"sequencer", "@", "\"\<Data\>\""}]}], ";", "\n", 
+       RowBox[{"CtrlSignalValue", "[", 
+        RowBox[{"ctrl", ",", " ", "True"}], "]"}], ";", "\n", 
+       RowBox[{"While", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"CtrlGetValue", "[", "ctrl", "]"}], " ", "===", " ", 
+          "True"}], ",", "Null"}], "]"}], ";", "\n", 
+       RowBox[{"ctrl", "=", 
+        RowBox[{"sequencer", "@", "\"\<Counts\>\""}]}], ";", "\n", 
+       RowBox[{"CtrlGetValue", "[", "ctrl", "]"}]}]}], "\n", "]"}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"<<", "SerialLink`"}], ";", "\[IndentingNewLine]", 
+    RowBox[{"(*", 
+     RowBox[{
+      RowBox[{"SequencerPort", "=", 
+       RowBox[{"SerialPortOpen", "[", 
+        RowBox[{"\"\<COM5\>\"", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\"\<BaudRate\>\"", "\[Rule]", "4000000"}], ",", 
+           RowBox[{"\"\<StopBits\>\"", "\[Rule]", "2"}], ",", 
+           RowBox[{"\"\<ReadBufferSize\>\"", "\[Rule]", "409600"}]}], "}"}]}],
+         "]"}]}], ";", 
+      RowBox[{"SerialPortClose", "@", "SequencerPort"}]}], "*)"}], 
+    "\[IndentingNewLine]", 
+    RowBox[{"ClearAll", "[", "SequencerCounts", "]"}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"SequencerCounts", "[", 
+      RowBox[{
+       RowBox[{"packets", ":", 
+        RowBox[{"{", "__Integer", "}"}]}], ",", 
+       RowBox[{"repeats_Integer:", "100"}]}], "]"}], ":=", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"SerialPortWrite", "[", 
+        RowBox[{"SequencerPort", ",", "packets"}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"Partition", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"FromDigits", "[", 
+             RowBox[{"#", ",", "256"}], "]"}], "&"}], "/@", 
+           RowBox[{"Partition", "[", 
+            RowBox[{
+             RowBox[{"Quiet", "@", 
+              RowBox[{"SerialPortRead", "[", 
+               RowBox[{"SequencerPort", ",", "\"\<Byte\>\"", ",", 
+                RowBox[{"12", "*", "repeats"}]}], "]"}]}], ",", "3"}], 
+            "]"}]}], ",", "4"}], "]"}], "\[LeftDoubleBracket]", 
+        RowBox[{"All", ",", "1"}], "\[RightDoubleBracket]"}]}], ")"}]}], 
+    ";"}], "\[IndentingNewLine]", "*)"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"ChartVI", "=", 
+     RowBox[{"LoadVI", "[", "\"\<Chart\>\"", "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ChartCtrl", "=", 
+     RowBox[{"FindCtrl", "[", 
+      RowBox[{"ChartVI", ",", "\"\<Chart\>\""}], "]"}]}], ";"}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"ChartVI", "@", 
+     RowBox[{"Abort", "[", "]"}]}], ";"}], "*)"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "SequencerSweep", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"SequencerSweep", "[", 
+     RowBox[{
+      RowBox[{"seq", ":", 
+       RowBox[{"_List", "|", "_String"}]}], ",", 
+      RowBox[{"stat_Symbol:", "True"}], ",", 
+      RowBox[{"repeats_Integer:", "100"}]}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"packets", ",", "counts", ",", 
+        RowBox[{"stop", "=", "False"}], ",", 
+        RowBox[{"data", "=", 
+         RowBox[{"{", "}"}]}]}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"packets", "=", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Head", "@", "seq"}], "===", "List"}], ",", 
+          RowBox[{"ExportSequencePacket", "[", 
+           RowBox[{"seq", ",", 
+            RowBox[{"{", "}"}], ",", "repeats"}], "]"}], ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"ExportSequencePacket", "[", 
+             RowBox[{
+              RowBox[{
+              "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+              ",", 
+              RowBox[{
+              "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+              ",", "repeats"}], "]"}], "&"}], "@", 
+           RowBox[{"ImportSequenceFile", "@", "seq"}]}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"SequencerOpen", "[", "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"ChartVI", "@", "FPWinOpen"}], "=", "True"}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"CallVI", "[", 
+          RowBox[{"\"\<SetXScale\>\"", ",", 
+           RowBox[{"{", 
+            RowBox[{
+            "\"\<reference\>\"", ",", "\"\<Start\>\"", ",", "\"\<End\>\"", 
+             ",", "\"\<Step\>\""}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"ChartCtrl", ",", "0", ",", "50", ",", "1"}], "}"}]}], 
+          "]"}], ";"}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"LoadVI", "[", "SequencerVI", "]"}], "@", "FPWinOpen"}], "=",
+         "True"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"SequencerAxis", "[", 
+        RowBox[{"0", ",", "100", ",", "1"}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"PrintTemporary", "@", 
+        RowBox[{"Button", "[", 
+         RowBox[{"\"\<\[FilledCircle]STOP\>\"", ",", 
+          RowBox[{"stop", "=", "True"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"$SweepStatus", "=", "True"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"While", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"!", "stop"}], "&&", "$SweepStatus"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"counts", "=", 
+           RowBox[{"SequencerCounts", "[", 
+            RowBox[{"packets", ",", "repeats"}], "]"}]}], ";", 
+          RowBox[{"(*", 
+           RowBox[{
+            RowBox[{"FakeCounts", "@", 
+             RowBox[{"RandomReal", "[", "]"}]}], ";"}], "*)"}], 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"AppendTo", "[", 
+               RowBox[{"data", ",", "#"}], "]"}], ";", 
+              RowBox[{"(*", 
+               RowBox[{"CtrlSetValue", "[", 
+                RowBox[{"ChartCtrl", ",", "#"}], "]"}], "*)"}], 
+              RowBox[{"CtrlSetValue", "[", 
+               RowBox[{
+                RowBox[{"sequencer", "@", "\"\<Average Plot\>\""}], ",", 
+                RowBox[{"MakeNETObject", "[", 
+                 RowBox[{
+                  RowBox[{"{", 
+                   RowBox[{"#", ",", "0"}], "}"}], ",", "\"\<Object[]\>\""}], 
+                 "]"}]}], "]"}], ";"}], ")"}], "&"}], "@", 
+           RowBox[{"If", "[", 
+            RowBox[{"stat", ",", 
+             RowBox[{"100", 
+              RowBox[{"Mean", "@", 
+               RowBox[{"ToState", "@", 
+                RowBox[{"N", "@", "counts"}]}]}]}], ",", 
+             RowBox[{"Mean", "@", 
+              RowBox[{"N", "@", "counts"}]}]}], "]"}]}]}]}], 
+        "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"$SweepStatus", "=", "False"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"SequencerClose", "[", "]"}], ";", "\[IndentingNewLine]", 
+       "data"}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "ProtectIon", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ProtectIon", "[", "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"r", "=", "False"}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"CtrlSignalValue", "[", 
+        RowBox[{
+         RowBox[{"laserpanel", "@", "\"\<370/F5\>\""}], ",", "True"}], "]"}], 
+       ";", 
+       RowBox[{"Do", "[", 
+        RowBox[{
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Mean", "@", 
+             RowBox[{"N", "@", 
+              RowBox[{"SequencerCounts", "@", "IonPackets"}]}]}], ">", "20"}],
+            ",", 
+           RowBox[{
+            RowBox[{"r", "=", "True"}], ";", 
+            RowBox[{"Break", "[", "]"}]}]}], "]"}], ",", 
+         RowBox[{"{", "20", "}"}]}], "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"CtrlSignalValue", "[", 
+        RowBox[{
+         RowBox[{"laserpanel", "@", "\"\<370/F5\>\""}], ",", "False"}], "]"}],
+        ";", "\[IndentingNewLine]", "r"}]}], "\[IndentingNewLine]", "]"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "CheckIon", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"CheckIon", "[", "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{"While", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Mean", "@", 
+        RowBox[{"N", "@", 
+         RowBox[{"SequencerCounts", "@", "CoolingPackets"}]}]}], "<", "2"}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"ProtectIon", "[", "]"}], ",", 
+         RowBox[{"Continue", "[", "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"CtrlSignalValue", "[", 
+        RowBox[{
+         RowBox[{"laserpanel", "@", "\"\<CCD/F7\>\""}], ",", "True"}], "]"}], 
+       ";", "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"ChoiceDialog", "[", 
+          RowBox[{"\"\<Ion Lost!\>\"", ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"\"\<Debug\>\"", "\[Rule]", "True"}], ",", 
+             RowBox[{"\"\<Continue\>\"", "\[Rule]", "False"}]}], "}"}]}], 
+          "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"SequencerClose", "[", "]"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Dialog", "[", "]"}], "===", "Break"}], ",", 
+            RowBox[{"Throw", "[", "Break", "]"}]}], "]"}]}]}], 
+        "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"CtrlSignalValue", "[", 
+        RowBox[{
+         RowBox[{"laserpanel", "@", "\"\<CCD/F7\>\""}], ",", "False"}], "]"}],
+        ";", "\[IndentingNewLine]", 
+       RowBox[{"SequencerOpen", "[", "]"}], ";"}]}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "SequencerScan", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SequencerScan", "[", 
+   RowBox[{
+    RowBox[{"seq", ":", 
+     RowBox[{"_List", "|", "_String"}]}], ",", "func_", ",", "range_List", 
+    ",", 
+    RowBox[{"stat_Symbol:", "True"}], ",", 
+    RowBox[{"repeats_Integer:", "100"}]}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"packets", ",", "counts", ",", "x", ",", 
+      RowBox[{"stop", "=", "False"}], ",", 
+      RowBox[{"plot", "=", 
+       RowBox[{"{", "}"}]}], ",", 
+      RowBox[{"data", "=", 
+       RowBox[{"{", "}"}]}]}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"packets", "=", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Head", "@", "seq"}], "===", "List"}], ",", 
+        RowBox[{"ExportSequencePacket", "[", 
+         RowBox[{"seq", ",", 
+          RowBox[{"{", "}"}], ",", "repeats"}], "]"}], ",", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"ExportSequencePacket", "[", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], ",", 
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            "repeats"}], "]"}], "&"}], "@", 
+         RowBox[{"ImportSequenceFile", "@", "seq"}]}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"SequencerOpen", "[", "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{
+       RowBox[{"PrintTemporary", "@", 
+        RowBox[{"Dynamic", "@", 
+         RowBox[{"Quiet", "@", 
+          RowBox[{"DataPlot", "@", "plot"}]}]}]}], ";"}], "*)"}], 
+     "\[IndentingNewLine]", 
+     RowBox[{"PrintTemporary", "@", 
+      RowBox[{"Button", "[", 
+       RowBox[{"\"\<\[FilledCircle]STOP\>\"", ",", 
+        RowBox[{"stop", "=", "True"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Monitor", "[", 
+      RowBox[{
+       RowBox[{"Do", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"If", "[", 
+           RowBox[{"stop", ",", 
+            RowBox[{"Break", "[", "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"func", "[", "x", "]"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Catch", "@", 
+              RowBox[{"CheckIon", "[", "]"}]}], "\[Equal]", "Break"}], ",", 
+            RowBox[{"Abort", "[", "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"counts", "=", 
+           RowBox[{"SequencerCounts", "[", 
+            RowBox[{"packets", ",", "repeats"}], "]"}]}], ";", 
+          RowBox[{"(*", 
+           RowBox[{
+            RowBox[{"FakeCounts", "@", 
+             RowBox[{"RandomReal", "[", "]"}]}], ";"}], "*)"}], 
+          "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"data", ",", 
+            RowBox[{"{", 
+             RowBox[{"x", ",", "counts"}], "}"}]}], "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"plot", ",", 
+            RowBox[{"{", 
+             RowBox[{"x", ",", 
+              RowBox[{"If", "[", 
+               RowBox[{"stat", ",", 
+                RowBox[{"100", 
+                 RowBox[{"Mean", "@", 
+                  RowBox[{"ToState", "@", 
+                   RowBox[{"N", "@", "counts"}]}]}]}], ",", 
+                RowBox[{"Mean", "@", 
+                 RowBox[{"N", "@", "counts"}]}]}], "]"}]}], "}"}]}], "]"}], 
+          ";"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", 
+           RowBox[{
+           "range", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+           ",", 
+           RowBox[{
+           "range", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+           ",", 
+           RowBox[{
+           "range", "\[LeftDoubleBracket]", "3", "\[RightDoubleBracket]"}]}], 
+          "}"}]}], "]"}], ",", 
+       RowBox[{
+        RowBox[{"TableForm", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Quiet", "@", 
+            RowBox[{"DataPlot", "[", 
+             RowBox[{"plot", ",", 
+              RowBox[{"ImageSize", "\[Rule]", "Large"}]}], "]"}]}], ",", 
+           RowBox[{"ProgressIndicator", "[", 
+            RowBox[{"x", ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{
+               "range", "\[LeftDoubleBracket]", "1", 
+                "\[RightDoubleBracket]"}], ",", 
+               RowBox[{
+               "range", "\[LeftDoubleBracket]", "2", 
+                "\[RightDoubleBracket]"}]}], "}"}]}], "]"}]}], "}"}], "]"}], 
+        ";", "\[IndentingNewLine]", 
+        RowBox[{"Print", "@", 
+         RowBox[{"DataPlot", "@", "plot"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"SequencerClose", "[", "]"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Abs", "[", 
+            RowBox[{
+             RowBox[{"plot", "\[LeftDoubleBracket]", 
+              RowBox[{
+               RowBox[{"-", "1"}], ",", "1"}], "\[RightDoubleBracket]"}], "-", 
+             RowBox[{
+             "range", "\[LeftDoubleBracket]", "2", 
+              "\[RightDoubleBracket]"}]}], "]"}], "<", 
+           RowBox[{"Abs", "[", 
+            RowBox[{
+            "range", "\[LeftDoubleBracket]", "3", "\[RightDoubleBracket]"}], 
+            "]"}]}], ",", "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Each", "[", 
+             RowBox[{"plot", ",", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"#1", ",", 
+                 RowBox[{"0.01", "#2"}]}], "}"}], "&"}]}], "]"}], ",", 
+            RowBox[{"ExportData", "[", 
+             RowBox[{
+              RowBox[{"NewData", "[", 
+               RowBox[{
+                RowBox[{"ToString", "@", "func"}], "<>", "\"\<-\>\""}], "]"}],
+               ",", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"\"\<C\>\"", "\[Rule]", 
+                 RowBox[{"\[LeftAssociation]", 
+                  RowBox[{"\"\<Channel\>\"", "\[Rule]", 
+                   RowBox[{"{", "1", "}"}]}], "\[RightAssociation]"}]}], ",", 
+                RowBox[{"\"\<X\>\"", "\[Rule]", 
+                 RowBox[{"List", "/@", 
+                  RowBox[{"data", "\[LeftDoubleBracket]", 
+                   RowBox[{"All", ",", "1"}], "\[RightDoubleBracket]"}]}]}], 
+                ",", 
+                RowBox[{"\"\<Y_Count\>\"", "\[Rule]", 
+                 RowBox[{"data", "\[LeftDoubleBracket]", 
+                  RowBox[{"All", ",", "2"}], "\[RightDoubleBracket]"}]}]}], 
+               "}"}]}], "]"}]}], "}"}], ",", 
+          RowBox[{"Abort", "[", "]"}]}], "]"}]}]}], "\[IndentingNewLine]", 
+      "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"SequencerScan", "[", 
+       RowBox[{"item_String", ",", "param_Integer", ",", 
+        RowBox[{"start_", "?", "NumberQ"}], ",", 
+        RowBox[{"end_", "?", "NumberQ"}], ",", 
+        RowBox[{"step_", "?", "NumberQ"}]}], "]"}], ":=", 
+      RowBox[{"Block", "[", 
+       RowBox[{
+        RowBox[{"{", "now", "}"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"CtrlSignalValue", "[", 
+          RowBox[{
+           RowBox[{"sequencer", "[", "\"\<Item\>\"", "]"}], ",", "item"}], 
+          "]"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"Each", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"\"\<Parameter\>\"", ",", "param"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"\"\<Start\>\"", ",", "start"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"\"\<End\>\"", ",", "end"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"\"\<Step\>\"", ",", "step"}], "}"}]}], "}"}], ",", 
+           RowBox[{
+            RowBox[{"CtrlSetValue", "[", 
+             RowBox[{
+              RowBox[{"sequencer", "@", "#1"}], ",", "#2"}], "]"}], "&"}]}], 
+          "]"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"CtrlSignalValue", "[", 
+          RowBox[{
+           RowBox[{"sequencer", "@", "\"\<Scan\>\""}], ",", "True"}], "]"}], 
+         ";", "\[IndentingNewLine]", 
+         RowBox[{"PrintTemporary", "@", 
+          RowBox[{"Button", "[", 
+           RowBox[{"\"\<\[FilledCircle]STOP\>\"", ",", 
+            RowBox[{"CtrlSignalValue", "[", 
+             RowBox[{
+              RowBox[{"sequencer", "@", "\"\<Scan\>\""}], ",", "False"}], 
+             "]"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"now", "=", "start"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"Monitor", "[", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"While", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"CtrlGetValue", "@", 
+                RowBox[{"sequencer", "@", "\"\<Scan\>\""}]}], "===", "True"}],
+               "&&", 
+              RowBox[{
+               RowBox[{"end", "-", "now"}], ">", "step"}]}], ",", 
+             RowBox[{
+              RowBox[{"now", "=", 
+               RowBox[{"CtrlGetValue", "@", 
+                RowBox[{"sequencer", "@", "\"\<Value\>\""}]}]}], ";", 
+              RowBox[{"Pause", "[", "1", "]"}]}]}], "]"}], ",", 
+           RowBox[{"ProgressIndicator", "[", 
+            RowBox[{"now", ",", 
+             RowBox[{"{", 
+              RowBox[{"start", ",", "end"}], "}"}]}], "]"}]}], "]"}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"now", "=", 
+          RowBox[{"CtrlGetValue", "@", 
+           RowBox[{"sequencer", "@", "\"\<Value\>\""}]}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"end", "-", "now"}], "<", 
+            RowBox[{"2", "step"}]}], ",", 
+           RowBox[{"CtrlGetValue", "@", 
+            RowBox[{"sequencer", "@", "\"\<data file\>\""}]}], ",", 
+           RowBox[{"Abort", "[", "]"}]}], "]"}]}]}], "\[IndentingNewLine]", 
+       "]"}]}], ";"}]}]}]}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.754630547593155*^9, {3.754639826104827*^9, 3.7546398385917997`*^9}, 
+   3.754639890793779*^9, {3.7546399426653094`*^9, 3.7546399499842634`*^9}, {
+   3.7546400594954634`*^9, 3.754640155642922*^9}, {3.754640208105308*^9, 
+   3.7546402128246355`*^9}, {3.754640254529336*^9, 3.7546403073927174`*^9}, {
+   3.7546404242480607`*^9, 3.7546404377916985`*^9}, {3.75464049192871*^9, 
+   3.7546404993527355`*^9}, {3.754640569440381*^9, 3.754640615328087*^9}, {
+   3.7546410575837965`*^9, 3.754641061535821*^9}, {3.754641229455765*^9, 
+   3.7546412297535577`*^9}, {3.7546414036243887`*^9, 
+   3.7546414068630004`*^9}, {3.754710744052964*^9, 3.7547107503739376`*^9}, 
+   3.754710893462207*^9, {3.754996736398394*^9, 3.754996739021916*^9}, {
+   3.7559192905175915`*^9, 3.755919293893568*^9}, {3.755923579384763*^9, 
+   3.75592360009879*^9}, {3.7561191937932577`*^9, 3.756119277013563*^9}, {
+   3.7561193239086456`*^9, 3.7561193492842607`*^9}, {3.756119381745584*^9, 
+   3.756119390417061*^9}, {3.756119429538829*^9, 3.756119556427744*^9}, {
+   3.756119777977313*^9, 3.7561197820423574`*^9}, {3.756120122380474*^9, 
+   3.75612015081872*^9}, {3.7561201892589736`*^9, 3.7561202482349887`*^9}, 
+   3.7561203265010433`*^9, {3.756126335825929*^9, 3.75612636616057*^9}, {
+   3.756128180642803*^9, 3.7561282841761007`*^9}, {3.7561310497962685`*^9, 
+   3.756131122807454*^9}, {3.756131181520587*^9, 3.756131209182147*^9}, {
+   3.7561312624497995`*^9, 3.756131330764467*^9}, {3.756133344805255*^9, 
+   3.7561333779283357`*^9}, {3.756133416954117*^9, 3.7561334753885093`*^9}, {
+   3.756133507574092*^9, 3.7561335641685724`*^9}, {3.756133860216875*^9, 
+   3.7561338866330943`*^9}, {3.756134111136137*^9, 3.7561341913724804`*^9}, {
+   3.756134298389067*^9, 3.7561343481413994`*^9}, {3.7561344968989587`*^9, 
+   3.7561344977051024`*^9}, {3.756135051519315*^9, 3.7561350629497433`*^9}, {
+   3.756135151032979*^9, 3.7561353169742603`*^9}, {3.756137811342642*^9, 
+   3.75613796841835*^9}, {3.756138516548953*^9, 3.7561385332593904`*^9}, {
+   3.756138703915121*^9, 3.756138705376981*^9}, {3.7561755713063035`*^9, 
+   3.756175585449952*^9}, {3.756175736154421*^9, 3.7561758001223516`*^9}, {
+   3.7561758342077866`*^9, 3.756175877618182*^9}, {3.7561761217547007`*^9, 
+   3.7561761345457344`*^9}, {3.7561762768119392`*^9, 3.756176285709732*^9}, {
+   3.756176349127617*^9, 3.7561763518670144`*^9}, {3.756176812971509*^9, 
+   3.756176829394327*^9}, {3.756177088202361*^9, 3.7561771148279524`*^9}, {
+   3.756177472379322*^9, 3.756177473667346*^9}, {3.75617766813005*^9, 
+   3.7561776890264745`*^9}, {3.756177721746455*^9, 3.7561777257302322`*^9}, {
+   3.7561880381005955`*^9, 3.756188056093145*^9}, {3.756188103719246*^9, 
+   3.7561881208871*^9}, {3.756188183566146*^9, 3.7561883127354383`*^9}, {
+   3.7561883508246775`*^9, 3.7561884344635077`*^9}, {3.7561885069189253`*^9, 
+   3.7561885475107765`*^9}, {3.7561892300549226`*^9, 
+   3.7561893164630537`*^9}, {3.7561897599995832`*^9, 
+   3.7561898060230246`*^9}, {3.7561964368123407`*^9, 3.7561964569641924`*^9}, 
+   3.756196986300774*^9, {3.7562545588151445`*^9, 3.756254560885835*^9}, {
+   3.756572311479821*^9, 3.7565723262952476`*^9}, {3.756572358452735*^9, 
+   3.7565724429263735`*^9}, {3.7565724763061666`*^9, 
+   3.7565726415355296`*^9}, {3.756573122636911*^9, 3.756573132091052*^9}, 
+   3.7565731649223595`*^9, 3.756573200351576*^9},
+ FontFamily->"Consolas",
+ FontSize->16,ExpressionUUID->"118c6e6a-7537-4f9e-b540-a2849ef39200"]
+},
+WindowSize->{978, 766},
+WindowMargins->{{Automatic, -52}, {Automatic, 17}},
+FrontEndVersion->"11.3 for Microsoft Windows (64-bit) (2018\:5e743\:67086\
+\:65e5)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 30429, 746, 3771, "Input",ExpressionUUID->"118c6e6a-7537-4f9e-b540-a2849ef39200",
+ InitializationCell->True]
+}
+]
+*)
+

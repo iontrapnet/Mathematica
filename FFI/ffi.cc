@@ -1,5 +1,5 @@
-#include "mathlink.h"
-#include "WolframLibrary.h"
+#include <mathlink.h>
+#include <WolframLibrary.h>
 #include <string.h>
 #include <dyncall.h>
 #include <dynload.h>
@@ -18,30 +18,54 @@ extern "C" {
 #define EXTERNC
 #endif
 
-#ifdef UNIX_MATHLINK
-#define DLL
-#else 
-#define DLL __declspec(dllexport) 
-#endif
-#define API EXTERNC DLL
+#define byte unsigned char
+#define real32 float
+#define real64 double
 
-#ifdef _WIN64
-#define ptr_t int64
-#define MLGetPtr MLGetInteger64
-#define MLPutPtr MLPutInteger64
-#else
-#define ptr_t int32
-#define MLGetPtr MLGetInteger32
-#define MLPutPtr MLPutInteger32
-#endif
-
-typedef unsigned char byte;
+#ifdef _MSVC
+typedef __int8 int8;
+typedef __int16 int16;
 typedef __int32 int32;
 typedef __int64 int64;
-typedef float real32;
-typedef double real64;
+typedef unsigned __int32 uint32;
+typedef unsigned __int64 uint64;
+#else
+#include <stdint.h>
+typedef int8_t int8;
+typedef int16_t int16;
+typedef int32_t int32;
+typedef int64_t int64;
+typedef uint32_t uint32;
+typedef uint64_t uint64;
+#endif
 
-API ptr_t FFI_Open(size_t size) {
+#ifdef _WIN32
+#define DLL __declspec(dllexport)
+#ifdef _WIN64
+#define ptr_t 64
+#else
+#define ptr_t 32
+#endif
+#else
+#define DLL
+#define ptr_t 64
+#endif
+
+#define API EXTERNC DLL
+
+#if ptr_t == 32
+#undef ptr_t
+#define ptr_t mlint32
+#define MLGetPtr MLGetInteger32
+#define MLPutPtr MLPutInteger32
+#else
+#undef ptr_t
+#define ptr_t mlint64
+#define MLGetPtr MLGetInteger64
+#define MLPutPtr MLPutInteger64
+#endif
+
+API ptr_t FFI_Open(int size) {
     return (ptr_t)dcNewCallVM(size);
 }
 
@@ -57,7 +81,7 @@ API void FFI_Reset(ptr_t vm) {
     dcReset((DCCallVM*)vm);
 }
 
-EXTERNC ptr_t FFI_Init(size_t size, int mode) {
+EXTERNC ptr_t FFI_Init(int size, int mode) {
     ptr_t vm = FFI_Open(size);
     FFI_Mode(vm, mode);
     return vm;

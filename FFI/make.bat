@@ -1,6 +1,6 @@
 @echo off
 SET ARCH=%1
-set "VCDir=D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\"
+set "VCDir=D:\Develop\Visual Studio 2010 Ultimate\"
 @call "%VCDir%vcvars%ARCH%.bat"
 SET CL=/nologo /c /DWIN32 /D_WINDOWS /W3 /O2 /DNDEBUG
 SET LINK=/NOLOGO /SUBSYSTEM:windows /INCREMENTAL:no /PDB:NONE kernel32.lib user32.lib gdi32.lib
